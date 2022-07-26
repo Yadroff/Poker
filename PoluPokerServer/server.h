@@ -25,15 +25,17 @@ private:
     QMap<int, QTcpSocket*> clients_; // мапа [client, socket]
     bool isListen_ = false; // статус
     QPushButton *buttonShutDown_; // кнопка выключения
-    QMap<int, QString> players_; // ники игроков
+    QMap<QTcpSocket*, QString> players_; // ники игроков
     QVector<Table *> tables_; // столы
-    QSqlDatabase dataBase_;
+    QSqlDatabase dataBase_; // БД с пользователями
 
     QByteArray tables(); // отправить столы
-    void addInDataBase(const QString &username, const QString &password);
+    QString addInDataBase(const QString &username, const QString &password); // добавить пользователя в БД
+    QString checkInDataBase(const QString &username, const QString &password, const int &id); // проверить пользователя в БД
 private slots:
     void newUser(); // новый пользователь
     void shutdownServer(); // выключение сервера
     void readData(); // чтение от пользователей
+    void disconnectUser();
 };
 #endif // SERVER_H

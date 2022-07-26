@@ -10,7 +10,7 @@ public:
     explicit Table(QWidget *parent = nullptr);
 
 signals:
-
+    void needToSend(const QString &command);
 };
 
 #endif // TABLE_H

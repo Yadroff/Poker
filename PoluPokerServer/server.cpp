@@ -12,9 +12,9 @@ Server::Server(QWidget *parent)
     buttonShutDown_->setIcon(buttonIcon);
     buttonShutDown_->setIconSize(pixmap.rect().size());
     buttonShutDown_->setFixedSize(pixmap.rect().size());
-    tcpServer_ = new QTcpServer;
+    tcpServer_ = new QTcpServer(this);
     connect(tcpServer_, SIGNAL(newConnection()), this, SLOT(newUser()));
-    if (!tcpServer_->listen(QHostAddress::LocalHost, SERVER_PORT)){
+    if (!tcpServer_->listen(QHostAddress::Any, SERVER_PORT)){
         perror("Server Listen");
     } else{
         isListen_ = true;
@@ -22,13 +22,9 @@ Server::Server(QWidget *parent)
     }
     connect(buttonShutDown_, SIGNAL(clicked()), this, SLOT(shutdownServer()));
     dataBase_ = QSqlDatabase::addDatabase("QSQLITE");
-    dataBase_.setHostName("localhost");
-    dataBase_.setUserName("root");
-    dataBase_.setPassword("");
     dataBase_.setDatabaseName(DATA_BASE_PATH);
     if (dataBase_.open()){
         std::cout << "OPERATION: OPEN DATA BASE: SUCCESS" << std::endl;
-        this->addInDataBase("Yadroff", "abc");
     } else{
         std::cout << "OPEARTION: OPEN DATA BASE: FAIL" << std::endl;
     }
@@ -48,22 +44,60 @@ QByteArray Server::tables()
     return toSend;
 }
 
-void Server::addInDataBase(const QString &username, const QString &password)
+QString Server::addInDataBase(const QString &username, const QString &password)
 {
+    QString answer;
     QSqlQuery qry;
     bool ok = qry.prepare("INSERT INTO Users (username, password) "
                           "VALUES (:username, :password)");
-    if (!ok) std::cout << qry.lastError().text().toStdString() << std::endl;
-    std::cout << (ok == true) << std::endl;
+    if (!ok){
+         answer = "REGIST " + qry.lastError().text();
+         std::cout << "OPERATION: REGIST" << username.toStdString() + " " + password.toStdString() + " " << answer.toStdString() << std::endl;
+         return answer;
+    }
     qry.bindValue(":username", username);
     qry.bindValue(":password", password);
 
     if (qry.exec()){
-        std::cout << "OPERATION: ADD USER: SUCCESS" << std::endl;
+        answer = "REGIST SUCCESS";
     } else{
-        std::cout << "OPERATION: ADD USER: FAIL" << std::endl;
-        std::cout << qry.lastError().text().toStdString() << std::endl;
+        answer = "REGIST " + qry.lastError().text();
     }
+    std::cout << "OPEARTION: REGIST " << username.toStdString() + " " + password.toStdString() + " " << answer.toStdString() << std::endl;
+    return answer;
+}
+
+QString Server::checkInDataBase(const QString &username, const QString &password, const int &id)
+{
+    QString answer;
+    foreach(auto &j, players_.keys()){
+        if (players_[j] == username){
+            answer = "LOGIN ALREADY LOGGED IN";
+            return answer;
+        }
+    }
+    QSqlQuery qry;
+    bool ok = qry.prepare("SELECT * FROM Users WHERE username = :username AND password = :password");
+    if (!ok){
+         answer = "LOGIN " + qry.lastError().text();
+         std::cout <<"OPEARTION: LOGIN: " << username.toStdString() << " " << password.toStdString() << " " << answer.toStdString() << std::endl;
+         return answer;
+    }
+    qry.bindValue(":username", username);
+    qry.bindValue(":password", password);
+    if (!qry.exec()){
+        answer = "LOGIN " + qry.lastError().text();
+        std::cout << answer.toStdString() << std::endl;
+        return answer;
+    }
+    if (qry.next()){
+        answer = "LOGIN SUCCESS";
+        players_[clients_[id]] = username;
+    } else{
+        answer = "LOGIN FAIL";
+    }
+    std::cout << "OPERATION: LOGIN: " << username.toStdString() +" " << password.toStdString() + " " << answer.toStdString() << std::endl;
+    return answer;
 }
 
 void Server::shutdownServer()
@@ -89,14 +123,33 @@ void Server::readData()
             QByteArray readBuff = clients_[i]->readAll();
             std::cout <<"OPEARTION: RECIVE MESSAGE: " << QString(readBuff).toStdString() << std::endl;
             QVector<QString> commands = QString(readBuff).split(" ").toVector();
+            if (commands.isEmpty()){
+                continue;
+            }
             QString command = commands[0];
             QByteArray toSend;
-            if (command == "init"){
+            if (command == "init"){ // INIT MENU
                 std::cout << "STATE: IN INIT" << std::endl;
                 toSend.append("TABLES ");
-                players_[i] = commands[1];
+                players_[clients_[i]] = commands[1];
                 toSend.append(this->tables());
                 toSend.append("TEST FROM SERVER TO CLIENT");
+            } else if (command == "LOGIN"){ // LOGIN
+                if (commands.size() != 3){
+                    std::cout << "LOGIN: WRONG FORMAT: SIZE";
+                    toSend = "LOGIN WRONG FORMAT";
+                } else{
+                    QString login = commands[1];
+                    toSend = checkInDataBase(commands[1], commands[2], i).toUtf8();
+                }
+
+            } else if (command == "REGIST"){ // REGISTRATION
+                if (commands.size() != 3){
+                    std::cout << "REGIST: WRONG FORMAT: SIZE" << std::endl;
+                    toSend = "REGIST WRONG FORMT";
+                } else{
+                    toSend = addInDataBase(commands[1], commands[2]).toUtf8();
+                }
             }
             if (!toSend.isEmpty()){
                 clients_[i]->write(toSend);
@@ -104,6 +157,25 @@ void Server::readData()
             }
         }
     }
+}
+
+void Server::disconnectUser()
+{
+    QTcpSocket* client = qobject_cast<QTcpSocket*>(sender());
+    int id = -1;
+       if(client)
+       {
+           for (auto it = clients_.begin(); it != clients_.end(); ++it){
+               if (it.value() == client){
+                   id = it.key();
+                   clients_.erase(it);
+                   break;
+               }
+           }
+           players_.remove(client);
+           std::cout << "OPEARTION: DISCONNECT: " << id << std::endl;
+           client->deleteLater();
+       }
 }
 
 void Server::newUser()
@@ -115,6 +187,7 @@ void Server::newUser()
             int id = clientSocket->socketDescriptor();
             clients_[id] = clientSocket;
             connect(clientSocket, SIGNAL(readyRead()), this, SLOT(readData()));
+            connect(clientSocket, SIGNAL(disconnected()), this, SLOT(disconnectUser()));
         }
     }
 }
