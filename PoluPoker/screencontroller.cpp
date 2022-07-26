@@ -1,9 +1,12 @@
 #include "screencontroller.h"
 #include <QHostAddress>
+#include <QSound>
 
 ScreenController::ScreenController(QObject *parent):
     QObject(parent)
 {
+    mediaPlayer_ = new QMediaPlayer;
+    mediaPlayer_->setMedia(QUrl::fromLocalFile("/home/Yadroff/QT/Poker/PoluPoker/sounds/intro.mp3"));
     socket_ = new QTcpSocket(this);
     socket_->connectToHost(QHostAddress::LocalHost, SERVER_PORT);
     if (!socket_->waitForConnected()){
@@ -32,6 +35,7 @@ void ScreenController::parseLogin(const QVector<QString> &commands)
     } else{
         if (commands[1] == "SUCCESS"){
             this->menu_ = new MainWindow;
+            mediaPlayer_->play();
             this->auth_->close();
             this->menu_->show();
         } else{
@@ -52,6 +56,7 @@ void ScreenController::parseRegist(const QVector<QString> &commands)
     } else{
         if (commands[1] == "SUCCESS"){
             this->menu_ = new MainWindow;
+            mediaPlayer_->play();
             this->auth_->close();
             this->menu_->show();
         } else{
