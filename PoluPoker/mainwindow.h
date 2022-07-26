@@ -13,7 +13,7 @@ class MainWindow : public QWidget
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    QStringList tables_;
+    QStringList tables;
 
 signals:
     void createdTable(const QString &tableName);

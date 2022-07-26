@@ -1,23 +1,19 @@
 #include "screencontroller.h"
 #include <QHostAddress>
 
-ScreenController::ScreenController(QWidget *parent):
-    QWidget(parent)
+ScreenController::ScreenController(QObject *parent):
+    QObject(parent)
 {
-    this->setWindowState(Qt::WindowMaximized);
     menu_ = new MainWindow();
     socket_ = new QTcpSocket(this);
     socket_->connectToHost(QHostAddress::LocalHost, SERVER_PORT);
     if (!socket_->waitForConnected()){
         std::cout << "Can not to connect: " << socket_->errorString().toStdString() << std::endl;
-        this->close();
+        return;
     }
-    std::cout << "Connect to server" << std::endl;
-    QString string = "Hello, World!\n";
-    socket_->write(string.toUtf8());
-    menu_->show();
-    connect(menu_, SIGNAL(createdTable(const QString &)), this, SLOT(createTable(const QString&)));
     connect(socket_, SIGNAL(readyRead()), this, SLOT(ReadingData()));
+    this->auth_ = new Authentication;
+    this->auth_->show();
 }
 
 ScreenController::~ScreenController()
@@ -40,5 +36,12 @@ void ScreenController::createTable(const QString &string)
 
 void ScreenController::ReadingData()
 {
-
+    QByteArray data = socket_->readAll();
+    QVector<QString> comands = QString(data).split(" ").toVector();
+    QString command = comands.first();
+    if (command == "TABLES"){
+        for (int i = 1; i < comands.size();++i){
+            this->menu_->tables.append(comands[i]);
+        }
+    }
 }

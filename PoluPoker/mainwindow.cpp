@@ -24,6 +24,7 @@ void MainWindow::setupUI()
     auto *layout = new QVBoxLayout();
     layout->setAlignment( Qt::AlignCenter);
     layout->setSpacing(20);
+
     //create Table
     buttonCreateTable_ = new Button("Create table button", "Create Table");
     layout->addWidget(buttonCreateTable_);
@@ -31,6 +32,7 @@ void MainWindow::setupUI()
     buttonCancelCreate_ = new Button("Cancel create button", "Cancel");
     lineCreateTable_ = new QLineEdit();
     lineCreateTable_->setMaximumWidth(200);
+    lineCreateTable_->setPlaceholderText("Write table name");
     auto *createLayout = new QHBoxLayout();
     createLayout->addWidget(lineCreateTable_);
     createLayout->addWidget(buttonCreate_);
@@ -123,7 +125,7 @@ void MainWindow::createClicked()
        return;
     }
     QString tableName = lineCreateTable_->text();
-    if (tables_.contains(tableName)){
+    if (tables.contains(tableName)){
         auto reply = QMessageBox::warning(this, "Create Error", "Table with this name already exists");
         if (reply == QMessageBox::Yes){
             QApplication::quit();
@@ -131,7 +133,7 @@ void MainWindow::createClicked()
         lineCreateTable_->clear();
         return;
     }
-    tables_.append(tableName);
+    tables.append(tableName);
     boxTables_->addItem(tableName);
     lineCreateTable_->clear();
     this->cancelCreate();
@@ -151,7 +153,7 @@ void MainWindow::cancelCreate()
 void MainWindow::connectTable()
 {
     buttonConnectTable_->hide();
-    boxTables_->addItems(tables_);
+    boxTables_->addItems(tables);
     boxTables_->show();
     buttonConnect_->show();
     buttonCancelConnect_->show();

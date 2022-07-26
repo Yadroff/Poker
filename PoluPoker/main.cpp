@@ -1,10 +1,9 @@
-#include "screencontroller.h"
-
 #include <QApplication>
+#include "screencontroller.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    ScreenController controller;
+    ScreenController scr;
     return a.exec();
 }
