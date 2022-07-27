@@ -11,6 +11,7 @@ CONFIG += c++17 console
 SOURCES += \
     authentication.cpp \
     button.cpp \
+    card.cpp \
     main.cpp \
     mainwindow.cpp \
     screencontroller.cpp \
@@ -19,6 +20,7 @@ SOURCES += \
 HEADERS += \
     authentication.h \
     button.h \
+    card.h \
     mainwindow.h \
     screencontroller.h \
     table.h
@@ -30,7 +32,9 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 FORMS += \
-    authentication.ui
+    authentication.ui \
+    table.ui
 
 RESOURCES += \
-    images.qrc
+    images.qrc \
+    sounds.qrc

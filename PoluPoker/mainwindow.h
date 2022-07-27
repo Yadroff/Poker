@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QtWidgets>
+#include <QMediaPlayer>
 #include "dialogwindow.h"
 #include "button.h"
 #include <iostream>
@@ -48,5 +49,7 @@ private:
     Button *exit_;
 
     DialogWindow *createTableWindow_;
+    QMediaPlayer *mediaPlayer_;
+
 };
 #endif // MAINWINDOW_H

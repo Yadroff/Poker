@@ -16,6 +16,10 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::setupUI()
 {
+    mediaPlayer_ = new QMediaPlayer;
+    mediaPlayer_->setMedia(QUrl("qrc:/sounds/intro.mp3"));
+    mediaPlayer_->setVolume(10);
+    mediaPlayer_->play();
     QPalette palette;
     palette.setBrush(this->backgroundRole(), QBrush(QPixmap(":/images/background.jpg")));
     this->setPalette(palette);

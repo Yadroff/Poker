@@ -2,15 +2,22 @@
 #define TABLE_H
 
 #include <QWidget>
+#include "card.h"
+
+namespace Ui {
+class Table;
+}
 
 class Table : public QWidget
 {
     Q_OBJECT
+
 public:
     explicit Table(QWidget *parent = nullptr);
+    ~Table();
 
-signals:
-    void needToSend(const QString &command);
+private:
+    Ui::Table *ui;
 };
 
 #endif // TABLE_H

@@ -22,7 +22,6 @@ private:
     MainWindow *menu_ = nullptr;
     Table *table_ = nullptr;
     Authentication *auth_ = nullptr;
-    QMediaPlayer *mediaPlayer_;
 
     void parseLogin(const QVector<QString> &commands);
     void parseRegist(const QVector<QString> &commands);
