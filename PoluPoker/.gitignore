@@ -1,5 +1,6 @@
 .qrc_clangd/*
 .qmake.stash
+qrc_qmake*
 *.o
 moc_*
 Makefile
