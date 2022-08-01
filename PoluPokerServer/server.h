@@ -22,7 +22,7 @@ public:
     ~Server();
 private:
     QTcpServer *tcpServer_; // сервер
-    QMap<int, QTcpSocket*> clients_; // мапа [client, socket]
+    QMap<qint64, QTcpSocket*> clients_; // мапа [client, socket]
     bool isListen_ = false; // статус
     QPushButton *buttonShutDown_; // кнопка выключения
     QMap<QTcpSocket*, QString> players_; // ники игроков
@@ -31,7 +31,9 @@ private:
 
     QByteArray tables(); // отправить столы
     QString addInDataBase(const QString &username, const QString &password); // добавить пользователя в БД
-    QString checkInDataBase(const QString &username, const QString &password, const int &id); // проверить пользователя в БД
+    QString checkInDataBase(const QString &username, const QString &password, const qint64 &id); // проверить пользователя в БД
+    QString createTable(const QString &name);
+    QString connectToTable(const qint64 &user);
 private slots:
     void newUser(); // новый пользователь
     void shutdownServer(); // выключение сервера

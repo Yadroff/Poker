@@ -6,6 +6,7 @@
 Server::Server(QWidget *parent)
     : QWidget(parent)
 {
+    Table table("Abc");
     buttonShutDown_ = new QPushButton(this);
     QPixmap pixmap(":/Shutdown_button.jpg");
     QIcon buttonIcon(pixmap);
@@ -67,7 +68,7 @@ QString Server::addInDataBase(const QString &username, const QString &password)
     return answer;
 }
 
-QString Server::checkInDataBase(const QString &username, const QString &password, const int &id)
+QString Server::checkInDataBase(const QString &username, const QString &password, const qint64 &id)
 {
     QString answer;
     foreach(auto &j, players_.keys()){
@@ -100,12 +101,24 @@ QString Server::checkInDataBase(const QString &username, const QString &password
     return answer;
 }
 
+QString Server::createTable(const QString &name)
+{
+    tables_.push_back(new Table(name));
+    QString answer = "CREATE SUCCESS";
+    return answer;
+}
+
+QString Server::connectToTable(const qint64 &user)
+{
+
+}
+
 void Server::shutdownServer()
 {
     if (!isListen_){
         return;
     }
-    foreach(int i, clients_.keys()){
+    foreach(qint64 i, clients_.keys()){
         clients_[i]->close();
         clients_.remove(i);
         std::cout << "OPEARTION: REMOVE: " << i << " CLIENT" << std::endl;
@@ -118,7 +131,7 @@ void Server::shutdownServer()
 
 void Server::readData()
 {
-    foreach (int i, clients_.keys()){
+    foreach (qint64 i, clients_.keys()){
         if (clients_[i]->bytesAvailable()){
             QByteArray readBuff = clients_[i]->readAll();
             std::cout <<"OPEARTION: RECIVE MESSAGE: " << QString(readBuff).toStdString() << std::endl;
@@ -150,6 +163,14 @@ void Server::readData()
                 } else{
                     toSend = addInDataBase(commands[1], commands[2]).toUtf8();
                 }
+            } else if (command == "CREATE"){ // CREATE TABLE
+                if (commands.size() != 2){
+                    std::cout << "CREATE: WRONG FORMAT: SIZE";
+                    toSend = "CREATE WRONG FORMAT";
+                } else{
+                    toSend = createTable(commands[1]).toUtf8();
+                    connectToTable(i);
+                }
             }
             if (!toSend.isEmpty()){
                 clients_[i]->write(toSend);
@@ -162,7 +183,7 @@ void Server::readData()
 void Server::disconnectUser()
 {
     QTcpSocket* client = qobject_cast<QTcpSocket*>(sender());
-    int id = -1;
+    qint64 id = -1;
        if(client)
        {
            for (auto it = clients_.begin(); it != clients_.end(); ++it){
@@ -184,7 +205,7 @@ void Server::newUser()
         while (tcpServer_->hasPendingConnections()){
             std::cout << "OPEARTION: NEW CONNECTION" << std::endl;
             auto *clientSocket = tcpServer_->nextPendingConnection();
-            int id = clientSocket->socketDescriptor();
+            qint64 id = clientSocket->socketDescriptor();
             clients_[id] = clientSocket;
             connect(clientSocket, SIGNAL(readyRead()), this, SLOT(readData()));
             connect(clientSocket, SIGNAL(disconnected()), this, SLOT(disconnectUser()));

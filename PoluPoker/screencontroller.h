@@ -9,7 +9,6 @@
 #include "authentication.h"
 #include "table.h"
 
-const quint16 SERVER_PORT = 7777;
 
 class ScreenController: public QObject
 {
@@ -23,11 +22,11 @@ private:
     Table *table_ = nullptr;
     Authentication *auth_ = nullptr;
 
+    void getHost(QString &ip, quint16 &port);
     void parseLogin(const QVector<QString> &commands);
     void parseRegist(const QVector<QString> &commands);
+    void createMenu();
 private slots:
-    void connectToTable(const QString &string);
-    void createTable(const QString &string);
     void readingData();
     void sendToServer(const QString &command);
 };

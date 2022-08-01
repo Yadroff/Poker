@@ -6,7 +6,10 @@ ScreenController::ScreenController(QObject *parent):
     QObject(parent)
 {
     socket_ = new QTcpSocket(this);
-    socket_->connectToHost(QHostAddress::LocalHost, SERVER_PORT);
+    QString ip;
+    quint16 port;
+    getHost(ip, port);
+    socket_->connectToHost(ip, port);
     if (!socket_->waitForConnected()){
         std::cout << "Can not to connect: " << socket_->errorString().toStdString() << std::endl;
         return;
@@ -22,6 +25,23 @@ ScreenController::~ScreenController()
 
 }
 
+void ScreenController::getHost(QString &ip, quint16 &port)
+{
+    QFile file("host.config");
+    if (!file.open(QIODevice::ReadOnly)){
+        perror("Can not open config file");
+    }
+    QTextStream input(&file);
+    QString info = input.readLine();
+
+    //invalid format.
+    if(info.split(':').size() != 2) return;
+
+    ip = info.split(':')[0];
+    port = QString(info.split(':')[1]).toUInt();
+}
+
+
 void ScreenController::parseLogin(const QVector<QString> &commands)
 {
     if (commands.size() != 2){
@@ -32,9 +52,8 @@ void ScreenController::parseLogin(const QVector<QString> &commands)
         QMessageBox::critical(this->auth_, "LOGIN FATAL", string);
     } else{
         if (commands[1] == "SUCCESS"){
-            this->menu_ = new MainWindow;
-            this->auth_->close();
-            this->menu_->show();
+            createMenu();
+
         } else{
             QMessageBox::information(this->auth_, "LOGIN ERROR", "Wrong login or password");
         }
@@ -52,26 +71,19 @@ void ScreenController::parseRegist(const QVector<QString> &commands)
         QMessageBox::critical(this->auth_, "LOGIN FATAL", string);
     } else{
         if (commands[1] == "SUCCESS"){
-            this->menu_ = new MainWindow;
-            this->auth_->close();
-            this->menu_->show();
+            createMenu();
         } else{
             QMessageBox::information(this->auth_, "LOGIN ERROR", "Already exists");
         }
     }
 }
 
-void ScreenController::connectToTable(const QString &string)
+void ScreenController::createMenu()
 {
-//    QString command = "Connect" + string;
-//    socket_->writeDatagram(command.toUtf8(), QHostAddress::LocalHost, SERVER_PORT);
-//    menu_->hide();
-//    table_ = new Table;
-//    table_->show();
-}
-
-void ScreenController::createTable(const QString &string)
-{
+    this->menu_ = new MainWindow;
+    this->auth_->close();
+    this->menu_->show();
+    connect(menu_, SIGNAL(needToSend(const QString &)), this, SLOT(sendToServer(const QString &)));
 
 }
 
