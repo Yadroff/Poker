@@ -4,3 +4,4 @@ qrc_qmake*
 *.o
 moc_*
 Makefile
+qrc_*
