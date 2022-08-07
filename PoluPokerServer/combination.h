@@ -19,8 +19,6 @@ enum class Combinations {
     RoyalFlush
 };
 
-const quint64 NOMINALS_NUMBER = 13;
-
 class Combination : public QObject
 {
     Q_OBJECT
@@ -33,14 +31,29 @@ public:
     void updateCombination();
     friend bool operator<(const Combination &first, const Combination &second);
     friend bool operator==(const Combination &first, const Combination &second);
+    friend std::ostream &operator<<(std::ostream &os, const Combination &comb);
 signals:
 private:
-    bool checkFlush(const QMap<Suit, quint64> &map);
-    QVector<QPair<Nominal, quint64>> checkStraight(const QMap<Nominal, quint64> &nominals);
-    bool checkFlushStraight(const quint64 &start, const QVector<Card> &cards_);
+    QVector<Nominal> checkStraightFlush(const QVector<Card> &cards, const QVector<Nominal> &straights, const QVector<Suit> &flushs); // вектор по причине снизу + лень переделывать
+    QVector<Nominal> checkFourOfAKind(const QVector<quint64> &nominals); // возвращается вектор по причине: если нет каре - то хз что возвращать
+    QVector<QPair<Nominal, Nominal>> checkFullHouse(const QVector<Nominal> &sets, const QVector<Nominal> &pairs); // вектор по той же причине
+    QVector<Suit> checkFlush(const QVector<quint64> &suits);
+    QVector<Nominal> checkStraight(const QVector<quint64> &nominals);
+    QVector<Nominal> checkPairs(const QVector<quint64> &nominals);
+    QVector<Nominal> checkSets(const QVector<quint64> &nominals);
+    void fillStraightFlush();
+    void fillFour();
+    void fillFullHouse();
+    void fillFlush();
+    void fillStraight();
+    void fillSet(const QVector<Nominal> &sets);
+    void fillTwoPairs(const QVector<Nominal> &pairs);
+    void fillPair(const QVector<Nominal> &pairs);
+    void fillHightCard();
+
     QVector<Card> cards_; // множество карт : <масть, номинал>
     QVector<Card> combinationCards_;
-    quint64 combination_;
+    Combinations combination_;
 };
 
 #endif // COMBINATION_H

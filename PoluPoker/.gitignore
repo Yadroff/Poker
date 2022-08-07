@@ -1,4 +1,4 @@
-.qrc_clangd/*
+.qrc_clangd/
 .qmake.stash
 qrc_qmake*
 *.o
