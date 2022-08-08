@@ -67,10 +67,17 @@ Card::Card(const Card &other)
     nominal_ = other.nominal_;
 }
 
+Card::Card()
+{
+    suit_ = Suit::Wrong;
+    nominal_ = Nominal::Wrong;
+}
+
 Card &Card::operator=(const Card &another)
 {
-    Card ans(another);
-    return ans;
+    this->suit_ = another.suit_;
+    this->nominal_ = another.nominal_;
+    return *this;
 }
 
 bool Card::operator!=(const Card &another)
@@ -80,7 +87,8 @@ bool Card::operator!=(const Card &another)
 
 bool operator<(const Card &lhs, const Card &rhs)
 {
-    return (lhs.nominal() == rhs.nominal()) ? lhs.suit() < rhs.suit() : lhs.nominal() < rhs.nominal();
+    bool ok = (lhs.nominal() == rhs.nominal()) ? lhs.suit() < rhs.suit() : lhs.nominal() < rhs.nominal();
+    return ok;
 }
 
 std::ostream &operator<<(std::ostream &os, const Card &card)

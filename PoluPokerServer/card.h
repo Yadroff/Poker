@@ -38,6 +38,7 @@ class Card : public QObject
 public:
     Card(const quint64 &suit, const quint64 &nominal, QObject *parent = nullptr); // конструктор
     Card(const Card &other);
+    Card();
 
     Card &operator=(const Card &another); // операторы
     bool operator!=(const Card &another);

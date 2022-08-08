@@ -5,3 +5,7 @@ qrc_qmake*
 moc_*
 Makefile
 qrc_*
+PoluPoker
+PoluPoker.pro.user
+qmake*
+.qtc_clangd/compile_commands.json

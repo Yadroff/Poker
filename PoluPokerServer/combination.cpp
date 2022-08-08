@@ -13,17 +13,18 @@ Combination::Combination(const Combination &another):
     cards_(another.cards_), combination_(another.combination_)
 {
     combinationCards_.reserve(COMBINATION_SIZE);
+    cards_.reserve(COMBINATION_SIZE + 2);
 }
 
 Combination::Combination(const Card &firstCard, const Card &secondCard, QObject *parent)
     : QObject{parent}
 {
+    cards_.reserve(COMBINATION_SIZE + 2);
+    combinationCards_.reserve(COMBINATION_SIZE);
     cards_.push_back(firstCard);
     cards_.push_back(secondCard);
-    combinationCards_.push_back(firstCard);
-    combinationCards_.push_back(secondCard);
-    combination_ = Combinations::HighCard;
-    combinationCards_.reserve(COMBINATION_SIZE);
+
+//    updateCombination();
 }
 
 void Combination::addCard(const Card &card)
@@ -32,7 +33,7 @@ void Combination::addCard(const Card &card)
 //    updateCombination();
 }
 
-void Combination::updateCombination() // не работает сортировка
+void Combination::updateCombination()
 {
 
     QVector<quint64> nominals(NOMINALS_NUMBER);
@@ -64,14 +65,14 @@ void Combination::updateCombination() // не работает сортиров�
     bool hasFlush = flushs.size() > 0;
     std::cout << "HAS STRAIGHTS: " << (quint32) hasStraights << " HAS FLUSH: " << (quint32) hasFlush << std::endl;
     bool hasStraightFlush = false;
-    QVector<Nominal> straightFlushs = checkStraightFlush(cards_, straights, flushs);
+    QVector<QPair<Nominal, Suit>> straightFlushs = checkStraightFlush(cards_, straights, flushs);
     hasStraightFlush = straightFlushs.size() > 0;
     std::cout << "HAS STRAIGHT FLUSH: " << (quint64) hasStraightFlush << std::endl;
 
     // попытаемся выбрать максимальную комбинацию
     if (hasStraightFlush){ // стрит флэш / флэш рояль
-        for (const auto &nominal: straightFlushs){
-            if (nominal == Nominal::Ten){
+        for (const auto &pair: straightFlushs){
+            if (pair.first == Nominal::Ten){
                 combination_ = Combinations::RoyalFlush;
                 break;
             }
@@ -109,6 +110,7 @@ void Combination::updateCombination() // не работает сортиров�
     std::cout << "COMBINATION: " << (quint64) combination_ << std::endl;
 
     // теперь составим комбинацию (во многом повторение прошлых действий, но что поделать...( )
+    combinationCards_.clear();
     switch (combination_){
     case Combinations::HighCard:{
         fillHightCard();
@@ -127,27 +129,27 @@ void Combination::updateCombination() // не работает сортиров�
         break;
     }
     case Combinations::Straight:{
-        fillStraight();
+        fillStraight(straights);
         break;
     }
     case Combinations::Flush:{
-        fillFlush();
+        fillFlush(flushs);
         break;
     }
     case Combinations::FullHouse:{
-        fillFullHouse();
+        fillFullHouse(fullHouse);
         break;
     }
     case Combinations::FourOfAKind:{
-        fillFour();
+        fillFour(kares);
         break;
     }
     case Combinations::StraightFlush:{
-        fillStraightFlush();
+        fillStraightFlush(straightFlushs);
         break;
     }
     case Combinations::RoyalFlush:{
-        fillStraightFlush();
+        fillStraightFlush(straightFlushs);
     }
     }
 }
@@ -170,7 +172,7 @@ QVector<Nominal> Combination::checkStraight(const QVector<quint64> &nominals)
     // в тупую пройдемся по всевозможным стартовым номиналам
     QVector<Nominal> straights;
     Card card(0, 0);
-    for (qint32 start = (qint32) Nominal::Two - 2; start < (qint32) Nominal::Ace - 2; ++start){
+    for (qint32 start = (qint32) Nominal::Two - 2; start <= (qint32) Nominal::Ace - 2; ++start){
         if (nominals[start] != 0 and (start <= (qint32) Nominal::Ten - 2 or start == (qint32) Nominal::Ace - 2)){
             qint32 next = (start == (qint32) Nominal::Ace - 2) ? (qint32) Nominal::Two - 2 : start + 1; // следующая карта в возможном стрите
             int lenght = 1; // длина текущей последовательности идущих подряд карт
@@ -215,34 +217,91 @@ QVector<Nominal> Combination::checkSets(const QVector<quint64> &nominals)
     return sets;
 }
 
-void Combination::fillStraightFlush()
+void Combination::fillStraightFlush(const QVector<QPair<Nominal, Suit>> &straightflush)
 {
-
+    Card card;
+    Nominal nominal = straightflush[0].first;
+    Suit suit = straightflush[0].second;
+    card.setSuit((quint64) suit);
+    for (int i = COMBINATION_SIZE - 1; i >= 0; --i){
+        card.setNominal((quint64) nominal + i);
+        combinationCards_.push_back(card);
+    }
 }
 
-void Combination::fillFour()
-{
-
+void Combination::fillFour(const QVector<Nominal> &kare)
+{   // каре может быть только одно
+    Nominal nominal = kare[0];
+    combinationCards_.append(QVector<Card>{Card(3, (quint64) nominal - 2), Card(2, (quint64) nominal - 2), Card(1, (quint64) nominal - 2), Card(0, (quint64) nominal - 2)});
+    for (int i = cards_.size() - 1; i >= 0; --i){
+        if (cards_[i].nominal() != nominal){
+            combinationCards_.push_back(cards_[i]);
+            break;
+        }
+    }
 }
 
-void Combination::fillFullHouse()
+void Combination::fillFullHouse(const QVector<QPair<Nominal, Nominal>> &fullHouse)
 {
-
+    combinationCards_.resize(COMBINATION_SIZE);
+    Nominal setNominal = fullHouse[0].first;
+    Nominal pairNominal = fullHouse[0].second;
+    int curSet = 0;
+    int curPair = 0;
+    std::cout << (int) setNominal << " " << (int) pairNominal << std::endl;
+    for (int i = cards_.size() - 1; i >= 0 and (curSet < 3 or curPair < 2); --i){
+        std::cout << "CUR INDEX: " << i << std::endl;
+        if (curSet < 3 and cards_[i].nominal() == setNominal){
+            std::cout << curSet << std::endl;
+            combinationCards_[curSet] = cards_[i];
+            ++curSet;
+        }
+        if (curPair < 2 and cards_[i].nominal() == pairNominal){
+            std::cout << "INDEX PAIR: " << 5 - curPair << std::endl;
+            combinationCards_[3 + curPair] = cards_[i];
+            ++curPair;
+        }
+    }
 }
 
-void Combination::fillFlush()
+void Combination::fillFlush(const QVector<Suit> &flushs)
 {
-
+    // если и есть флэш, то он только один
+    Suit suit = flushs[0];
+    int cur = COMBINATION_SIZE; // сколько осталось положить карт в комбинацию
+    for (int i = cards_.size() - 1; i >= 0 and cur > 0; --i){
+        if (cards_[i].suit() == suit){
+            --cur;
+            combinationCards_.push_back(cards_[i]);
+        }
+    }
 }
 
-void Combination::fillStraight()
+void Combination::fillStraight(const QVector<Nominal> &straights)
 {
-
+    Nominal maxNominal = Nominal::Wrong;
+    for (const auto &nom: straights){
+        if ((nom > maxNominal) or (maxNominal == Nominal::Ace)){
+            maxNominal = nom;
+        }
+    }
+    // нашли стартовый номинал, теперь составляем кобинацию
+    int cur = 4;
+    if (maxNominal == Nominal::Ace){
+        --cur;
+        maxNominal = Nominal::Two;
+        combinationCards_.push_back(cards_.last()); // если есть туз в руке => он последний 100% если несколько тузов => похер какой, ибо стрит
+    }
+    for (int i = cards_.size() - 1; i >= 0 and cur >= 0; --i){
+        if ((quint64) cards_[i].nominal() == (quint64) maxNominal + cur){
+            --cur;
+            combinationCards_.push_back(cards_[i]);
+        }
+    }
 }
 
 void Combination::fillSet(const QVector<Nominal> &sets)
 {
-    combinationCards_.clear();
     Nominal setNominal = *std::max_element(sets.begin(), sets.end());
     for (const auto &card: cards_){
         if (card.nominal() == setNominal){
@@ -261,7 +320,6 @@ void Combination::fillSet(const QVector<Nominal> &sets)
 
 void Combination::fillTwoPairs(const QVector<Nominal> &pairs)
 {
-    combinationCards_.clear();
     //сначала старшую пару
     Nominal firstNominal = pairs[0], secondNominal = pairs[1];
     if (firstNominal < secondNominal){
@@ -287,7 +345,6 @@ void Combination::fillPair(const QVector<Nominal> &pairs)
 {
     // добавляем сначала пару для удобства сравнения
     Nominal pairNominal = pairs[0]; // опасное место
-    combinationCards_.clear();
     for (const auto &card: cards_){
         if (card.nominal() == pairNominal){
             combinationCards_.push_back(card);
@@ -305,21 +362,26 @@ void Combination::fillPair(const QVector<Nominal> &pairs)
 
 void Combination::fillHightCard()
 {
-    combinationCards_.clear();
     if (cards_.size() <= (int) COMBINATION_SIZE){
         combinationCards_ = cards_;
         return;
     }
-    for (quint64 i = 0; i < COMBINATION_SIZE; ++i){
-        combinationCards_[i] = cards_[cards_.size() - 1 - i]; // составляем комбинацию в порядке убывания
+    int cur = 5;
+    for (int i = cards_.size() - 1; i >= 0 and cur > 0; --i, --cur){ // тупо перетаскиваем первые 5 максимальных элементов
+        combinationCards_.push_back(cards_[i]);
     }
 }
 
-
-QVector<Nominal> Combination::checkStraightFlush(const QVector<Card> &cards, const QVector<Nominal> &straights, const QVector<Suit> &flushs) // робит
+QVector<QPair<Nominal, Suit>> Combination::checkStraightFlush(const QVector<Card> &cards, const QVector<Nominal> &straights, const QVector<Suit> &flushs) // робит
 {
-    QVector<Nominal> straightFlushs;
+//    QVector<Nominal> straightFlushs;
+    QVector<QPair<Nominal, Suit> > maxStraightFlush;
+    maxStraightFlush.reserve(1);
+    Nominal maxNominal = Nominal::Wrong;
     for (auto &nominal: straights){
+        if (nominal < maxNominal){
+            continue;
+        }
         quint64 nom = (quint64) nominal;
         for (int i = 0; i < cards.size(); ++i){
             if ((quint64) cards[i].nominal() == nom){
@@ -343,13 +405,19 @@ QVector<Nominal> Combination::checkStraightFlush(const QVector<Card> &cards, con
                         isStraightFlush = isStraightFlush and ok;
                     }
                     if (isStraightFlush){
-                        straightFlushs.push_back(nominal);
+                        // straightFlushs.push_back(nominal);
+                        auto pair = QPair(nominal, suit);
+                        if (maxStraightFlush.size() != 0){
+                            maxStraightFlush[0] = pair;
+                        } else{
+                            maxStraightFlush.push_back(pair);
+                        }
                     }
                 }
             }
         }
     }
-    return straightFlushs;
+    return maxStraightFlush;
 }
 
 QVector<Nominal> Combination::checkFourOfAKind(const QVector<quint64> &nominals) // робит
@@ -358,7 +426,7 @@ QVector<Nominal> Combination::checkFourOfAKind(const QVector<quint64> &nominals)
     quint64 ansNominal = 0;
     for (quint64 i = 0; i < (quint64) nominals.size(); ++i){
         if (nominals[i] == SUITS_NUMBER){
-            ansNominal = qMax(ansNominal, i + 2);
+            ansNominal = qMax(ansNominal, i);
         }
     }
     if (ansNominal != 0){
