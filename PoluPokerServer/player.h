@@ -7,14 +7,29 @@
 
 const quint64 DEFAULT_COINS = 10000;
 
-class Player : public QObject
-{
-    Q_OBJECT
+class Player : public QObject {
+Q_OBJECT
 public:
-    explicit Player(const qint64 &id, const quint64 &seat, QObject *parent = nullptr);
+    Player();
+
+    Player(const QString &name, const qint64 &id, const quint64 &seat, QObject *parent = nullptr);
+
     Player(const Player &another);
-signals:
+
+    QString name() const;
+
+    Combination combination() const;
+
+    void addCard(const Card &card);
+
+    Player &operator=(const Player &player);
+
+    friend std::ostream &operator<<(std::ostream &os, const Player &player);
+
+    friend bool operator<(const Player &left, const Player &right);
+
 private:
+    QString name_;
     qint64 id_;
     quint64 coins_;
     quint64 seat_;

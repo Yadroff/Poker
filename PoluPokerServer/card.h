@@ -4,7 +4,7 @@
 #include <QObject>
 #include <iostream>
 
-enum class Suit{
+enum class Suit {
     Diamonds = 0,
     Hearts,
     Clubs,
@@ -12,7 +12,7 @@ enum class Suit{
     Wrong = -1
 };
 
-enum class Nominal{
+enum class Nominal {
     Two = 2,
     Three,
     Four,
@@ -32,24 +32,28 @@ enum class Nominal{
 const quint32 SUITS_NUMBER = 4;
 const quint32 NOMINALS_NUMBER = 13;
 
-class Card : public QObject
-{
-    Q_OBJECT
+class Card : public QObject {
+Q_OBJECT
 public:
     Card(const quint64 &suit, const quint64 &nominal, QObject *parent = nullptr); // конструктор
     Card(const Card &other);
+
     Card();
 
     Card &operator=(const Card &another); // операторы
     bool operator!=(const Card &another);
+
     friend bool operator<(const Card &lhs, const Card &rhs);
+
     friend std::ostream &operator<<(std::ostream &os, const Card &card);
 
     Suit suit() const; // геттеры
     Nominal nominal() const;
 
     void setSuit(const quint64 &suit);
+
     void setNominal(const quint64 &nominal);
+
 private:
     Suit suit_;
     Nominal nominal_;

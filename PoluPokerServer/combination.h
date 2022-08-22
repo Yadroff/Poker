@@ -17,39 +17,67 @@ enum class Combinations {
     FullHouse,
     FourOfAKind,
     StraightFlush,
-    RoyalFlush
+    RoyalFlush,
+    Error = -1
 };
 
-class Combination : public QObject
-{
-    Q_OBJECT
+class Combination : public QObject {
+Q_OBJECT
 public:
     explicit Combination(QObject *parent = nullptr);
-    explicit Combination(const Combination &another);
+
+    Combination(const Combination &another);
+
     explicit Combination(const Card &firstCard, const Card &secondCard, QObject *parent = nullptr);
+
     void addCard(const Card &card);
-    void getCombination();
+
+    Combinations combination() const;
+
     void updateCombination();
-    friend bool operator<(const Combination &first, const Combination &second);
-    friend bool operator==(const Combination &first, const Combination &second);
+
+    friend bool operator<(const Combination &left, const Combination &right);
+
+    friend bool operator>(const Combination &left, const Combination &right);
+
+    friend bool operator==(const Combination &left, const Combination &right);
+
+    Combination &operator=(const Combination &another);
+
     friend std::ostream &operator<<(std::ostream &os, const Combination &comb);
+
 signals:
 private:
-    QVector<QPair<Nominal, Suit>> checkStraightFlush(const QVector<Card> &cards, const QVector<Nominal> &straights, const QVector<Suit> &flushs); // вектор по причине снизу + лень переделывать
-    QVector<Nominal> checkFourOfAKind(const QVector<quint64> &nominals); // возвращается вектор по причине: если нет каре - то хз что возвращать
-    QVector<QPair<Nominal, Nominal>> checkFullHouse(const QVector<Nominal> &sets, const QVector<Nominal> &pairs); // вектор по той же причине
+    QVector<QPair<Nominal, Suit>> checkStraightFlush(const QVector<Card> &cards, const QVector<Nominal> &straights,
+                                                     const QVector<Suit> &flushs); // вектор по причине снизу + лень переделывать
+    QVector<Nominal> checkFourOfAKind(
+            const QVector<quint64> &nominals); // возвращается вектор по причине: если нет каре - то хз что возвращать
+    QVector<QPair<Nominal, Nominal>>
+    checkFullHouse(const QVector<Nominal> &sets, const QVector<Nominal> &pairs); // вектор по той же причине
     QVector<Suit> checkFlush(const QVector<quint64> &suits);
+
     QVector<Nominal> checkStraight(const QVector<quint64> &nominals);
+
     QVector<Nominal> checkPairs(const QVector<quint64> &nominals);
+
     QVector<Nominal> checkSets(const QVector<quint64> &nominals);
+
     void fillStraightFlush(const QVector<QPair<Nominal, Suit>> &straightflush);
+
     void fillFour(const QVector<Nominal> &kare);
+
     void fillFullHouse(const QVector<QPair<Nominal, Nominal>> &fullHouse);
+
     void fillFlush(const QVector<Suit> &flushs);
+
     void fillStraight(const QVector<Nominal> &straights);
+
     void fillSet(const QVector<Nominal> &sets);
+
     void fillTwoPairs(const QVector<Nominal> &pairs);
+
     void fillPair(const QVector<Nominal> &pairs);
+
     void fillHightCard();
 
     QVector<Card> cards_; // множество карт : <масть, номинал>
