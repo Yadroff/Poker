@@ -78,7 +78,7 @@ private:
 
     void fillPair(const QVector<Nominal> &pairs);
 
-    void fillHightCard();
+    void fillHighCard();
 
     QVector<Card> cards_; // множество карт : <масть, номинал>
     QVector<Card> combinationCards_;

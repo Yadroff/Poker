@@ -118,7 +118,7 @@ void Combination::updateCombination() {
     combinationCards_.clear();
     switch (combination_) {
         case Combinations::HighCard: {
-            fillHightCard();
+            fillHighCard();
             break;
         }
         case Combinations::Pair: {
@@ -426,7 +426,7 @@ void Combination::fillPair(const QVector<Nominal> &pairs) {
 /*!
  * \brief заполняет комбинациию старшей карты
  */
-void Combination::fillHightCard() {
+void Combination::fillHighCard() {
     if (cards_.size() <= (int) COMBINATION_SIZE) {
         combinationCards_ = cards_;
         return;

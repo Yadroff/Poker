@@ -104,13 +104,27 @@ QString Server::checkInDataBase(const QString &username, const QString &password
 }
 
 QString Server::createTable(const QString &name) {
-    tables_.push_back(new Table(name, 5));
-    QString answer = "CREATE SUCCESS";
+    QString answer;
+    if (tables_.contains(name)) {
+        answer = "CREATE_TABLE: EXISTS";
+        std::cout << "CREATE TABLE ERROR: ALREADY EXISTS";
+    } else {
+        tables_.insert(name, new Table(name));
+        answer = "CREATE_TABLE: SUCCESS";
+
+    }
     return answer;
 }
 
-QString Server::connectToTable(const qint64 &user) {
-
+QString Server::connectToTable(const QString &name, const qint64 &user) {
+    if (tables_.contains(name)) {
+        if (tables_[name]->addPlayer(players_[clients_[user]], user, 0)) {
+            return {"ADD_PLAYER: SUCCESS"};
+        } else {
+            return {"ADD_PLAYER: ERROR: ALREADY EXISTS"};
+        }
+    }
+    return {"ADD_PLAYER: ERROR: TABLE DOESN'T EXISTS"};
 }
 
 void Server::shutdownServer() {
@@ -120,7 +134,7 @@ void Server::shutdownServer() {
             foreach(qint64 i, clients_.keys()) {
             clients_[i]->close();
             clients_.remove(i);
-            std::cout << "OPEARTION: REMOVE: " << i << " CLIENT" << std::endl;
+            std::cout << "OPERATION: REMOVE: " << i << " CLIENT" << std::endl;
         }
     tcpServer_->close();
     std::cout << "STATE: SERVER CLOSED" << std::endl;
@@ -166,7 +180,7 @@ void Server::readData() {
                         toSend = "CREATE WRONG FORMAT";
                     } else {
                         toSend = createTable(commands[1]).toUtf8();
-                        connectToTable(i);
+                        connectToTable(commands[1], i);
                     }
                 }
                 if (!toSend.isEmpty()) {
@@ -189,7 +203,7 @@ void Server::disconnectUser() {
             }
         }
         players_.remove(client);
-        std::cout << "OPEARTION: DISCONNECT: " << id << std::endl;
+        std::cout << "OPERATION: DISCONNECT: " << id << std::endl;
         client->deleteLater();
     }
 }
@@ -197,7 +211,7 @@ void Server::disconnectUser() {
 void Server::newUser() {
     if (isListen_) {
         while (tcpServer_->hasPendingConnections()) {
-            std::cout << "OPEARTION: NEW CONNECTION" << std::endl;
+            std::cout << "OPERATION: NEW CONNECTION" << std::endl;
             auto *clientSocket = tcpServer_->nextPendingConnection();
             qint64 id = clientSocket->socketDescriptor();
             clients_[id] = clientSocket;

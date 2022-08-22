@@ -23,20 +23,20 @@ public:
 
 private:
     QTcpServer *tcpServer_; // сервер
-    QMap<qint64, QTcpSocket *> clients_; // мапа [client, socket]
+    QMap<qint64, QTcpSocket *> clients_; // мапа [clientID, socket]
     bool isListen_ = false; // статус
     QPushButton *buttonShutDown_; // кнопка выключения
     QMap<QTcpSocket *, QString> players_; // ники игроков
-    QVector<Table *> tables_; // столы
+    QMap<QString, Table *> tables_; // столы
     QSqlDatabase dataBase_; // БД с пользователями
 
     QByteArray tables(); // отправить столы
-    QString addInDataBase(const QString &username, const QString &password); // добавить пользователя в БД
+    static QString addInDataBase(const QString &username, const QString &password); // добавить пользователя в БД
     QString
     checkInDataBase(const QString &username, const QString &password, const qint64 &id); // проверить пользователя в БД
     QString createTable(const QString &name);
 
-    QString connectToTable(const qint64 &user);
+    QString connectToTable(const QString &name, const qint64 &user);
 
 private slots:
 

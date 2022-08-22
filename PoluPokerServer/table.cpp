@@ -10,7 +10,7 @@ const int FLOP_CARDS = 4;
  */
 Table::Table(const QString &name, const char &size, QObject *parent)
         : QObject(parent), tableCards_(5), usedCards_(52),
-          generator_(QDateTime::currentMSecsSinceEpoch()), curBet_(0), size_(size), winnerComb_() {
+          generator_(QDateTime::currentMSecsSinceEpoch()), curBet_(0), size_(size), winnerComb_(), bank_(0) {
     name_ = name;
     addPlayer("Yadroff", 0, 0);
     addPlayer("potnie_yaici", 1, 1);
@@ -31,7 +31,7 @@ Table::Table(const QString &name, const char &size, QObject *parent)
 
 QString Table::name() const { return this->name_; }
 
-QVector<Player *> Table::players() const { return this->players_; }
+QMap<QString, Player *> Table::players() const { return this->players_; }
 
 /*!
  * Генератор псеводослучайной карты из колоды
@@ -110,14 +110,19 @@ void Table::putCardOnTable() {
 /*!
  * Функция добавления игрока
  * @param playerName - ник игрока
- * @param id - хз, зачем
+ * @param id - идентификатор для более быстрой отправки команд
  * @param seat - номер места, за которым сидит игрок
  */
-void Table::addPlayer(const QString &playerName, const qint64 &id, const quint64 &seat) {
-    auto player = new Player(playerName, id, seat);
-    players_.push_back(player);
-    gamePlayers_.push_back(player);
-    std::cout << "ADDED PLAYER:" << std::endl << *(players_.last()) << std::endl;
+bool Table::addPlayer(const QString &playerName, const qint64 &id, const quint64 &seat) {
+    if (players_.contains(playerName)) {
+        std::cout << "TABLE: " << name_.toStdString() << " : ERROR: ADD PLAYER: ALREADY EXISTS" << std::endl;
+        return false;
+    }
+    auto *player = new Player(playerName, id, seat);
+    players_.insert(playerName, player);
+    gamePlayers_.insert(playerName, player);
+    std::cout << "TABLE: " << name_.toStdString() << ": SUCCESS: ADD PLAYER: " << playerName.toStdString() << std::endl;
+    return true;
 }
 
 

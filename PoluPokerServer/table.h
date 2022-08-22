@@ -4,23 +4,24 @@
 #include "player.h"
 #include <QObject>
 #include <QRandomGenerator>
+#include <QMap>
 
-// TODO: переделать все в указатели
+// TODO: переделать вектор в мапу
 class Table : public QObject {
 Q_OBJECT
 public:
-    explicit Table(const QString &name, const char &size,
-                   QObject *parente = nullptr);
+    explicit Table(const QString &name, const char &size = 5,
+                   QObject *parent = nullptr);
 
     QString name() const;
 
-    QVector<Player *> players() const;
+    QMap<QString, Player *> players() const;
 
     void giveCardToPlayer(const QString &playerName);
 
     void putCardOnTable();
 
-    void addPlayer(const QString &playerName, const qint64 &id, const quint64 &seat);
+    bool addPlayer(const QString &playerName, const qint64 &id, const quint64 &seat);
 
     int size() const;
 
@@ -41,8 +42,8 @@ private:
     void betting(const int &start);
 
     QString name_;
-    QVector<Player *> players_;
-    QVector<Player *> gamePlayers_;
+    QMap<QString, Player *> players_;
+    QMap<QString, Player *> gamePlayers_;
     QVector<Card> tableCards_;
     QVector<bool> usedCards_;
     QRandomGenerator generator_;
