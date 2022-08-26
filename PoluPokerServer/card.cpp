@@ -60,7 +60,7 @@ Card::Card(const quint64 &suit, const quint64 &nominal, QObject *parent)
     }
 }
 
-Card::Card(const Card &other) {
+Card::Card(const Card &other): QObject() {
     suit_ = other.suit_;
     nominal_ = other.nominal_;
 }
@@ -157,7 +157,7 @@ Nominal Card::nominal() const {
 }
 
 void Card::setSuit(const quint64 &suit) {
-    if (suit < 0 or suit > 3) {
+    if (suit > 3) {
         std::cout << "ERROR: SET SUIT: WRONG SUIT: " << suit << std::endl;
         return;
     }

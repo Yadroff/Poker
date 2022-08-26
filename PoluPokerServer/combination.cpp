@@ -6,7 +6,7 @@
 
 Combination::Combination(QObject *parent) : QObject{parent}, combination_(Combinations::Error) {}
 
-Combination::Combination(const Combination &another){
+Combination::Combination(const Combination &another): QObject(){
     combinationCards_.reserve(COMBINATION_SIZE);
     cards_.reserve(COMBINATION_SIZE + 2);
     cards_ = another.cards_;

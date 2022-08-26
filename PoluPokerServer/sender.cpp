@@ -10,7 +10,7 @@ void Sender::run() {
     std::cout << "SENDER: START SENDING" << std::endl;
     while (runningFlag) {
         QByteArray datagram = "SERVER SEND";
-        qint64 ans = socket_->writeDatagram(datagram, QHostAddress::Broadcast, serverPort);
+        socket_->writeDatagram(datagram, QHostAddress::Broadcast, serverPort);
 //        std::cout << "SENDER: SEND: " << ans << std::endl;
         QThread::sleep(2);
     }
