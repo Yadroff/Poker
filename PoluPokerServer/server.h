@@ -7,11 +7,14 @@
 #include <QTcpSocket>
 #include <QtSql>
 #include <QSqlDatabase>
+#include <QThread>
+#include <QUdpSocket>
 
 #include "table.h"
+#include "sender.h"
 
 const quint16 SERVER_PORT = 7777;
-const QString DATA_BASE_PATH = "/home/Yadroff/QT/Poker/PoluPokerServer/users.db";
+const QString DATA_BASE_PATH = "./users.db";
 
 class Server : public QWidget {
 Q_OBJECT
@@ -29,6 +32,8 @@ private:
     QMap<QTcpSocket *, QString> players_; // ники игроков
     QMap<QString, Table *> tables_; // столы
     QSqlDatabase dataBase_; // БД с пользователями
+    QThread *threadBroadcast_;
+    Sender *senderBroadcast_;
 
     QByteArray tables(); // отправить столы
     static QString addInDataBase(const QString &username, const QString &password); // добавить пользователя в БД
@@ -44,6 +49,10 @@ private slots:
     void shutdownServer(); // выключение сервера
     void readData(); // чтение от пользователей
     void disconnectUser();
+
+
+//signals:
+//    void stopBroadcast();
 };
 
 #endif // SERVER_H

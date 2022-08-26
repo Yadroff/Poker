@@ -1,10 +1,19 @@
 #include "server.h"
 #include <iostream>
+#include <QThread>
 
 
 Server::Server(QWidget *parent)
         : QWidget(parent) {
-    Table table("Abc", 5);
+    senderBroadcast_ = new Sender();
+    threadBroadcast_ = new QThread(this);
+    senderBroadcast_->moveToThread(threadBroadcast_);
+    connect(threadBroadcast_, SIGNAL(started()), senderBroadcast_, SLOT(run()));
+    connect(senderBroadcast_, SIGNAL(finished()), senderBroadcast_, SLOT(deleteLater()));
+    connect(senderBroadcast_, SIGNAL(finished()), threadBroadcast_, SLOT(quit()));
+    connect(threadBroadcast_, SIGNAL(finished()), threadBroadcast_, SLOT(deleteLater()));
+    threadBroadcast_->start();
+//    Table table("Abc", 5);
     buttonShutDown_ = new QPushButton(this);
     QPixmap pixmap(":/image/Shutdown_button.jpg");
     QIcon buttonIcon(pixmap);
@@ -30,8 +39,14 @@ Server::Server(QWidget *parent)
 }
 
 Server::~Server() {
-    if (dataBase_.isOpen()) {
+    senderBroadcast_->setRunningFlag(false);
+    threadBroadcast_->quit();
+    threadBroadcast_->wait();
+    threadBroadcast_->deleteLater();
+    senderBroadcast_->deleteLater();
+    if (dataBase_.isOpen()){
         dataBase_.close();
+        std::cout << "OPERATION: CLOSE DATA BASE: SUCCESS" << std::endl;
     }
     shutdownServer();
 }
@@ -179,6 +194,7 @@ void Server::readData() {
                         std::cout << "CREATE: WRONG FORMAT: SIZE";
                         toSend = "CREATE WRONG FORMAT";
                     } else {
+                        //TODO: Отправить всем создание нового стола
                         toSend = createTable(commands[1]).toUtf8();
                         connectToTable(commands[1], i);
                     }
@@ -220,6 +236,7 @@ void Server::newUser() {
         }
     }
 }
+
 
 
 

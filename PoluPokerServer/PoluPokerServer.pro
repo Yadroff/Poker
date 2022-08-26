@@ -14,14 +14,16 @@ SOURCES += \
     main.cpp \
     player.cpp \
     server.cpp \
-    table.cpp
+    table.cpp \
+    sender.cpp
 
 HEADERS += \
     card.h \
     combination.h \
     player.h \
     server.h \
-    table.h
+    table.h \
+    sender.h
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin

@@ -1,15 +1,20 @@
 #include "screencontroller.h"
-#include <QHostAddress>
 #include <QSound>
 
 ScreenController::ScreenController(QObject *parent):
     QObject(parent)
 {
+    hasServerAddress_ = false;
+    udpSocket_ = new QUdpSocket(this);
+    udpSocket_->bind(45454, QUdpSocket::ShareAddress);
+    connect(udpSocket_, &QUdpSocket::readyRead, this, &ScreenController::connectToServer);
+    if (!udpSocket_->waitForReadyRead()){
+        std::cout << "Can not connect to server" << std::endl;
+    }
+    delete udpSocket_;
+//    std::cout << "HERE" << std::endl;
     socket_ = new QTcpSocket(this);
-    QString ip;
-    quint16 port;
-    getHost(ip, port);
-    socket_->connectToHost(ip, port);
+    socket_->connectToHost(serverAddress_, 7777);
     if (!socket_->waitForConnected()){
         std::cout << "Can not to connect: " << socket_->errorString().toStdString() << std::endl;
         return;
@@ -105,4 +110,18 @@ void ScreenController::sendToServer(const QString &command)
     socket_->write(command.toUtf8());
     std::cout << "WRITE TO SERVER: " << command.toStdString() << std::endl;
     socket_->waitForReadyRead();
+}
+
+void ScreenController::connectToServer()
+{
+    QByteArray datagram;
+    while (udpSocket_->hasPendingDatagrams()){
+        QHostAddress address;
+        datagram.resize(udpSocket_->pendingDatagramSize());
+        udpSocket_->readDatagram(datagram.data(), datagram.size(), &address, &serverPort_);
+        std::cout << QString(datagram.data()).toStdString() << std::endl;
+        serverAddress_ = address.toString().split(":").last();
+        std::cout << serverAddress_.toStdString() << std::endl;
+        hasServerAddress_ = true;
+    }
 }

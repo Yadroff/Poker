@@ -3,6 +3,7 @@
 
 #include <QtWidgets>
 #include <QTcpSocket>
+#include <QUdpSocket>
 #include <QtMultimedia/QMediaPlayer>
 
 #include "mainwindow.h"
@@ -17,10 +18,14 @@ public:
     explicit ScreenController(QObject *parent = nullptr);
     ~ScreenController();    
 private:
-    QTcpSocket *socket_ = nullptr;
-    MainWindow *menu_ = nullptr;
-    Table *table_ = nullptr;
-    Authentication *auth_ = nullptr;
+    QTcpSocket *socket_;
+    QUdpSocket *udpSocket_;
+    MainWindow *menu_;
+    Table *table_;
+    Authentication *auth_;
+    QString serverAddress_;
+    quint16 serverPort_;
+    bool hasServerAddress_;
 
     void getHost(QString &ip, quint16 &port);
     void parseLogin(const QVector<QString> &commands);
@@ -29,6 +34,7 @@ private:
 private slots:
     void readingData();
     void sendToServer(const QString &command);
+    void connectToServer();
 };
 
 #endif // SCREENCONTROLLER_H
