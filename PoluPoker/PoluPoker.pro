@@ -12,17 +12,23 @@ SOURCES += \
     authentication.cpp \
     button.cpp \
     card.cpp \
+    gameui.cpp \
     main.cpp \
     mainwindow.cpp \
+    player.cpp \
     screencontroller.cpp \
+    serverconnecter.cpp \
     table.cpp
 
 HEADERS += \
     authentication.h \
     button.h \
     card.h \
+    gameui.h \
     mainwindow.h \
+    player.h \
     screencontroller.h \
+    serverconnecter.h \
     table.h
 
 
@@ -33,8 +39,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 FORMS += \
     authentication.ui \
+    gameui.ui \
     table.ui
-
 RESOURCES += \
     images.qrc \
     sounds.qrc

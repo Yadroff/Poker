@@ -14,15 +14,15 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-image: url(:/images/backgroundClient.jpg);</string>
+   <string notr="true"/>
   </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
      <x>110</x>
-     <y>140</y>
-     <width>801</width>
-     <height>511</height>
+     <y>110</y>
+     <width>791</width>
+     <height>541</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -32,7 +32,7 @@
     <string/>
    </property>
   </widget>
-  <widget class="QTextEdit" name="textEdit">
+  <widget class="QTextEdit" name="chat">
    <property name="geometry">
     <rect>
      <x>1010</x>
@@ -45,72 +45,72 @@
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QLabel" name="tableCard">
+  <widget class="QLabel" name="card1">
    <property name="geometry">
     <rect>
      <x>380</x>
      <y>350</y>
-     <width>45</width>
-     <height>60</height>
+     <width>44</width>
+     <height>63</height>
     </rect>
    </property>
    <property name="text">
     <string/>
    </property>
   </widget>
-  <widget class="QLabel" name="tableCard_2">
+  <widget class="QLabel" name="card2">
    <property name="geometry">
     <rect>
-     <x>430</x>
+     <x>433</x>
      <y>350</y>
-     <width>45</width>
-     <height>60</height>
+     <width>44</width>
+     <height>63</height>
     </rect>
    </property>
    <property name="text">
     <string/>
    </property>
   </widget>
-  <widget class="QLabel" name="tableCard_3">
+  <widget class="QLabel" name="card3">
    <property name="geometry">
     <rect>
-     <x>480</x>
+     <x>485</x>
      <y>350</y>
-     <width>45</width>
-     <height>60</height>
+     <width>44</width>
+     <height>63</height>
     </rect>
    </property>
    <property name="text">
     <string/>
    </property>
   </widget>
-  <widget class="QLabel" name="tableCard_5">
+  <widget class="QLabel" name="card4">
    <property name="geometry">
     <rect>
-     <x>540</x>
+     <x>539</x>
      <y>350</y>
-     <width>45</width>
-     <height>60</height>
+     <width>44</width>
+     <height>63</height>
     </rect>
    </property>
    <property name="text">
     <string/>
    </property>
   </widget>
-  <widget class="QLabel" name="tableCard_6">
+  <widget class="QLabel" name="card5">
    <property name="geometry">
     <rect>
      <x>590</x>
      <y>350</y>
-     <width>45</width>
-     <height>60</height>
+     <width>44</width>
+     <height>63</height>
     </rect>
    </property>
    <property name="text">
     <string/>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit">
+  <widget class="QLineEdit" name="lineMessage">
    <property name="geometry">
     <rect>
      <x>1010</x>
@@ -130,7 +130,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Send</string>
+    <string>SEND</string>
    </property>
   </widget>
  </widget>

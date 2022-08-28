@@ -3,14 +3,15 @@
 
 #include <QtWidgets>
 #include <QTcpSocket>
-#include <QUdpSocket>
 #include <QtMultimedia/QMediaPlayer>
+#include <QThread>
 
 #include "mainwindow.h"
 #include "authentication.h"
 #include "table.h"
+#include "serverconnecter.h"
 
-
+const quint16 SERVER_PORT = 7777;
 class ScreenController: public QObject
 {
     Q_OBJECT
@@ -19,22 +20,20 @@ public:
     ~ScreenController();    
 private:
     QTcpSocket *socket_;
-    QUdpSocket *udpSocket_;
     MainWindow *menu_;
     Table *table_;
     Authentication *auth_;
-    QString serverAddress_;
-    quint16 serverPort_;
-    bool hasServerAddress_;
+    ServerConnecter *servConnect_;
+    QThread *thread;
 
-    void getHost(QString &ip, quint16 &port);
     void parseLogin(const QVector<QString> &commands);
     void parseRegist(const QVector<QString> &commands);
     void createMenu();
+    void testTable();
 private slots:
     void readingData();
     void sendToServer(const QString &command);
-    void connectToServer();
+    void connectToServer(const QString& servAddress);
 };
 
 #endif // SCREENCONTROLLER_H
