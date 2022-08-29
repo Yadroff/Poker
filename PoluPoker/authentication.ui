@@ -37,6 +37,9 @@ border-image: url(:/images/backgroundAunthetication.jpg);
     <property name="title">
      <string>Login</string>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
     <widget class="QLabel" name="labelLogin">
      <property name="geometry">
       <rect>

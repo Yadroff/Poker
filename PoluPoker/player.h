@@ -20,7 +20,7 @@ private:
     QLabel *labelName_;
     QLabel *labelMoney_;
 public slots:
-    void leave();
+    void leaveTable();
 };
 
 #endif // PLAYER_H

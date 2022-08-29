@@ -64,13 +64,15 @@ void ScreenController::createMenu() {
 
 void ScreenController::testTable()
 {
-    table_ = new Table();
-    table_->putCardOnTable("Spades", "Ace");
-    table_->putCardOnTable("Diamonds", "Ace");
-    table_->putCardOnTable("Diamonds", "Two");
-    table_->putCardOnTable("Hearts", "Eight");
-    table_->putCardOnTable("Clubs", "Jack");
-    table_->show();
+//    table_ = new Table();
+//    table_->putCardOnTable("Spades", "Ace");
+//    table_->putCardOnTable("Diamonds", "Ace");
+//    table_->putCardOnTable("Diamonds", "Two");
+//    table_->putCardOnTable("Hearts", "Eight");
+//    table_->putCardOnTable("Clubs", "Jack");
+//    table_->show();
+    ui_ = new GameUI();
+    ui_->show();
 }
 
 void ScreenController::readingData() {

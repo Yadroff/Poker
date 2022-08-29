@@ -5,19 +5,19 @@
 #include "player.h"
 
 namespace Ui {
-class gameUI;
+class GameUI;
 }
 
-class gameUI : public QMainWindow
+class GameUI : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit gameUI(QWidget *parent = nullptr);
-    ~gameUI();
+    explicit GameUI(QWidget *parent = nullptr);
+    ~GameUI();
 
 private:
-    Ui::gameUI *ui;
+    Ui::GameUI *ui;
     QVector<Player*> players_;
 };
 

@@ -30,7 +30,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/ft_green_poker_skin.png</pixmap>
+     <pixmap resource="images.qrc">:/images/ft_green_poker_skin.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="labelBottomLeft">
@@ -84,7 +84,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/playerInfoButton1.2x2.png</pixmap>
+     <pixmap resource="images.qrc">:/images/playerInfoButton1.2x2.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -103,7 +103,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/playerInfoButton2.2x2.png</pixmap>
+     <pixmap resource="images.qrc">:/images/playerInfoButton2.2x2.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -122,7 +122,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/playerInfoButton2.2x2.png</pixmap>
+     <pixmap resource="images.qrc">:/images/playerInfoButton2.2x2.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -141,7 +141,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/playerInfoButton2.2x2.png</pixmap>
+     <pixmap resource="images.qrc">:/images/playerInfoButton2.2x2.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -160,7 +160,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/playerInfoButton2.2x2.png</pixmap>
+     <pixmap resource="images.qrc">:/images/playerInfoButton2.2x2.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -179,7 +179,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/playerInfoButton1.2x2.png</pixmap>
+     <pixmap resource="images.qrc">:/images/playerInfoButton1.2x2.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -198,7 +198,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/playerInfoButton1.2x2.png</pixmap>
+     <pixmap resource="images.qrc">:/images/playerInfoButton1.2x2.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -217,7 +217,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/playerInfoButton1.2x2.png</pixmap>
+     <pixmap resource="images.qrc">:/images/playerInfoButton1.2x2.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -236,7 +236,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/PotHolder.png</pixmap>
+     <pixmap resource="images.qrc">:/images/PotHolder.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -591,7 +591,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/playerGUIBackground.png</pixmap>
+     <pixmap resource="images.qrc">:/images/playerGUIBackground.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -610,7 +610,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/playerGUIOverlay.png</pixmap>
+     <pixmap resource="images.qrc">:/images/playerGUIOverlay.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1089,6 +1089,158 @@
     <property name="geometry">
      <rect>
       <x>520</x>
+      <y>180</y>
+      <width>20</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>Images/BlueChipStack.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Player0Stack7">
+    <property name="geometry">
+     <rect>
+      <x>820</x>
+      <y>180</y>
+      <width>20</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>Images/BlueChipStack.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Player0Stack3">
+    <property name="geometry">
+     <rect>
+      <x>820</x>
+      <y>160</y>
+      <width>20</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>Images/BlueChipStack.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Player0Stack2">
+    <property name="geometry">
+     <rect>
+      <x>800</x>
+      <y>160</y>
+      <width>20</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>Images/BlueChipStack.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Player0Stack5">
+    <property name="geometry">
+     <rect>
+      <x>780</x>
+      <y>180</y>
+      <width>20</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>Images/BlueChipStack.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Player0Stack0">
+    <property name="geometry">
+     <rect>
+      <x>760</x>
+      <y>160</y>
+      <width>20</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>Images/BlueChipStack.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Player0Stack1">
+    <property name="geometry">
+     <rect>
+      <x>780</x>
+      <y>160</y>
+      <width>20</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>Images/BlueChipStack.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Player0Stack6">
+    <property name="geometry">
+     <rect>
+      <x>800</x>
+      <y>180</y>
+      <width>20</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>Images/BlueChipStack.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Player0Stack4">
+    <property name="geometry">
+     <rect>
+      <x>760</x>
       <y>180</y>
       <width>20</width>
       <height>24</height>
@@ -1917,7 +2069,7 @@ min-height:100px;</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/background.jpg</pixmap>
+     <pixmap resource="images.qrc">:/images/backgroundClient.jpg</pixmap>
     </property>
     <property name="scaledContents">
      <bool>false</bool>
@@ -2349,7 +2501,7 @@ min-height:31px</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/chatBox2.1x2.png</pixmap>
+     <pixmap resource="images.qrc">:/images/chatBox2.1x2.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -2380,7 +2532,7 @@ icon: blafdsf;
      <number>48</number>
     </property>
    </widget>
-   <widget class="QTextBrowser" name="messageBrowser">
+   <widget class="QTextEdit" name="messageBrowser">
     <property name="geometry">
      <rect>
       <x>1250</x>
@@ -2398,6 +2550,9 @@ border: transparent;</string>
     </property>
     <property name="horizontalScrollBarPolicy">
      <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QLabel" name="labelPot">
@@ -2418,7 +2573,7 @@ border: transparent;</string>
      <cursorShape>ArrowCursor</cursorShape>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string>Here will be current bet</string>
     </property>
    </widget>
    <widget class="QPushButton" name="buttonBet">
@@ -2430,9 +2585,15 @@ border: transparent;</string>
       <height>31</height>
      </rect>
     </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(88, 32, 32);
-color: white</string>
+     <string notr="true">QPushButton {
+     background-color: rgb(88, 32, 32);
+     border-radius: 5px;
+	color: white
+}</string>
     </property>
     <property name="text">
      <string>Bet</string>
@@ -2447,9 +2608,15 @@ color: white</string>
       <height>31</height>
      </rect>
     </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(88, 32, 32);
-color: white</string>
+     <string notr="true">QPushButton {
+     background-color: rgb(88, 32, 32);
+     border-radius: 5px;
+	color: white
+}</string>
     </property>
     <property name="text">
      <string>Call</string>
@@ -2464,9 +2631,15 @@ color: white</string>
       <height>31</height>
      </rect>
     </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(88, 32, 32);
-color: white</string>
+     <string notr="true">QPushButton {
+     background-color: rgb(88, 32, 32);
+     border-radius: 5px;
+	color: white
+}</string>
     </property>
     <property name="text">
      <string>Fold</string>
@@ -2482,8 +2655,11 @@ color: white</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(88, 32, 32);
-color: white</string>
+     <string notr="true">QPushButton {
+     background-color: rgb(88, 32, 32);
+     border-radius: 5px;
+	color: white
+}</string>
     </property>
     <property name="text">
      <string>Cancel</string>
@@ -2498,9 +2674,15 @@ color: white</string>
       <height>31</height>
      </rect>
     </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(88, 32, 32);
-color: white</string>
+     <string notr="true">QPushButton {
+     background-color: rgb(88, 32, 32);
+     border-radius: 5px;
+	color: white
+}</string>
     </property>
     <property name="text">
      <string>Submit</string>
@@ -2525,6 +2707,9 @@ color: white</string>
       <height>31</height>
      </rect>
     </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
     <property name="styleSheet">
      <string notr="true"/>
     </property>
@@ -2532,14 +2717,12 @@ color: white</string>
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
-   <zorder>buttonCancel</zorder>
-   <zorder>buttonSubmit</zorder>
-   <zorder>inputBet</zorder>
    <zorder>background</zorder>
+   <zorder>buttonSitInSeat5</zorder>
+   <zorder>placeholder5</zorder>
+   <zorder>inputBet</zorder>
    <zorder>labelCardHolder</zorder>
    <zorder>labelTable</zorder>
-   <zorder>labelPlayerCard1</zorder>
-   <zorder>labelPlayerCard2</zorder>
    <zorder>labelBottomLeft</zorder>
    <zorder>labelBottomRight</zorder>
    <zorder>labelPotHolder</zorder>
@@ -2614,7 +2797,6 @@ color: white</string>
    <zorder>buttonSitInSeat2</zorder>
    <zorder>buttonSitInSeat3</zorder>
    <zorder>buttonSitInSeat4</zorder>
-   <zorder>buttonSitInSeat5</zorder>
    <zorder>buttonSitInSeat6</zorder>
    <zorder>buttonSitInSeat7</zorder>
    <zorder>Player6Card2</zorder>
@@ -2622,7 +2804,6 @@ color: white</string>
    <zorder>Player7Card1</zorder>
    <zorder>Player7Card2</zorder>
    <zorder>placeholder4</zorder>
-   <zorder>placeholder5</zorder>
    <zorder>Player0Card1</zorder>
    <zorder>Player0Card2</zorder>
    <zorder>Player1Card1</zorder>
@@ -2652,6 +2833,14 @@ color: white</string>
    <zorder>Player4Name</zorder>
    <zorder>Player4ChipCount</zorder>
    <zorder>Player7Stack0</zorder>
+   <zorder>Player0Stack0</zorder>
+   <zorder>Player0Stack2</zorder>
+   <zorder>Player0Stack1</zorder>
+   <zorder>Player0Stack3</zorder>
+   <zorder>Player0Stack7</zorder>
+   <zorder>Player0Stack5</zorder>
+   <zorder>Player0Stack4</zorder>
+   <zorder>Player0Stack6</zorder>
    <zorder>label</zorder>
    <zorder>labelButtonHolder</zorder>
    <zorder>buttonBet</zorder>
@@ -2664,6 +2853,10 @@ color: white</string>
    <zorder>messageBox</zorder>
    <zorder>messageBrowser</zorder>
    <zorder>labelPot</zorder>
+   <zorder>buttonSubmit</zorder>
+   <zorder>buttonCancel</zorder>
+   <zorder>labelPlayerCard2</zorder>
+   <zorder>labelPlayerCard1</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -2671,7 +2864,7 @@ color: white</string>
      <x>0</x>
      <y>0</y>
      <width>1569</width>
-     <height>30</height>
+     <height>29</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuGame">
@@ -2694,6 +2887,8 @@ color: white</string>
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="images.qrc"/>
+ </resources>
  <connections/>
 </ui>

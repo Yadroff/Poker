@@ -39,8 +39,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 FORMS += \
     authentication.ui \
-    gameui.ui \
-    table.ui
+    table.ui \
+    gameui.ui
 RESOURCES += \
     images.qrc \
     sounds.qrc

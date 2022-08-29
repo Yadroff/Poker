@@ -1,12 +1,20 @@
 <RCC>
     <qresource prefix="/">
-        <file>images/background.jpg</file>
         <file>images/backgroundClient.jpg</file>
-        <file>images/BlueChipStack.png</file>
-        <file>images/cardDeck.png</file>
-        <file>images/ft_green_poker_skin.png</file>
-        <file>images/homeScreenRectButton.png</file>
         <file>images/iconRegistration.jpg</file>
+        <file>images/homeScreenRectButton.png</file>
+        <file>images/ft_green_poker_skin.png</file>
+        <file>images/cardDeck.png</file>
         <file>images/backgroundAunthetication.jpg</file>
+        <file>images/background.jpg</file>
+        <file>images/BlueChipStack.png</file>
+        <file>images/RedGUIButton.png</file>
+        <file>images/chatBox2.1x2.png</file>
+        <file>images/PotHolder.png</file>
+        <file>images/playerInfoButton2.2x2.png</file>
+        <file>images/playerInfoButton2.1.png</file>
+        <file>images/playerInfoButton1.2x2.png</file>
+        <file>images/playerGUIOverlay.png</file>
+        <file>images/playerGUIBackground.png</file>
     </qresource>
 </RCC>

@@ -49,7 +49,7 @@
    <property name="geometry">
     <rect>
      <x>380</x>
-     <y>350</y>
+     <y>320</y>
      <width>44</width>
      <height>63</height>
     </rect>
@@ -62,7 +62,7 @@
    <property name="geometry">
     <rect>
      <x>433</x>
-     <y>350</y>
+     <y>320</y>
      <width>44</width>
      <height>63</height>
     </rect>
@@ -74,8 +74,8 @@
   <widget class="QLabel" name="card3">
    <property name="geometry">
     <rect>
-     <x>485</x>
-     <y>350</y>
+     <x>486</x>
+     <y>320</y>
      <width>44</width>
      <height>63</height>
     </rect>
@@ -87,8 +87,8 @@
   <widget class="QLabel" name="card4">
    <property name="geometry">
     <rect>
-     <x>539</x>
-     <y>350</y>
+     <x>538</x>
+     <y>320</y>
      <width>44</width>
      <height>63</height>
     </rect>
@@ -100,8 +100,8 @@
   <widget class="QLabel" name="card5">
    <property name="geometry">
     <rect>
-     <x>590</x>
-     <y>350</y>
+     <x>589</x>
+     <y>320</y>
      <width>44</width>
      <height>63</height>
     </rect>

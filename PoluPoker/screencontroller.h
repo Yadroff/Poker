@@ -10,6 +10,7 @@
 #include "authentication.h"
 #include "table.h"
 #include "serverconnecter.h"
+#include "gameui.h"
 
 const quint16 SERVER_PORT = 7777;
 class ScreenController: public QObject
@@ -25,6 +26,7 @@ private:
     Authentication *auth_;
     ServerConnecter *servConnect_;
     QThread *thread;
+    GameUI *ui_;
 
     void parseLogin(const QVector<QString> &commands);
     void parseRegist(const QVector<QString> &commands);
