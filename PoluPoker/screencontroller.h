@@ -8,7 +8,6 @@
 
 #include "mainwindow.h"
 #include "authentication.h"
-#include "table.h"
 #include "serverconnecter.h"
 #include "gameui.h"
 

@@ -17,8 +17,8 @@ SOURCES += \
     mainwindow.cpp \
     player.cpp \
     screencontroller.cpp \
-    serverconnecter.cpp \
-    table.cpp
+    seat.cpp \
+    serverconnecter.cpp
 
 HEADERS += \
     authentication.h \
@@ -28,8 +28,8 @@ HEADERS += \
     mainwindow.h \
     player.h \
     screencontroller.h \
-    serverconnecter.h \
-    table.h
+    seat.h \
+    serverconnecter.h
 
 
 # Default rules for deployment.
@@ -39,7 +39,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 FORMS += \
     authentication.ui \
-    table.ui \
     gameui.ui
 RESOURCES += \
     images.qrc \
