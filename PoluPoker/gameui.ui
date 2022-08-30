@@ -46,7 +46,7 @@
      <string notr="true">color: white</string>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string>Waiting wor players</string>
     </property>
    </widget>
    <widget class="QLabel" name="labelBottomRight">
@@ -62,7 +62,7 @@
      <string notr="true">color: white</string>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string>Players for start: 1/3</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -255,7 +255,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/cardDeck.png</pixmap>
+     <pixmap resource="images.qrc">:/images/cardDeck.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="labelCommunityCard2">
@@ -271,7 +271,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/cardDeck.png</pixmap>
+     <pixmap resource="images.qrc">:/images/cardDeck.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="labelCommunityCard3">
@@ -287,7 +287,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/cardDeck.png</pixmap>
+     <pixmap resource="images.qrc">:/images/cardDeck.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="labelCommunityCard4">
@@ -303,7 +303,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/cardDeck.png</pixmap>
+     <pixmap resource="images.qrc">:/images/cardDeck.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="labelCommunityCard5">
@@ -319,7 +319,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/cardDeck.png</pixmap>
+     <pixmap resource="images.qrc">:/images/cardDeck.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="Player3Card2">
@@ -335,7 +335,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/cardDeck.png</pixmap>
+     <pixmap resource="images.qrc">:/images/cardDeck.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="Player3Card1">
@@ -351,7 +351,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/cardDeck.png</pixmap>
+     <pixmap resource="images.qrc">:/images/cardDeck.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="Player2Card2">
@@ -367,7 +367,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/cardDeck.png</pixmap>
+     <pixmap resource="images.qrc">:/images/cardDeck.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="Player2Card1">
@@ -383,7 +383,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/cardDeck.png</pixmap>
+     <pixmap resource="images.qrc">:/images/cardDeck.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="Player1Card2">
@@ -399,7 +399,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/cardDeck.png</pixmap>
+     <pixmap resource="images.qrc">:/images/cardDeck.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="Player1Card1">
@@ -415,7 +415,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/cardDeck.png</pixmap>
+     <pixmap resource="images.qrc">:/images/cardDeck.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="Player0Card2">
@@ -431,7 +431,10 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/cardDeck.png</pixmap>
+     <pixmap resource="images.qrc">:/images/cardDeck.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>false</bool>
     </property>
    </widget>
    <widget class="QLabel" name="Player0Card1">
@@ -447,7 +450,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/cardDeck.png</pixmap>
+     <pixmap resource="images.qrc">:/images/cardDeck.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="Player7Card2">
@@ -463,7 +466,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/cardDeck.png</pixmap>
+     <pixmap resource="images.qrc">:/images/cardDeck.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="Player7Card1">
@@ -479,7 +482,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/cardDeck.png</pixmap>
+     <pixmap resource="images.qrc">:/images/cardDeck.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="Player6Card2">
@@ -495,7 +498,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/cardDeck.png</pixmap>
+     <pixmap resource="images.qrc">:/images/cardDeck.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="Player6Card1">
@@ -511,7 +514,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/cardDeck.png</pixmap>
+     <pixmap resource="images.qrc">:/images/cardDeck.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="Player5Card2">
@@ -527,7 +530,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/cardDeck.png</pixmap>
+     <pixmap resource="images.qrc">:/images/cardDeck.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="Player5Card1">
@@ -543,7 +546,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/cardDeck.png</pixmap>
+     <pixmap resource="images.qrc">:/images/cardDeck.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="Player4Card2">
@@ -559,7 +562,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/cardDeck.png</pixmap>
+     <pixmap resource="images.qrc">:/images/cardDeck.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="Player4Card1">
@@ -575,7 +578,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/cardDeck.png</pixmap>
+     <pixmap resource="images.qrc">:/images/cardDeck.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="labelCardHolder">
@@ -629,7 +632,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/cardDeck.png</pixmap>
+     <pixmap resource="images.qrc">:/images/cardDeck.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="labelPlayerCard1">
@@ -645,7 +648,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/cardDeck.png</pixmap>
+     <pixmap resource="images.qrc">:/images/cardDeck.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="Player4Stack2">
@@ -661,7 +664,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/GreenChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -680,7 +683,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/BlueChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -699,7 +702,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/BlueChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -718,7 +721,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/GreenChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -737,7 +740,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/YellowChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -756,7 +759,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/YellowChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -775,7 +778,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/RedChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -794,7 +797,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/RedChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -813,7 +816,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/YellowChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -832,7 +835,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/RedChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -851,7 +854,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/BlueChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -870,7 +873,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/YellowChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -889,7 +892,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/BlueChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -908,7 +911,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/RedChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -927,7 +930,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/GreenChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -946,7 +949,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/GreenChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -965,7 +968,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/GreenChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -984,7 +987,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/BlueChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1003,7 +1006,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/RedChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1022,7 +1025,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/GreenChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1041,7 +1044,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/RedChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1060,7 +1063,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/BlueChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1079,7 +1082,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/YellowChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1098,7 +1101,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/YellowChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1117,7 +1120,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/YellowChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1136,7 +1139,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/GreenChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1155,7 +1158,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/GreenChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1174,7 +1177,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/RedChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1193,7 +1196,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/BlueChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1212,7 +1215,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/BlueChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1231,7 +1234,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/YellowChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1250,7 +1253,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/RedChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1269,7 +1272,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/GreenChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1288,7 +1291,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/BlueChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1307,7 +1310,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/RedChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1326,7 +1329,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/BlueChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1345,7 +1348,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/YellowChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1364,7 +1367,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/GreenChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1383,7 +1386,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/RedChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1402,7 +1405,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/YellowChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1421,7 +1424,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/GreenChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1440,7 +1443,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/BlueChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1459,7 +1462,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/YellowChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1478,7 +1481,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/RedChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1497,7 +1500,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/GreenChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1516,7 +1519,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/BlueChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1535,7 +1538,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/YellowChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1554,7 +1557,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/RedChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1573,7 +1576,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/RedChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1592,7 +1595,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/BlueChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1611,7 +1614,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/YellowChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1630,7 +1633,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/GreenChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1649,7 +1652,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/YellowChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1668,7 +1671,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/GreenChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1687,7 +1690,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/YellowChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1706,7 +1709,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/RedChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1725,7 +1728,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/BlueChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1744,7 +1747,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/BlueChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1763,7 +1766,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/RedChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1782,7 +1785,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/YellowChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1801,7 +1804,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/GreenChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1820,7 +1823,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/GreenChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1839,7 +1842,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/RedChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -1858,7 +1861,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>Images/BlueChipStack.png</pixmap>
+     <pixmap resource="images.qrc">:/images/BlueChipStack.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -2719,8 +2722,6 @@ border: transparent;</string>
    </widget>
    <zorder>background</zorder>
    <zorder>buttonSitInSeat5</zorder>
-   <zorder>placeholder5</zorder>
-   <zorder>inputBet</zorder>
    <zorder>labelCardHolder</zorder>
    <zorder>labelTable</zorder>
    <zorder>labelBottomLeft</zorder>
@@ -2828,8 +2829,6 @@ border: transparent;</string>
    <zorder>Player7ChipCount</zorder>
    <zorder>Player6Name</zorder>
    <zorder>Player6ChipCount</zorder>
-   <zorder>Player5Name</zorder>
-   <zorder>Player5ChipCount</zorder>
    <zorder>Player4Name</zorder>
    <zorder>Player4ChipCount</zorder>
    <zorder>Player7Stack0</zorder>
@@ -2857,6 +2856,10 @@ border: transparent;</string>
    <zorder>buttonCancel</zorder>
    <zorder>labelPlayerCard2</zorder>
    <zorder>labelPlayerCard1</zorder>
+   <zorder>placeholder5</zorder>
+   <zorder>Player5Name</zorder>
+   <zorder>Player5ChipCount</zorder>
+   <zorder>inputBet</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -2864,7 +2867,7 @@ border: transparent;</string>
      <x>0</x>
      <y>0</y>
      <width>1569</width>
-     <height>29</height>
+     <height>30</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuGame">

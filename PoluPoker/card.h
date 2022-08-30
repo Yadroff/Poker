@@ -4,14 +4,15 @@
 #include <QObject>
 #include <QPixmap>
 
-const qint32 xCardSize= 44;
-const qint32 yCardSize = 63;
+const int xCardSize= 44;
+const int yCardSize = 63;
 
 enum class Suit {
     hearts = 0, // черви
     diamonds, // буби
     clubs, // крести
-    spades // пики
+    spades, // пики
+    closed, // закрытая
 };
 
 enum class Rank {
@@ -27,7 +28,8 @@ enum class Rank {
     ten,
     jack,
     queen,
-    king
+    king,
+    closed
 };
 
 const int SUITS_NUMBER = 4;

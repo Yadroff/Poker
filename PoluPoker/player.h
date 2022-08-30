@@ -2,7 +2,7 @@
 #define PLAYER_H
 
 #include <QObject>
-#include <QLabel>
+#include <seat.h>
 
 const int DEFAULT_COINS = 5000;
 class Player : public QObject
@@ -15,10 +15,7 @@ private:
     QString name_;
     qint32 seat_;
     qint32 money_;
-    QLabel *labelCard1_;
-    QLabel *labelCard2_;
-    QLabel *labelName_;
-    QLabel *labelMoney_;
+    Seat *seat;
 public slots:
     void leaveTable();
 };

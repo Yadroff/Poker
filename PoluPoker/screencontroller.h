@@ -21,7 +21,6 @@ public:
 private:
     QTcpSocket *socket_;
     MainWindow *menu_;
-    Table *table_;
     Authentication *auth_;
     ServerConnecter *servConnect_;
     QThread *thread;

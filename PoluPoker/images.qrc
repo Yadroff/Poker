@@ -16,5 +16,9 @@
         <file>images/playerInfoButton1.2x2.png</file>
         <file>images/playerGUIOverlay.png</file>
         <file>images/playerGUIBackground.png</file>
+        <file>images/YellowChipStack.png</file>
+        <file>images/RedChipStack.png</file>
+        <file>images/GreenChipStack.png</file>
+        <file>images/GrayChipStack.png</file>
     </qresource>
 </RCC>

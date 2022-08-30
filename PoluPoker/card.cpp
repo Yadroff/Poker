@@ -1,8 +1,8 @@
 #include "card.h"
 
 Card::Card(QObject *parent)
-    : QObject(parent), cardDeck_(":/images/cardDeck.png"), rank_(Rank::ace),
-    suit_(Suit::hearts) {}
+    : QObject(parent), cardDeck_(":/images/cardDeck.png"), rank_(Rank::closed),
+    suit_(Suit::closed) {}
 
 void Card::setCard(const QString &suit, const QString &nominal) {
     if (suit == "Diamonds") {
@@ -13,6 +13,8 @@ void Card::setCard(const QString &suit, const QString &nominal) {
         suit_ = Suit::clubs;
     } else if (suit == "Spades") {
         suit_ = Suit::spades;
+    } else if (suit == "Closed"){
+        suit_ = Suit::closed;
     }
     if (nominal == "Ace") {
         rank_ = Rank::ace;
@@ -40,10 +42,14 @@ void Card::setCard(const QString &suit, const QString &nominal) {
         rank_ = Rank::queen;
     } else if (nominal == "King") {
         rank_ = Rank::king;
+    } else if (nominal == "closed"){
+        rank_ = Rank::closed;
     }
 }
 
 QPixmap Card::getPixmap() {
-    return cardDeck_.copy(xCardSize * (qint64)rank_, yCardSize * (qint64)suit_,
+    int x = (rank_ == Rank::closed) ? 0 : (int) rank_;
+    int y = (int) suit_;
+    return cardDeck_.copy(xCardSize * x, yCardSize * y,
                           xCardSize, yCardSize);
 }
