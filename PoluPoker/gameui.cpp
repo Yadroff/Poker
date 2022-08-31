@@ -1,14 +1,23 @@
 #include "gameui.h"
 #include "ui_gameui.h"
-#include <QVBoxLayout>
 
-GameUI::GameUI(QWidget *parent) :
+#include <QMessageBox>
+#include <iostream>
+GameUI::GameUI(const QString &name, const QString &myName, QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::GameUI)
+    ui(new Ui::GameUI),
+    currentBet_(0)
 {
+    setWindowTitle(name);
+    std::cout << windowTitle().toStdString() << std::endl;
+    me_ = new Player(myName, this);
     ui->setupUi(this);
     ui->centralwidget->setWindowState(Qt::WindowMaximized);
     setupSeats();
+    setupCards();
+    hideBet();
+    ui->labelCardHolder->hide();
+    test();
 }
 
 GameUI::~GameUI()
@@ -16,9 +25,27 @@ GameUI::~GameUI()
     delete ui;
 }
 
+void GameUI::test()
+{
+    players_.push_back(new Player("potnie_yaici", seats_[0]));
+    currentBet_ = 500;
+    showBetOnTable(currentBet_);
+    bet();
+}
+
+void GameUI::showGUI()
+{
+    ui->labelCardHolder->show();
+}
+
+void GameUI::showBetOnTable(const int &bet)
+{
+    ui->labelPot->show();
+    ui->labelPotHolder->setText(QString::number(bet));
+}
+
 void GameUI::setupSeats()
 {
-    seats_.resize(8);
     // player 0
     auto *player0Coins = new QVector<QLabel*>;
     player0Coins->reserve(8);
@@ -180,3 +207,213 @@ void GameUI::setupSeats()
     auto *player7Place = ui->placeholder7;
     seats_.push_back(new Seat(player7Coins, player7Cards, player7Place, player7Name, player7Money, player7Button));
 }
+
+void GameUI::setupCards()
+{
+    cards_.resize(5);
+    cards_.push_back(ui->labelCommunityCard1);
+    ui->labelCommunityCard1->hide();
+    cards_.push_back(ui->labelCommunityCard2);
+    ui->labelCommunityCard2->hide();
+    cards_.push_back(ui->labelCommunityCard3);
+    ui->labelCommunityCard3->hide();
+    cards_.push_back(ui->labelCommunityCard4);
+    ui->labelCommunityCard4->hide();
+    cards_.push_back(ui->labelCommunityCard5);
+    ui->labelCommunityCard5->hide();
+    ui->labelPot->hide();
+    ui->labelPotHolder->hide();
+    ui->labelPlayerCard1->hide();
+    ui->labelPlayerCard2->hide();
+}
+
+void GameUI::bet()
+{
+    ui->labelButtonHolder->show();
+    ui->buttonCall->show();
+    ui->buttonFold->show();
+    ui->buttonBet->show();
+}
+
+void GameUI::hideBet()
+{
+    ui->labelButtonHolder->hide();
+    ui->buttonBet->hide();
+    ui->buttonCall->hide();
+    ui->buttonCancel->hide();
+    ui->buttonDecrementBet->hide();
+    ui->buttonIncrementBet->hide();
+    ui->buttonFold->hide();
+    ui->buttonSubmit->hide();
+    ui->horizontalBetSlider->hide();
+    ui->inputBet->hide();
+}
+
+void GameUI::on_buttonSitInSeat0_clicked()
+{
+    if (seats_[0]->isAvailable()){
+        me_->changeSeat(seats_[0]);
+        showGUI();
+    } else{
+         QMessageBox::critical(this, "ERROR", "Choosen seat is taken");
+    }
+}
+
+
+void GameUI::on_buttonSitInSeat1_clicked()
+{
+    if (seats_[1]->isAvailable()){
+        me_->changeSeat(seats_[1]);
+        showGUI();
+    } else{
+         QMessageBox::critical(this, "ERROR", "Choosen seat is taken");
+    }
+}
+
+
+void GameUI::on_buttonSitInSeat2_clicked()
+{
+    if (seats_[2]->isAvailable()){
+        me_->changeSeat(seats_[2]);
+    } else{
+         QMessageBox::critical(this, "ERROR", "Choosen seat is taken");
+    }
+}
+
+
+void GameUI::on_buttonSitInSeat3_clicked()
+{
+    if (seats_[3]->isAvailable()){
+        me_->changeSeat(seats_[3]);
+        showGUI();
+    } else{
+         QMessageBox::critical(this, "ERROR", "Choosen seat is taken");
+    }
+}
+
+
+void GameUI::on_buttonSitInSeat4_clicked()
+{
+    if (seats_[4]->isAvailable()){
+        me_->changeSeat(seats_[4]);
+        showGUI();
+    } else{
+         QMessageBox::critical(this, "ERROR", "Choosen seat is taken");
+    }
+}
+
+
+void GameUI::on_buttonSitInSeat5_clicked()
+{
+    if (seats_[5]->isAvailable()){
+        me_->changeSeat(seats_[5]);
+        showGUI();
+    } else{
+         QMessageBox::critical(this, "ERROR", "Choosen seat is taken");
+    }
+}
+
+
+void GameUI::on_buttonSitInSeat6_clicked()
+{
+    if (seats_[6]->isAvailable()){
+        me_->changeSeat(seats_[6]);
+        showGUI();
+    } else{
+         QMessageBox::critical(this, "ERROR", "Choosen seat is taken");
+    }
+}
+
+
+void GameUI::on_buttonSitInSeat7_clicked()
+{
+    if (seats_[7]->isAvailable()){
+        me_->changeSeat(seats_[7]);
+        showGUI();
+    } else{
+         QMessageBox::critical(this, "ERROR", "Choosen seat is taken");
+    }
+}
+
+
+void GameUI::on_buttonFold_clicked()
+{
+    ui->messageBrowser->append("You fold");
+    hideBet();
+    // отправить на сервер fold
+    me_->clearCards();
+}
+
+
+void GameUI::on_buttonBet_clicked()
+{
+    ui->buttonBet->hide();
+    ui->buttonCall->hide();
+    ui->buttonFold->hide();
+    ui->buttonDecrementBet->show();
+    ui->buttonIncrementBet->show();
+    ui->buttonCancel->show();
+    ui->buttonSubmit->show();
+    ui->inputBet->show();
+    ui->horizontalBetSlider->show();
+    ui->inputBet->setText(QString::number(currentBet_));
+}
+
+
+void GameUI::on_horizontalBetSlider_sliderMoved(int position)
+{
+    ui->inputBet->setText(QString::number((me_->money() - currentBet_) / 100 * position + currentBet_));
+}
+
+
+void GameUI::on_buttonIncrementBet_clicked()
+{
+    int curValue = ui->horizontalBetSlider->value();
+    if (curValue != 100){
+        ui->horizontalBetSlider->setValue(++curValue);
+
+    }
+}
+
+
+void GameUI::on_horizontalBetSlider_valueChanged(int value)
+{
+    ui->horizontalBetSlider->setSliderPosition(value);
+    emit ui->horizontalBetSlider->sliderMoved(value);
+}
+
+
+void GameUI::on_buttonDecrementBet_clicked()
+{
+    int curValue = ui->horizontalBetSlider->value();
+    if (curValue > 0){
+        ui->horizontalBetSlider->setValue(--curValue);
+    }
+}
+
+
+void GameUI::on_buttonCancel_clicked()
+{
+    hideBet();
+    bet();
+}
+
+
+void GameUI::on_buttonSubmit_clicked()
+{
+    currentBet_ = ui->inputBet->text().toInt();
+    ui->messageBrowser->append(QString("You set new bet: %1").arg(QString::number(currentBet_)));
+    me_->bet(currentBet_);
+    hideBet();
+}
+
+
+void GameUI::on_buttonCall_clicked()
+{
+    me_->bet(currentBet_);
+    ui->messageBrowser->append(QString("You called bet: %1").arg(QString::number(currentBet_)));
+    showBetOnTable();
+    hideBet();
+    //TODO: отправить на сервер
+}
+

@@ -2721,7 +2721,6 @@ border: transparent;</string>
     </property>
    </widget>
    <zorder>background</zorder>
-   <zorder>buttonSitInSeat5</zorder>
    <zorder>labelCardHolder</zorder>
    <zorder>labelTable</zorder>
    <zorder>labelBottomLeft</zorder>
@@ -2856,10 +2855,11 @@ border: transparent;</string>
    <zorder>buttonCancel</zorder>
    <zorder>labelPlayerCard2</zorder>
    <zorder>labelPlayerCard1</zorder>
-   <zorder>placeholder5</zorder>
-   <zorder>Player5Name</zorder>
-   <zorder>Player5ChipCount</zorder>
    <zorder>inputBet</zorder>
+   <zorder>buttonSitInSeat5</zorder>
+   <zorder>placeholder5</zorder>
+   <zorder>Player5ChipCount</zorder>
+   <zorder>Player5Name</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

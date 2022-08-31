@@ -24,8 +24,8 @@ void Seat::show()
     for (auto *coin: *coins_){
         coin->show();
     }
-    for (auto *card: *cards_){
-        card->show();
+    for (int i = 0; i < cardsCount_; ++i){
+        (*cards_)[i]->show();
     }
     name_->show();
     place_->show();
@@ -33,10 +33,34 @@ void Seat::show()
     button_->hide();
 }
 
-void Seat::addPlayer(const QString &playerName, const int &money)
+void Seat::addPlayer(const QString &playerName, const int &money, const int &cardsCount)
 {
     name_->setText(playerName);
     money_->setText(QString::number(money));
+    cardsCount_ = cardsCount;
     isAvailable_ = false;
     show();
+}
+
+bool Seat::isAvailable() const
+{
+    return isAvailable_;
+}
+
+void Seat::free()
+{
+    isAvailable_ = true;
+    hide();
+}
+
+void Seat::setCardPixmap(const int &number, const QPixmap &pixmap)
+{
+    if (number >= 0 and number < 2){
+       (*cards_)[number]->setPixmap(pixmap);
+    }
+}
+
+void Seat::changeMoney(const int &newMoney)
+{
+    money_->setText(QString::number(newMoney));
 }

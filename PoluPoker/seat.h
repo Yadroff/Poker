@@ -15,14 +15,23 @@ public:
 
     void show();
 
+    void addPlayer(const QString &playerName, const int &money, const int &cardsCount_);
+
+    bool isAvailable() const;
+
+    void free();
+
+    void setCardPixmap(const int &number, const QPixmap &pixmap);
+
+    void changeMoney(const int &newMoney);
 private:
     QVector<QLabel*> *coins_;
     QVector<QLabel*> *cards_;
+    int cardsCount_;
     QLabel *place_, *name_, *money_;
     QPushButton *button_;
     bool isAvailable_;
 private slots:
-    void addPlayer(const QString &playerName, const int &money);
 signals:
 
 };

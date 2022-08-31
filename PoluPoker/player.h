@@ -3,19 +3,28 @@
 
 #include <QObject>
 #include <seat.h>
+#include <card.h>
 
 const int DEFAULT_COINS = 5000;
 class Player : public QObject
 {
     Q_OBJECT
 public:
-    explicit Player(QObject *parent = nullptr);
-    Player(const QString &name, const int &seat, QLabel *card1, QLabel *card2, QLabel *labelName, QLabel *coins);
+    explicit Player(const QString &name, QObject *parent = nullptr);
+    Player(const QString &name, Seat *seat);
+    void giveCard(const QString &suit, const QString &nominal);
+    void changeSeat(Seat *seat);
+    void clearCards();
+
+    int money() const;
+    void bet(qint32 &bet);
+
 private:
+    Card card_;
+    int cardsCount_;
     QString name_;
-    qint32 seat_;
     qint32 money_;
-    Seat *seat;
+    Seat *seat_;
 public slots:
     void leaveTable();
 };

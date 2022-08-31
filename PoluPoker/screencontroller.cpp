@@ -4,15 +4,15 @@
 ScreenController::ScreenController(QObject *parent) :
     QObject(parent) {
     testTable();
-    thread = new QThread(this);
-    servConnect_ = new ServerConnecter();
-    servConnect_->moveToThread(thread);
-    connect(thread, SIGNAL(started()), servConnect_, SLOT(run()));
-    connect(servConnect_, SIGNAL(finished(const QString &)), this, SLOT(connectToServer(const QString &)));
-    thread->start();
-    this->auth_ = new Authentication();
-    this->auth_->show();
-    connect(auth_, SIGNAL(needToSend(const QString &)), this, SLOT(sendToServer(const QString &)));
+//    thread = new QThread(this);
+//    servConnect_ = new ServerConnecter();
+//    servConnect_->moveToThread(thread);
+//    connect(thread, SIGNAL(started()), servConnect_, SLOT(run()));
+//    connect(servConnect_, SIGNAL(finished(const QString &)), this, SLOT(connectToServer(const QString &)));
+//    thread->start();
+//    this->auth_ = new Authentication();
+//    this->auth_->show();
+//    connect(auth_, SIGNAL(needToSend(const QString &)), this, SLOT(sendToServer(const QString &)));
 }
 
 ScreenController::~ScreenController(){
@@ -71,7 +71,7 @@ void ScreenController::testTable()
 //    table_->putCardOnTable("Hearts", "Eight");
 //    table_->putCardOnTable("Clubs", "Jack");
 //    table_->show();
-    ui_ = new GameUI();
+    ui_ = new GameUI("My table", "Yadroff");
     ui_->show();
 }
 
