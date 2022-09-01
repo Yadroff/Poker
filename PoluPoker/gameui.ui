@@ -2406,7 +2406,7 @@ min-height:100px;</string>
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="labelWeclomeText">
     <property name="geometry">
      <rect>
       <x>320</x>
@@ -2425,7 +2425,7 @@ min-height:100px;</string>
 </string>
     </property>
     <property name="text">
-     <string>Welcome Text</string>
+     <string>Prepare your anus</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -2529,10 +2529,13 @@ icon: blafdsf;
      <string/>
     </property>
     <property name="text">
-     <string>Enter your message</string>
+     <string/>
     </property>
     <property name="maxLength">
      <number>48</number>
+    </property>
+    <property name="placeholderText">
+     <string>Enter your message</string>
     </property>
    </widget>
    <widget class="QTextEdit" name="messageBrowser">
@@ -2839,7 +2842,7 @@ border: transparent;</string>
    <zorder>Player0Stack5</zorder>
    <zorder>Player0Stack4</zorder>
    <zorder>Player0Stack6</zorder>
-   <zorder>label</zorder>
+   <zorder>labelWeclomeText</zorder>
    <zorder>labelButtonHolder</zorder>
    <zorder>buttonBet</zorder>
    <zorder>buttonCall</zorder>

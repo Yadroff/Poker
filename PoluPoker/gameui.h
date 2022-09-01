@@ -22,11 +22,12 @@ private:
     QVector<QLabel *> cards_;
     Player *me_;
     QString name_;
-    int currentBet_;
+    int bet_;
+    int pot_;
 private slots:
     void test();
     void showGUI();
-    void showBetOnTable(const int &bet);
+    void showBetOnTable();
     void setupSeats();
     void setupCards();
     void bet();
@@ -48,6 +49,9 @@ private slots:
     void on_buttonCancel_clicked();
     void on_buttonSubmit_clicked();
     void on_buttonCall_clicked();
+    void on_messageBox_editingFinished();
+
+    void startGame();
 };
 
 #endif // GAMEUI_H

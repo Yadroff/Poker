@@ -9,6 +9,7 @@
 #include "mainwindow.h"
 #include "authentication.h"
 #include "serverconnecter.h"
+#include "senderreciver.h"
 #include "gameui.h"
 
 const quint16 SERVER_PORT = 7777;
@@ -25,15 +26,14 @@ private:
     ServerConnecter *servConnect_;
     QThread *thread;
     GameUI *ui_;
+    SenderReciver *senderReciver_;
 
-    void parseLogin(const QVector<QString> &commands);
-    void parseRegist(const QVector<QString> &commands);
-    void createMenu();
     void testTable();
 private slots:
-    void readingData();
     void sendToServer(const QString &command);
     void connectToServer(const QString& servAddress);
+    void loginFail(const QString &);
+    void createMenu();
 };
 
 #endif // SCREENCONTROLLER_H

@@ -5,7 +5,7 @@
 Button::Button(const QString &nameButton, const QString &buttonText)
 {
     this->setAccessibleName(nameButton);
-    QPixmap pixmap(":/images/redGUIButton.png");
+    QPixmap pixmap(":/images/homeScreenRectButton.png");
     QIcon buttonIcon(pixmap);
     this->setIcon(buttonIcon);
     this->setIconSize(pixmap.rect().size());

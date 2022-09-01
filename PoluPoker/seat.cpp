@@ -64,3 +64,9 @@ void Seat::changeMoney(const int &newMoney)
 {
     money_->setText(QString::number(newMoney));
 }
+
+void Seat::hideAll()
+{
+    hide();
+    button_->hide();
+}

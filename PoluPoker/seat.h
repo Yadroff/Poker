@@ -24,6 +24,8 @@ public:
     void setCardPixmap(const int &number, const QPixmap &pixmap);
 
     void changeMoney(const int &newMoney);
+
+    void hideAll();
 private:
     QVector<QLabel*> *coins_;
     QVector<QLabel*> *cards_;

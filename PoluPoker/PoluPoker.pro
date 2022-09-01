@@ -18,6 +18,7 @@ SOURCES += \
     player.cpp \
     screencontroller.cpp \
     seat.cpp \
+    senderreciver.cpp \
     serverconnecter.cpp
 
 HEADERS += \
@@ -29,6 +30,7 @@ HEADERS += \
     player.h \
     screencontroller.h \
     seat.h \
+    senderreciver.h \
     serverconnecter.h
 
 
