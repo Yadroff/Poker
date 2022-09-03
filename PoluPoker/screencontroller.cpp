@@ -1,9 +1,12 @@
 #include "screencontroller.h"
 #include <QSound>
 
+const int TABLE_SIZE = 8;
+
 ScreenController::ScreenController(QObject *parent) :
     QObject(parent) {
 //    testTable();
+
     thread = new QThread(this);
     servConnect_ = new ServerConnecter();
     servConnect_->moveToThread(thread);
@@ -12,10 +15,21 @@ ScreenController::ScreenController(QObject *parent) :
     thread->start();
     this->auth_ = new Authentication();
     this->auth_->show();
+    connect(this->auth_, SIGNAL(changeLogin(const QString &)), this, SLOT(setLogin(const QString &)));
 }
 
 ScreenController::~ScreenController(){
 
+}
+
+void ScreenController::setLogin(const QString &newLogin)
+{
+    login_ = newLogin;
+}
+
+const QString &ScreenController::login() const
+{
+    return login_;
 }
 
 void ScreenController::loginFail(const QString &error)
@@ -27,9 +41,27 @@ void ScreenController::loginFail(const QString &error)
 void ScreenController::createMenu() {
     this->menu_ = new MainWindow;
     this->auth_->close();
+    this->auth_->deleteLater();
     this->menu_->show();
-    connect(menu_, SIGNAL(needToSend(const QString &)), this, SLOT(sendToServer(const QString &)));
+//    connect(menu_, SIGNAL(needToSend(const QString &)), this->senderReciver_, SLOT(send(const QString &)));
+    connect(menu_, SIGNAL(signalCreateTable(const QString &)), this, SLOT(createTable(const QString&)));
+}
 
+void ScreenController::createTable(const QString &name)
+{
+    this->table_ = new GameUI(name, login_);
+    this->menu_->hide();
+    this->menu_->deleteLater();
+    QString string = "CREATE " + name + " " + QString::number(TABLE_SIZE);
+    senderReciver_->send(string);
+}
+
+void ScreenController::connectTable(const QString &name)
+{
+    this->table_ = new GameUI(name, login_);
+    QString command = "CONNECT" + name + " " + login_ + " ";
+    senderReciver_->send(command);
+    //TODO: достать инфу с сервера
 }
 
 void ScreenController::testTable()
@@ -41,17 +73,13 @@ void ScreenController::testTable()
 //    table_->putCardOnTable("Hearts", "Eight");
 //    table_->putCardOnTable("Clubs", "Jack");
 //    table_->show();
-    ui_ = new GameUI("My table", "Yadroff");
-    ui_->show();
+    table_ = new GameUI("My table", "Yadroff");
+    table_->show();
 }
 
-void ScreenController::sendToServer(const QString &command) {
-    socket_->write(command.toUtf8());
-    std::cout << "WRITE TO SERVER: " << command.toStdString() << std::endl;
-    socket_->waitForReadyRead();
-}
 
 void ScreenController::connectToServer(const QString &string) {
+    this->auth_->stopLoad();
     std::cout << string.toStdString() << std::endl;
     thread->quit();
     thread->wait();
@@ -63,7 +91,7 @@ void ScreenController::connectToServer(const QString &string) {
         QMessageBox::critical(this->auth_, "CONNECTION FAIL", string);
         return;
     }
-    socket_ = new QTcpSocket();
+    auto socket_ = new QTcpSocket();
     socket_->connectToHost(stringList.last(), SERVER_PORT);
     if (!socket_->waitForConnected()) {
         std::cout << "Can not to connect: " << socket_->errorString().toStdString() << std::endl;

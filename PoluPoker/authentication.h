@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QMessageBox>
+#include "load.h"
 
 const QString KEY_VERNAM = "EVTIQWXQVVOPMCXREPYZ";
 const int KEY_SIZE = KEY_VERNAM.size();
@@ -18,10 +19,13 @@ class Authentication : public QMainWindow
 public:
     explicit Authentication(QWidget *parent = nullptr);
     ~Authentication();
-
+    void load();
+    void stopLoad();
+private:
+        Load *load_;
 signals:
     void needToSend(const QString &command);
-
+    void changeLogin(const QString &login);
 private slots:
     void on_buttonRegister_clicked();
 

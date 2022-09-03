@@ -17,7 +17,8 @@ public:
     QStringList tables;
 
 signals:
-   void needToSend(const QString &command);
+    void signalCreateTable(const QString &name);
+    void signalConnectTable(const QString &name);
 private slots:\
     // create
     void createTable();

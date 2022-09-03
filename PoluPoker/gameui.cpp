@@ -257,6 +257,7 @@ void GameUI::on_buttonSitInSeat0_clicked()
         me_->changeSeat(seats_[0]);
         showGUI();
         //TODO: отправить на сервер изменение места
+        emit changeSeat(0);
     } else{
          QMessageBox::critical(this, "ERROR", "Choosen seat is taken");
     }
@@ -268,6 +269,7 @@ void GameUI::on_buttonSitInSeat1_clicked()
     if (seats_[1]->isAvailable()){
         me_->changeSeat(seats_[1]);
         showGUI();
+        emit changeSeat(1);
     } else{
          QMessageBox::critical(this, "ERROR", "Choosen seat is taken");
     }
@@ -278,6 +280,7 @@ void GameUI::on_buttonSitInSeat2_clicked()
 {
     if (seats_[2]->isAvailable()){
         me_->changeSeat(seats_[2]);
+        emit changeSeat(2);
     } else{
          QMessageBox::critical(this, "ERROR", "Choosen seat is taken");
     }
@@ -289,6 +292,7 @@ void GameUI::on_buttonSitInSeat3_clicked()
     if (seats_[3]->isAvailable()){
         me_->changeSeat(seats_[3]);
         showGUI();
+        emit changeSeat(3);
     } else{
          QMessageBox::critical(this, "ERROR", "Choosen seat is taken");
     }
@@ -300,6 +304,7 @@ void GameUI::on_buttonSitInSeat4_clicked()
     if (seats_[4]->isAvailable()){
         me_->changeSeat(seats_[4]);
         showGUI();
+        emit changeSeat(4);
     } else{
          QMessageBox::critical(this, "ERROR", "Choosen seat is taken");
     }
@@ -311,6 +316,7 @@ void GameUI::on_buttonSitInSeat5_clicked()
     if (seats_[5]->isAvailable()){
         me_->changeSeat(seats_[5]);
         showGUI();
+        emit changeSeat(5);
         startGame();
         test();
     } else{
@@ -324,6 +330,7 @@ void GameUI::on_buttonSitInSeat6_clicked()
     if (seats_[6]->isAvailable()){
         me_->changeSeat(seats_[6]);
         showGUI();
+        emit changeSeat(6);
     } else{
          QMessageBox::critical(this, "ERROR", "Choosen seat is taken");
     }
@@ -335,6 +342,7 @@ void GameUI::on_buttonSitInSeat7_clicked()
     if (seats_[7]->isAvailable()){
         me_->changeSeat(seats_[7]);
         showGUI();
+        emit changeSeat(7);
     } else{
          QMessageBox::critical(this, "ERROR", "Choosen seat is taken");
     }
@@ -413,6 +421,7 @@ void GameUI::on_buttonSubmit_clicked()
     me_->bet(bet_);
     hideBet();
     //TODO: отправить на сервер изменение ставки
+    emit bet(bet_);
 }
 
 
@@ -424,6 +433,7 @@ void GameUI::on_buttonCall_clicked()
     showBetOnTable();
     hideBet();
     //TODO: отправить на сервер call
+    emit call();
 }
 
 
@@ -436,6 +446,7 @@ void GameUI::on_messageBox_editingFinished()
     ui->messageBrowser->append("You: " + text);
     ui->messageBox->clear();
     //TODO: отправить на сервер сообщение в чат
+    emit sendChat(text);
 }
 
 void GameUI::startGame()

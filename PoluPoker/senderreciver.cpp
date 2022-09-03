@@ -1,5 +1,7 @@
 #include "senderreciver.h"
 #include <iostream>
+#include <QJsonObject>
+#include <QJsonParseError>
 
 SenderReciver::SenderReciver(QTcpSocket *socket, QObject *parent):
     QObject{parent}, socket_(socket)
@@ -18,25 +20,68 @@ SenderReciver::~SenderReciver()
 void SenderReciver::send(const QString &str)
 {
     if (socket_->isOpen()){
-        socket_->write(str.toUtf8());
+        socket_->write(toJSON(str));
     }
+}
+
+QByteArray SenderReciver::toJSON(const QString &string)
+{
+    auto stringVec = string.split(" ").toVector();
+    QJsonObject obj;
+    auto command = stringVec[0];
+    if (command == "REGIST" or command == "LOGIN"){
+        assert(stringVec.size() == 3);
+        obj.insert("command", command);
+        obj.insert("login", stringVec[1]);
+        obj.insert("password", stringVec[2]);
+    } else if (command == "CREATE"){
+        assert(stringVec.size() == 3);
+        obj.insert("command", command);
+        obj.insert("name", stringVec[1]);
+        obj.insert("size", stringVec[2].toInt());
+    } else if (command == "CONNECT"){
+        assert(stringVec.size() == 4);
+        obj.insert("command", command);
+        obj.insert("table_name", stringVec[1]);
+        obj.insert("player_name", stringVec[2]);
+        obj.insert("coins", stringVec[3].toInt());
+    } else if (command == "CHANGE_SEAT"){
+        assert(stringVec.size() == 3);
+        obj.insert("command", command);
+        obj.insert("player_name", stringVec[1]);
+        obj.insert("new_seat", stringVec[2]);
+    }
+    QJsonDocument doc(obj);
+    QByteArray arr = doc.toJson(QJsonDocument::Indented);
+    std::cout << arr.toStdString() << std::endl;
+    return arr;
 }
 
 void SenderReciver::readData()
 {
     QByteArray data = socket_->readAll();
-    std::cout << data.toStdString() << std::endl;
-    parse(QString(data));
+    QJsonDocument json;
+    QJsonParseError jsonError;
+    json.fromJson(data, &jsonError);
+    if (jsonError.error != QJsonParseError::NoError){
+        std::cout << "JSON Error: " << jsonError.errorString().toStdString() << std::endl;
+    }
+    std::cout << QString(json.toJson(QJsonDocument::Compact)).toStdString() << std::endl;
+    parse(json);
 }
 
-void SenderReciver::parse(const QString &data)
+void SenderReciver::parse(const QJsonDocument &jsonDoc)
 {
-    QVector<QString> commands = QString(data).split(" ").toVector();
-    QString command = commands.first();
-    if (command == "LOGIN") { // LOGIN
-        parseLogin(commands);
-    } else if (command == "REGIST") { // REGIST
-        parseRegist(commands);
+    QJsonObject obj = jsonDoc.object();
+    QString command = obj.value("command").toString();
+    if (command == "REGIST" or command == "LOGIN"){
+        QString result = obj.value("result").toString();
+        if (result == "SUCCESS"){
+            emit loginRegistSuccess();
+        } else{
+            if (result.contains("UNIQUE constraint failed")) result = "User already exists";
+            emit loginRegistFail(result);
+        }
     }
 }
 
@@ -53,6 +98,7 @@ void SenderReciver::parseLogin(const QVector<QString> &commands)
             emit loginRegistSuccess();
 
         } else {
+
             emit loginRegistFail("Wrong login or password");
         }
     }

@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QTcpSocket>
 
+#include <QJsonDocument>
+
 class SenderReciver : public QObject
 {
     Q_OBJECT
@@ -14,9 +16,11 @@ public slots:
     void send(const QString &str);
 private:
     QTcpSocket *socket_;
+
+    QByteArray toJSON(const QString &string);
 private slots:
     void readData();
-    void parse(const QString &data);
+    void parse(const QJsonDocument &json);
     void parseLogin(const QVector<QString> &commands);
     void parseRegist(const QVector<QString> &commands);
 signals:

@@ -11,6 +11,7 @@ CONFIG += c++17
 SOURCES += \
     card.cpp \
     combination.cpp \
+    command.cpp \
     main.cpp \
     player.cpp \
     server.cpp \
@@ -20,6 +21,7 @@ SOURCES += \
 HEADERS += \
     card.h \
     combination.h \
+    command.h \
     player.h \
     server.h \
     table.h \

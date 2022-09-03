@@ -1,0 +1,20 @@
+{
+    "command": "INFO_TABLE",
+    "table_name": "ABC",
+    "players": [
+        {
+        "name": "A",
+        "seat": 7,
+        "money": 5000,
+        "cards": 2
+        },
+        {
+        "name": "B",
+        "seat": 5,
+        "money": 3000,
+        "cards": 2
+        }
+    ],
+    "pot": 50000,
+    "bet": 30000,
+}

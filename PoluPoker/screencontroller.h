@@ -1,9 +1,7 @@
 #ifndef SCREENCONTROLLER_H
 #define SCREENCONTROLLER_H
 
-#include <QtWidgets>
 #include <QTcpSocket>
-#include <QtMultimedia/QMediaPlayer>
 #include <QThread>
 
 #include "mainwindow.h"
@@ -18,22 +16,26 @@ class ScreenController: public QObject
     Q_OBJECT
 public:
     explicit ScreenController(QObject *parent = nullptr);
-    ~ScreenController();    
+    ~ScreenController();
+
+    const QString &login() const;
+
 private:
-    QTcpSocket *socket_;
     MainWindow *menu_;
     Authentication *auth_;
     ServerConnecter *servConnect_;
     QThread *thread;
-    GameUI *ui_;
+    GameUI *table_;
     SenderReciver *senderReciver_;
-
+    QString login_;
     void testTable();
 private slots:
-    void sendToServer(const QString &command);
+    void setLogin(const QString &newLogin);
     void connectToServer(const QString& servAddress);
     void loginFail(const QString &);
     void createMenu();
+    void createTable(const QString &name);
+    void connectTable(const QString &name);
 };
 
 #endif // SCREENCONTROLLER_H

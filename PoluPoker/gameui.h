@@ -24,6 +24,12 @@ private:
     QString name_;
     int bet_;
     int pot_;
+signals:
+    void sendChat(const QString &message);
+    void call();
+    void fold();
+    void bet(const int &);
+    void changeSeat(const int &);
 private slots:
     void test();
     void showGUI();

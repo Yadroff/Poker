@@ -12,6 +12,7 @@
 
 #include "table.h"
 #include "sender.h"
+#include "command.h"
 
 const quint16 SERVER_PORT = 7777;
 const QString DATA_BASE_PATH = "./users.db";
@@ -23,7 +24,7 @@ public:
     explicit Server(QWidget *parent = nullptr);
 
     ~Server();
-
+    friend class Command;
 private:
     QTcpServer *tcpServer_; // сервер
     QMap<qint64, QTcpSocket *> clients_; // мапа [clientID, socket]

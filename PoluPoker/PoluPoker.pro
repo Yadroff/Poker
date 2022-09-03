@@ -13,6 +13,7 @@ SOURCES += \
     button.cpp \
     card.cpp \
     gameui.cpp \
+    load.cpp \
     main.cpp \
     mainwindow.cpp \
     player.cpp \
@@ -26,6 +27,7 @@ HEADERS += \
     button.h \
     card.h \
     gameui.h \
+    load.h \
     mainwindow.h \
     player.h \
     screencontroller.h \
@@ -41,7 +43,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 FORMS += \
     authentication.ui \
-    gameui.ui
+    gameui.ui \
+    load.ui
 RESOURCES += \
     images.qrc \
     sounds.qrc

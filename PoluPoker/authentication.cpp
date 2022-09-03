@@ -2,6 +2,7 @@
 #include "ui_authentication.h"
 
 #include <iostream>
+#include <QDesktopWidget>
 
 Authentication::Authentication(QWidget *parent) :
     QMainWindow(parent),
@@ -10,12 +11,30 @@ Authentication::Authentication(QWidget *parent) :
     ui->setupUi(this);
     ui->lineLogin->setPlaceholderText("Write your LOGIN");
     ui->linePassword->setPlaceholderText("Write your PASSWORD");
-    this->setWindowState(Qt::WindowMaximized);
+    this->setWindowState(Qt::WindowFullScreen);
+    load_ = new Load(this);
+    QDesktopWidget deskWid;
+    auto rect = deskWid.screenGeometry(ui->centralwidget);
+    int x = rect.width() - load_->geometry().width();
+    int y = rect.height() - load_->geometry().height();
+    load_->setGeometry(x / 2, y / 2, load_->geometry().width(), load_->geometry().height());
 }
 
 Authentication::~Authentication()
 {
     delete ui;
+    delete load_;
+}
+
+void Authentication::load()
+{
+    load_->show();
+}
+
+void Authentication::stopLoad()
+{
+    load_->hide();
+    load_->deleteLater();
 }
 
 void Authentication::on_buttonRegister_clicked()
@@ -37,6 +56,7 @@ void Authentication::on_buttonRegister_clicked()
     QString command = "REGIST " + login + QString(" ") + password;
     password = "";
     emit needToSend(command);
+    emit changeLogin(login);
 }
 
 
@@ -59,6 +79,7 @@ void Authentication::on_buttonLogin_clicked()
     QString command = "LOGIN " + login + QString(" ") + password;
     password = "";
     emit needToSend(command);
+    emit changeLogin(login);
 }
 
 bool Authentication::isValidString(QString &string)

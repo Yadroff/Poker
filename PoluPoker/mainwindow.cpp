@@ -141,8 +141,8 @@ void MainWindow::createClicked()
     boxTables_->addItem(tableName);
     lineCreateTable_->clear();
     this->cancelCreate();
-    QString command = "CREATE " + tableName;
-    emit needToSend(command);
+//    QString command = "CREATE " + tableName;
+    emit signalCreateTable(tableName);
 
 }
 
@@ -168,7 +168,7 @@ void MainWindow::connectClicked()
 {
     QString tableName = boxTables_->currentText();
     this->cancelConnect();
-    QString command = "CONNECT " + tableName;
-    emit needToSend(command);
+//    QString command = "CONNECT " + tableName;
+    emit signalConnectTable(tableName);
 }
 
