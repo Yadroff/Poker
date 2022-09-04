@@ -2,6 +2,10 @@
 #define COMMANDCONNECT_H
 
 #include <QObject>
+#include <QJsonDocument>
+#include <QJsonObject>
+
+#include "command.h"
 #include "player.h"
 #include "table.h"
 
@@ -9,13 +13,12 @@ class CommandConnect : public QObject
 {
     Q_OBJECT
 public:
-    explicit CommandConnect(Table *table, QString &playerName, QObject *parent = nullptr);
-    QByteArray
+    explicit CommandConnect(Table *table, QString &playerName, const int &playerID, QObject *parent = nullptr);
+    QByteArray exec();
 private:
     Table *table_;
     QString playerName_;
-signals:
-
+    int playerID_;
 };
 
 #endif // COMMANDCONNECT_H

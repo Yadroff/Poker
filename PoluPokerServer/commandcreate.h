@@ -2,6 +2,8 @@
 #define COMMANDCREATE_H
 
 #include <QObject>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 #include "command.h"
 #include "table.h"

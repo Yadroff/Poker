@@ -12,7 +12,7 @@ Q_OBJECT
 public:
     Player();
 
-    Player(const QString &name, const qint64 &id, const quint64 &seat, QObject *parent = nullptr);
+    Player(const QString &name, const qint64 &id, const int &seat, QObject *parent = nullptr);
 
     Player(const Player &another);
 
@@ -32,7 +32,7 @@ private:
     QString name_;
     qint64 id_;
     quint64 coins_;
-    quint64 seat_;
+    int seat_;
     Combination combination_;
 };
 

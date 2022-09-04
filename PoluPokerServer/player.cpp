@@ -6,7 +6,7 @@ Player::Player() {
     seat_ = 0;
 }
 
-Player::Player(const QString &name, const qint64 &id, const quint64 &seat,
+Player::Player(const QString &name, const qint64 &id, const int &seat,
                QObject *parent)
     : QObject{parent}, id_(id), seat_(seat), combination_() {
     name_ = name;

@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QtSql>
 #include <QSqlDatabase>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 #include "command.h"
 

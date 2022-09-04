@@ -113,7 +113,7 @@ void Table::putCardOnTable() {
  * @param id - идентификатор для более быстрой отправки команд
  * @param seat - номер места, за которым сидит игрок
  */
-bool Table::addPlayer(const QString &playerName, const qint64 &id, const quint64 &seat) {
+bool Table::addPlayer(const QString &playerName, const int &id, const int &seat) {
     if (players_.contains(playerName)) {
         std::cout << "TABLE: " << name_.toStdString() << " : ERROR: ADD PLAYER: ALREADY EXISTS" << std::endl;
         return false;

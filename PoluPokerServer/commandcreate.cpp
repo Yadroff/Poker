@@ -5,13 +5,21 @@ CommandCreate::CommandCreate(QMap<QString, Table*> &tables, QString &name, int &
     QObject{parent}, tableName_(name), tableSize_(size), map_(tables)
 {}
 
-Table *CommandCreate::exec()
+QByteArray CommandCreate::exec()
 {
+    QJsonObject obj;
+    obj.insert("command", "CREATE");
+    QString result;
     if (map_.contains(tableName_)){
-        qDebug() << QString("TABLE %1 ALREADY EXISTS").arg(tableName_);
-        return nullptr;
+        result = "ALREADY EXISTS";
+    } else{
+        auto table = new Table(tableName_, tableSize_);
+        map_.insert(tableName_, table);
+        result = "SUCCESS";
     }
-    auto table = new Table(tableName_, tableSize_);
-    qDebug() << QString("NEW TABLE %1 WITH SIZE %2 CREATED").arg(tableName_).arg(tableSize_);
-    return table;
+    obj.insert("result", result);
+    QJsonDocument doc(obj);
+    auto ans = doc.toJson(QJsonDocument::Indented);
+    qDebug() << QString(ans);
+    return ans;
 }

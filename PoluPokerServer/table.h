@@ -21,7 +21,7 @@ public:
 
     void putCardOnTable();
 
-    bool addPlayer(const QString &playerName, const qint64 &id, const quint64 &seat);
+    bool addPlayer(const QString &playerName, const int &id, const int &seat);
 
     int size() const;
 
