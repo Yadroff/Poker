@@ -1,16 +1,14 @@
 #ifndef COMMAND_H
 #define COMMAND_H
 
-#include <QObject>
+#include <QByteArray>
 
-class Command : public QObject
+class Command
 {
-    Q_OBJECT
 public:
-    explicit Command(QObject *parent = nullptr);
+    virtual ~Command() = 0;
 
-signals:
-
+    virtual QByteArray exec() = 0;
 };
 
 #endif // COMMAND_H

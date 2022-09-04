@@ -2,7 +2,7 @@ QT       += core gui network sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++17
+CONFIG += c++17 console
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -12,6 +12,8 @@ SOURCES += \
     card.cpp \
     combination.cpp \
     command.cpp \
+    commandlogin.cpp \
+    commandregist.cpp \
     main.cpp \
     player.cpp \
     server.cpp \
@@ -22,6 +24,8 @@ HEADERS += \
     card.h \
     combination.h \
     command.h \
+    commandlogin.h \
+    commandregist.h \
     player.h \
     server.h \
     table.h \

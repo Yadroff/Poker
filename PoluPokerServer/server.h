@@ -24,7 +24,6 @@ public:
     explicit Server(QWidget *parent = nullptr);
 
     ~Server();
-    friend class Command;
 private:
     QTcpServer *tcpServer_; // сервер
     QMap<qint64, QTcpSocket *> clients_; // мапа [clientID, socket]
