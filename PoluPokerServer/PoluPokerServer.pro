@@ -11,7 +11,8 @@ CONFIG += c++17 console
 SOURCES += \
     card.cpp \
     combination.cpp \
-    command.cpp \
+    commandconnect.cpp \
+    commandcreate.cpp \
     commandlogin.cpp \
     commandregist.cpp \
     main.cpp \
@@ -22,14 +23,17 @@ SOURCES += \
 
 HEADERS += \
     card.h \
-    combination.h \
     command.h \
+    combination.h \
+    commandconnect.h \
+    commandcreate.h \
     commandlogin.h \
     commandregist.h \
     player.h \
     server.h \
     table.h \
     sender.h
+
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin

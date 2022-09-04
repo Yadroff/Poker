@@ -10,7 +10,7 @@
 class Table : public QObject {
 Q_OBJECT
 public:
-    explicit Table(const QString &name, const char &size = 5,
+    explicit Table(const QString &name, const char &size = 8,
                    QObject *parent = nullptr);
 
     QString name() const;

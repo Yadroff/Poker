@@ -2,5 +2,4 @@
     "command": "CONNECT",
     "table_name": "ABC",
     "player_name": "1",
-    "coins": 5000
 }

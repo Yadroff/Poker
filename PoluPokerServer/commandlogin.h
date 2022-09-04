@@ -4,9 +4,10 @@
 #include <QObject>
 #include <QtSql>
 #include <QSqlDatabase>
+
 #include "command.h"
 
-class CommandLogin : public QObject, public Command
+class CommandLogin : public Command, public QObject
 {
     Q_OBJECT
 public:

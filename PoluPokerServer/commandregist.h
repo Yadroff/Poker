@@ -5,9 +5,10 @@
 #include <QtSql>
 #include <QSqlDatabase>
 #include <QJsonDocument>
+
 #include "command.h"
 
-class CommandRegist : public QObject, public Command
+class CommandRegist : public Command, public QObject
 {
     Q_OBJECT
 public:
