@@ -12,21 +12,21 @@ Table::Table(const QString &name, const char &size, QObject *parent)
         : QObject(parent), tableCards_(5), usedCards_(52),
           generator_(QDateTime::currentMSecsSinceEpoch()), curBet_(0), size_(size), winnerComb_(), bank_(0) {
     name_ = name;
-    addPlayer("Yadroff", 0, 0);
-    addPlayer("potnie_yaici", 1, 1);
+//    addPlayer("Yadroff", 0, 0);
+//    addPlayer("potnie_yaici", 1, 1);
     blind();
     flop();
     tern();
 
-    auto winners = calculateWinner();
-    std::cout << "\t WINNER" << std::endl;
-    for (auto *player: winners) {
-        std::cout << *player << std::endl;
-    }
-    std::cout << "\tEND WINNER" << std::endl;
-    for (auto *player: gamePlayers_) {
-        std::cout << *player << std::endl;
-    }
+//    auto winners = calculateWinner();
+//    std::cout << "\t WINNER" << std::endl;
+//    for (auto *player: winners) {
+//        std::cout << *player << std::endl;
+//    }
+//    std::cout << "\tEND WINNER" << std::endl;
+//    for (auto *player: gamePlayers_) {
+//        std::cout << *player << std::endl;
+//    }
 }
 
 QString Table::name() const { return this->name_; }
@@ -146,3 +146,7 @@ QVector<Player *> Table::calculateWinner() {
     }
     return winners;
 }
+void Table::betting(const int &start) {}
+void Table::river() {}
+int Table::bet() const { return curBet_; }
+int Table::pot() const { return bank_; }

@@ -1,14 +1,14 @@
 #ifndef COMMAND_H
 #define COMMAND_H
 
-#include <QByteArray>
+#include <QJsonDocument>
 
 class Command
 {
 public:
-    virtual ~Command() = 0;
+    ~Command(){}
 
-    virtual QByteArray exec() = 0;
+    virtual QJsonDocument exec() = 0;
 };
 
 #endif // COMMAND_H

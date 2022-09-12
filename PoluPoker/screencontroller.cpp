@@ -6,7 +6,8 @@ const int TABLE_SIZE = 8;
 ScreenController::ScreenController(QObject *parent) :
     QObject(parent) {
 //    testTable();
-
+//    this->menu_ = new MainWindow();
+//    this->menu_->show();
     thread = new QThread(this);
     servConnect_ = new ServerConnecter();
     servConnect_->moveToThread(thread);
@@ -38,10 +39,9 @@ void ScreenController::loginFail(const QString &error)
 }
 
 
-void ScreenController::createMenu() {
-    this->menu_ = new MainWindow;
+void ScreenController::createMenu(const QStringList &tables) {
+    this->menu_ = new MainWindow(tables);
     this->auth_->close();
-    this->auth_->deleteLater();
     this->menu_->show();
 //    connect(menu_, SIGNAL(needToSend(const QString &)), this->senderReciver_, SLOT(send(const QString &)));
     connect(menu_, SIGNAL(signalCreateTable(const QString &)), this, SLOT(createTable(const QString&)));
@@ -101,7 +101,7 @@ void ScreenController::connectToServer(const QString &string) {
     std::cout << "CONNECTED TO SERVER: IP: " << stringList.last().toStdString() << std::endl;
     senderReciver_ = new SenderReciver(socket_, this);
     connect(auth_, SIGNAL(needToSend(const QString &)), senderReciver_, SLOT(send(const QString &)));
-    connect(senderReciver_, SIGNAL(loginRegistSuccess()), this, SLOT(createMenu()));
+    connect(senderReciver_, SIGNAL(loginRegistSuccess(const QStringList &)), this, SLOT(createMenu(const QStringList &)));
     connect(senderReciver_, SIGNAL(loginRegistFail(const QString &)), this, SLOT(loginFail(const QString &)));
 }
 

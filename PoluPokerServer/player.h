@@ -8,32 +8,39 @@
 const quint64 DEFAULT_COINS = 10000;
 
 class Player : public QObject {
-Q_OBJECT
+  Q_OBJECT
 public:
-    Player();
+  Player();
 
-    Player(const QString &name, const qint64 &id, const int &seat, QObject *parent = nullptr);
+  Player(const QString &name, const qint64 &id, const int &seat,
+         QObject *parent = nullptr);
 
-    Player(const Player &another);
+  Player(const Player &another);
 
-    QString name() const;
+  QString name() const;
 
-    Combination combination() const;
+  Combination combination() const;
 
-    void addCard(const Card &card);
+  void addCard(const Card &card);
 
-    Player &operator=(const Player &player);
+  Player &operator=(const Player &player);
 
-    friend std::ostream &operator<<(std::ostream &os, const Player &player);
+  friend std::ostream &operator<<(std::ostream &os, const Player &player);
 
-    friend bool operator<(const Player &left, const Player &right);
+  friend bool operator<(const Player &left, const Player &right);
+
+  int seat() const;
+  void setSeat(int seat);
+
+  int coins() const;
+  void setCoins(int coins);
 
 private:
-    QString name_;
-    qint64 id_;
-    quint64 coins_;
-    int seat_;
-    Combination combination_;
+  QString name_;
+  qint64 id_;
+  int coins_;
+  int seat_;
+  Combination combination_;
 };
 
 #endif // PLAYER_H

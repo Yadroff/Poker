@@ -8,12 +8,12 @@
 #include "command.h"
 #include "table.h"
 
-class CommandCreate : public Command, public QObject
+class CommandCreate : public Command
 {
-    Q_OBJECT
 public:
-    explicit CommandCreate(QMap<QString, Table*> &tables, QString &name, int &size, QObject *parent = nullptr);
-    QByteArray exec();
+    explicit CommandCreate(QMap<QString, Table*> &tables, QString &name, int &size);
+    QJsonDocument exec();
+    ~CommandCreate() = default;
 private:
     QString tableName_;
     int tableSize_;

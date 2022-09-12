@@ -1,4 +1,12 @@
 {
     "command": "LOGIN",
-    "result": "SUCCESS"
+    "result": "SUCCESS",
+    "tables": [
+    {
+    "name": "ABC"
+    },
+    {
+    "name": "ABCD"
+    }
+    ]
 }

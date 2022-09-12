@@ -1,5 +1,6 @@
 {
-    "command": "INFO_TABLE",
+    "command": "CONNECT",
+    "result": "SUCCESS",
     "table_name": "ABC",
     "players": [
         {

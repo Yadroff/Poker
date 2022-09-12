@@ -54,7 +54,7 @@ compile_commands.json
 *_qmlcache.qrc
 
 PoluPokerServer
-.qtc_clangd
-qmake*
+.qtc_clangd/
+.qmake*
 .idea/
 cmake-build-debug/

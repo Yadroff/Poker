@@ -25,6 +25,10 @@ public:
 
     int size() const;
 
+    int bet() const;
+
+    int pot() const;
+
 signals:
 private:
     QVector<Player *> calculateWinner();
@@ -47,10 +51,10 @@ private:
     QVector<Card> tableCards_;
     QVector<bool> usedCards_;
     QRandomGenerator generator_;
-    quint32 curBet_;
+    int curBet_;
     int size_;
     Combination winnerComb_;
-    quint32 bank_;
+    int bank_;
 };
 
 #endif // TABLE_H

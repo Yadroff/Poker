@@ -9,12 +9,12 @@
 #include "player.h"
 #include "table.h"
 
-class CommandConnect : public QObject
+class CommandConnect :public Command
 {
-    Q_OBJECT
 public:
-    explicit CommandConnect(Table *table, QString &playerName, const int &playerID, QObject *parent = nullptr);
-    QByteArray exec();
+    explicit CommandConnect(Table *table, QString &playerName, const int &playerID);
+    QJsonDocument exec();
+    ~CommandConnect() = default;
 private:
     Table *table_;
     QString playerName_;

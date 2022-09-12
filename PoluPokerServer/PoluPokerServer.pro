@@ -13,8 +13,7 @@ SOURCES += \
     combination.cpp \
     commandconnect.cpp \
     commandcreate.cpp \
-    commandlogin.cpp \
-    commandregist.cpp \
+    commandauth.cpp \
     main.cpp \
     player.cpp \
     server.cpp \
@@ -27,8 +26,7 @@ HEADERS += \
     combination.h \
     commandconnect.h \
     commandcreate.h \
-    commandlogin.h \
-    commandregist.h \
+    commandauth.h \
     player.h \
     server.h \
     table.h \

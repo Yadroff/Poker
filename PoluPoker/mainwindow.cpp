@@ -1,9 +1,10 @@
 #include "mainwindow.h"
 
-MainWindow::MainWindow(QWidget *parent)
-    : QWidget(parent)
+MainWindow::MainWindow(const QStringList &tables, QWidget *parent)
+    : QWidget(parent), tables_(tables)
 {
     setupUI();
+	boxTables_->addItems(tables);
     connect(exit_, &QPushButton::clicked, this, &MainWindow::exitMenu);
     connect(buttonHelp_, &QPushButton::clicked, this, &MainWindow::help);
     connect(buttonCreateTable_, &QPushButton::clicked, this, &MainWindow::createTable);
@@ -87,7 +88,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::cancelConnect()
 {
-    boxTables_->clear();
     boxTables_->hide();
     buttonConnect_->hide();
     buttonCancelConnect_->hide();
@@ -129,7 +129,7 @@ void MainWindow::createClicked()
        return;
     }
     QString tableName = lineCreateTable_->text();
-    if (tables.contains(tableName)){
+    if (tables_.contains(tableName)){
         auto reply = QMessageBox::warning(this, "Create Error", "Table with this name already exists");
         if (reply == QMessageBox::Yes){
             QApplication::quit();
@@ -137,7 +137,7 @@ void MainWindow::createClicked()
         lineCreateTable_->clear();
         return;
     }
-    tables.append(tableName);
+    tables_.append(tableName);
     boxTables_->addItem(tableName);
     lineCreateTable_->clear();
     this->cancelCreate();
@@ -149,6 +149,7 @@ void MainWindow::createClicked()
 void MainWindow::cancelCreate()
 {
     lineCreateTable_->clear();
+	boxTables_->clear();
     lineCreateTable_->hide();
     buttonCreate_->hide();
     buttonCancelCreate_->hide();
@@ -158,7 +159,7 @@ void MainWindow::cancelCreate()
 void MainWindow::connectTable()
 {
     buttonConnectTable_->hide();
-    boxTables_->addItems(tables);
+    boxTables_->addItems(tables_);
     boxTables_->show();
     buttonConnect_->show();
     buttonCancelConnect_->show();

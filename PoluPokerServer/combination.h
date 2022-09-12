@@ -46,6 +46,8 @@ public:
 
     friend std::ostream &operator<<(std::ostream &os, const Combination &comb);
 
+    int size();
+
 signals:
 private:
     QVector<QPair<Nominal, Suit>> checkStraightFlush(const QVector<Card> &cards, const QVector<Nominal> &straights,

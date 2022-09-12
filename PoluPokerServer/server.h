@@ -13,6 +13,9 @@
 #include "table.h"
 #include "sender.h"
 #include "command.h"
+#include "commandconnect.h"
+#include "commandcreate.h"
+#include "commandauth.h"
 
 const quint16 SERVER_PORT = 7777;
 const QString DATA_BASE_PATH = "./users.db";
@@ -35,14 +38,9 @@ private:
     QThread *threadBroadcast_;
     Sender *senderBroadcast_;
 
-    QByteArray tables(); // отправить столы
-    static QString addInDataBase(const QString &username, const QString &password); // добавить пользователя в БД
-    QString
-    checkInDataBase(const QString &username, const QString &password, const qint64 &id); // проверить пользователя в БД
-    QString createTable(const QString &name);
+    QJsonArray tables(); // отправить столы
 
-    QString connectToTable(const QString &name, const qint64 &user);
-
+	void test();
 private slots:
 
     void newUser(); // новый пользователь

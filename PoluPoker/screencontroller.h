@@ -33,7 +33,7 @@ private slots:
     void setLogin(const QString &newLogin);
     void connectToServer(const QString& servAddress);
     void loginFail(const QString &);
-    void createMenu();
+    void createMenu(const QStringList &tables);
     void createTable(const QString &name);
     void connectTable(const QString &name);
 };

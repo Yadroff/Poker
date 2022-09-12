@@ -21,11 +21,9 @@ private:
 private slots:
     void readData();
     void parse(const QJsonDocument &json);
-    void parseLogin(const QVector<QString> &commands);
-    void parseRegist(const QVector<QString> &commands);
 signals:
     void loginRegistFail(const QString &error);
-    void loginRegistSuccess();
+    void loginRegistSuccess(const QStringList &tables);
 };
 
 #endif // SENDERRECIVER_H

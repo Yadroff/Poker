@@ -12,9 +12,9 @@ class MainWindow : public QWidget
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    MainWindow(const QStringList &tables, QWidget *parent = nullptr);
     ~MainWindow();
-    QStringList tables;
+    QStringList tables_;
 
 signals:
     void signalCreateTable(const QString &name);
