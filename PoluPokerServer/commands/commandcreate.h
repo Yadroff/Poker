@@ -6,7 +6,7 @@
 #include <QJsonObject>
 
 #include "command.h"
-#include "table.h"
+#include "Table/table.h"
 
 class CommandCreate : public Command
 {

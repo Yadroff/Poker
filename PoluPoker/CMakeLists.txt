@@ -11,12 +11,50 @@ find_package(Qt5Multimedia REQUIRED)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-if (CMAKE_VERSION VERSION_LESS "3.7.0")
-    set(CMAKE_INCLUDE_CURRENT_DIR ON)
-endif ()
-add_executable(PoluPoker main.cpp authentication.cpp authentication.h authentication.ui button.cpp button.h card.cpp card.h
-        dialogwindow.cpp dialogwindow.h gameui.cpp gameui.h gameui.ui images.qrc mainwindow.h mainwindow.cpp player.h player.cpp screencontroller.h screencontroller.cpp
-        seat.h seat.cpp senderreciver.h senderreciver.cpp serverconnecter.h serverconnecter.cpp sounds.qrc load.h load.cpp load.ui)
+include_directories("${CMAKE_SOURCE_DIR}")
+set(HEADERS
+        authentication/authentication.h
+        gameUI/card.h
+        gameUI/gameui.h
+        gameUI/player.h
+        gameUI/seat.h
+        menu/mainwindow.h
+        serverChatting/senderreciver.h
+        serverChatting/serverconnecter.h
+        load.h
+        button.h
+        screencontroller.h
+        )
+
+set(SOURCES
+        main.cpp
+        authentication/authentication.cpp
+        gameUI/card.cpp
+        gameUI/gameui.cpp
+        gameUI/player.cpp
+        gameUI/seat.cpp
+        menu/mainwindow.cpp
+        serverChatting/senderreciver.cpp
+        serverChatting/serverconnecter.cpp
+        load.cpp
+        button.cpp
+        screencontroller.cpp
+        )
+
+set(UIS
+        authentication/authentication.ui
+        gameUI/gameui.ui
+        load.ui
+        )
+
+set(RESOURCES
+        images.qrc
+        sounds.qrc
+        )
+
+set(QMLS
+        )
+
+add_executable(${PROJECT_NAME} ${HEADERS} ${SOURCES} ${RESOURCES} ${QMLS} ${UIS})
 target_link_libraries(PoluPoker Qt5::Widgets Qt5::Core Qt5::Gui Qt5::Network Qt5::Multimedia)
 

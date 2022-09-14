@@ -3,7 +3,6 @@
 
 #include <QtWidgets>
 #include <QMediaPlayer>
-#include "dialogwindow.h"
 #include "button.h"
 #include <iostream>
 
@@ -48,7 +47,6 @@ private:
     Button *buttonHelp_;
     Button *exit_;
 
-    DialogWindow *createTableWindow_;
     QMediaPlayer *mediaPlayer_;
 
 };

@@ -10,12 +10,12 @@
 #include <QThread>
 #include <QUdpSocket>
 
-#include "table.h"
+#include "Table/table.h"
 #include "sender.h"
-#include "command.h"
-#include "commandconnect.h"
-#include "commandcreate.h"
-#include "commandauth.h"
+#include "Commands/command.h"
+#include "Commands/commandconnect.h"
+#include "Commands/commandcreate.h"
+#include "Commands/commandauth.h"
 
 const quint16 SERVER_PORT = 7777;
 const QString DATA_BASE_PATH = "./users.db";

@@ -4,11 +4,11 @@
 #include <QTcpSocket>
 #include <QThread>
 
-#include "mainwindow.h"
-#include "authentication.h"
-#include "serverconnecter.h"
-#include "senderreciver.h"
-#include "gameui.h"
+#include "menu/mainwindow.h"
+#include "authentication/authentication.h"
+#include "serverChatting/serverconnecter.h"
+#include "serverChatting/senderreciver.h"
+#include "gameUI/gameui.h"
 
 const quint16 SERVER_PORT = 7777;
 class ScreenController: public QObject

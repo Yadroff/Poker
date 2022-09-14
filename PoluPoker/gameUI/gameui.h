@@ -2,8 +2,8 @@
 #define GAMEUI_H
 
 #include <QMainWindow>
-#include "player.h"
-#include "seat.h"
+#include "gameUI/player.h"
+#include "gameUI/seat.h"
 namespace Ui {
 class GameUI;
 }

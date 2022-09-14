@@ -6,8 +6,8 @@
 #include <QJsonObject>
 
 #include "command.h"
-#include "player.h"
-#include "table.h"
+#include "Table/player.h"
+#include "Table/table.h"
 
 class CommandConnect :public Command
 {

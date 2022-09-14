@@ -2,8 +2,8 @@
 #define PLAYER_H
 
 #include <QObject>
-#include <seat.h>
-#include <card.h>
+#include <gameUI/seat.h>
+#include <gameUI/card.h>
 
 const int DEFAULT_COINS = 5000;
 class Player : public QObject

@@ -11,9 +11,37 @@ find_package(Qt5Sql REQUIRED)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-add_executable(PoluPokerServer main.cpp card.h card.cpp combination.cpp combination.h command.h commandconnect.h commandconnect.cpp
-        commandcreate.h commandcreate.cpp commandauth.h commandauth.cpp  image.qrc
-        player.h player.cpp sender.h sender.cpp server.h server.cpp)
-target_link_libraries(PoluPokerServer Qt5::Widgets Qt5::Core Qt5::Gui Qt5::Network Qt5::Sql)
+include_directories("${CMAKE_SOURCE_DIR}")
+set(HEADERS
+        Commands/command.h
+        Commands/commandcreate.h
+        Commands/commandconnect.h
+        Commands/commandauth.h
+        Table/card.h
+        Table/combination.h
+        Table/player.h
+        Table/table.h
+        server.h
+        sender.h
+        )
+
+set(SOURCES
+        main.cpp
+        Commands/commandcreate.cpp
+        Commands/commandconnect.cpp
+        Commands/commandauth.cpp
+        Table/card.cpp
+        Table/combination.cpp
+        Table/player.cpp
+        Table/table.cpp
+        server.cpp
+        sender.cpp
+        )
+
+set(RESOURCES
+        image.qrc
+        )
+
+add_executable(${PROJECT_NAME} ${HEADERS} ${SOURCES} ${RESOURCES} ${QMLS})
+target_link_libraries(${PROJECT_NAME} Qt5::Widgets Qt5::Core Qt5::Gui Qt5::Network Qt5::Sql)
 
