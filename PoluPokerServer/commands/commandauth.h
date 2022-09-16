@@ -12,7 +12,7 @@ class CommandAuth : public Command {
  public:
   explicit CommandAuth(QSqlDatabase *base, QString &login, QString &password, const bool &isLogin);
 
-  QJsonDocument exec();
+  QJsonDocument exec() override;
 
   QJsonDocument login();
 

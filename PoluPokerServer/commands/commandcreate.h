@@ -6,13 +6,16 @@
 #include <QJsonObject>
 
 #include "command.h"
-#include "Table/table.h"
+#include "table/table.h"
 
+/*!
+ * @brief Класс команды создания стола
+ */
 class CommandCreate : public Command
 {
 public:
     explicit CommandCreate(QMap<QString, Table*> &tables, QString &name, int &size);
-    QJsonDocument exec();
+    QJsonDocument exec() override;
     ~CommandCreate() = default;
 private:
     QString tableName_;

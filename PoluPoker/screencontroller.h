@@ -16,17 +16,15 @@ class ScreenController: public QObject
     Q_OBJECT
 public:
     explicit ScreenController(QObject *parent = nullptr);
-    ~ScreenController();
-
-    const QString &login() const;
+    ~ScreenController() = default;
 
 private:
-    MainWindow *menu_;
+    MainWindow *menu_{};
     Authentication *auth_;
     ServerConnecter *servConnect_;
     QThread *thread;
-    GameUI *table_;
-    SenderReciver *senderReciver_;
+    GameUI *table_{};
+    SenderReciver *senderReciver_{};
     QString login_;
     void testTable();
 private slots:

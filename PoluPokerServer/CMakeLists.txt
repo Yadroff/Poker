@@ -13,27 +13,27 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 include_directories("${CMAKE_SOURCE_DIR}")
 set(HEADERS
-        Commands/command.h
-        Commands/commandcreate.h
-        Commands/commandconnect.h
-        Commands/commandauth.h
-        Table/card.h
-        Table/combination.h
-        Table/player.h
-        Table/table.h
+        commands/command.h
+        commands/commandcreate.h
+        commands/commandconnect.h
+        commands/commandauth.h
+        table/card.h
+        table/combination.h
+        table/player.h
+        table/table.h
         server.h
         sender.h
         )
 
 set(SOURCES
         main.cpp
-        Commands/commandcreate.cpp
-        Commands/commandconnect.cpp
-        Commands/commandauth.cpp
-        Table/card.cpp
-        Table/combination.cpp
-        Table/player.cpp
-        Table/table.cpp
+        commands/commandcreate.cpp
+        commands/commandconnect.cpp
+        commands/commandauth.cpp
+        table/card.cpp
+        table/combination.cpp
+        table/player.cpp
+        table/table.cpp
         server.cpp
         sender.cpp
         )

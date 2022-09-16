@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QRandomGenerator>
 #include <QMap>
+#include <QTcpSocket>
 
 // TODO: переделать вектор в мапу
 class Table : public QObject {
@@ -13,21 +14,21 @@ public:
     explicit Table(const QString &name, const char &size = 8,
                    QObject *parent = nullptr);
 
-    QString name() const;
+    [[nodiscard]] QString name() const;
 
-    QMap<QString, Player *> players() const;
+    [[nodiscard]] QMap<QString, Player *> players() const;
 
     void giveCardToPlayer(const QString &playerName);
 
     void putCardOnTable();
 
-    bool addPlayer(const QString &playerName, const int &id, const int &seat);
+    bool addPlayer(const QString &playerName, QTcpSocket *socket, const int &seat);
 
-    int size() const;
+    [[nodiscard]] int size() const;
 
-    int bet() const;
+    [[nodiscard]] int bet() const;
 
-    int pot() const;
+    [[nodiscard]] int pot() const;
 
 signals:
 private:
@@ -43,7 +44,9 @@ private:
 
     void river();
 
-    void betting(const int &start);
+    void betting(const Player &player);
+
+	void test();
 
     QString name_;
     QMap<QString, Player *> players_;

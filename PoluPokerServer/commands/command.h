@@ -6,7 +6,7 @@
 class Command
 {
 public:
-    ~Command(){}
+    ~Command()= default;
 
     virtual QJsonDocument exec() = 0;
 };

@@ -2,24 +2,25 @@
 #define PLAYER_H
 
 #include <QObject>
+#include <QTcpSocket>
 
 #include "combination.h"
 
 const quint64 DEFAULT_COINS = 10000;
 
 class Player : public QObject {
-  Q_OBJECT
-public:
+ Q_OBJECT
+ public:
   Player();
 
-  Player(const QString &name, const qint64 &id, const int &seat,
-         QObject *parent = nullptr);
+  Player(const QString &name, QTcpSocket *sock, const int &seat,
+		 QObject *parent = nullptr);
 
   Player(const Player &another);
 
-  QString name() const;
+  [[nodiscard]] QString name() const;
 
-  Combination combination() const;
+  [[nodiscard]] Combination combination() const;
 
   void addCard(const Card &card);
 
@@ -29,15 +30,17 @@ public:
 
   friend bool operator<(const Player &left, const Player &right);
 
-  int seat() const;
+  [[nodiscard]] int seat() const;
   void setSeat(int seat);
 
-  int coins() const;
+  [[nodiscard]] int coins() const;
   void setCoins(int coins);
 
-private:
+  [[nodiscard]] QTcpSocket *socket() const;
+  void setSocket(QTcpSocket *socket);
+ private:
   QString name_;
-  qint64 id_;
+  QTcpSocket *socket_;
   int coins_;
   int seat_;
   Combination combination_;

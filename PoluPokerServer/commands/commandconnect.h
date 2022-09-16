@@ -6,14 +6,14 @@
 #include <QJsonObject>
 
 #include "command.h"
-#include "Table/player.h"
-#include "Table/table.h"
+#include "table/player.h"
+#include "table/table.h"
 
 class CommandConnect :public Command
 {
 public:
     explicit CommandConnect(Table *table, QString &playerName, const int &playerID);
-    QJsonDocument exec();
+    QJsonDocument exec() override;
     ~CommandConnect() = default;
 private:
     Table *table_;

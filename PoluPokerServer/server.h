@@ -10,12 +10,12 @@
 #include <QThread>
 #include <QUdpSocket>
 
-#include "Table/table.h"
+#include "table/table.h"
 #include "sender.h"
-#include "Commands/command.h"
-#include "Commands/commandconnect.h"
-#include "Commands/commandcreate.h"
-#include "Commands/commandauth.h"
+#include "commands/command.h"
+#include "commands/commandconnect.h"
+#include "commands/commandcreate.h"
+#include "commands/commandauth.h"
 
 const quint16 SERVER_PORT = 7777;
 const QString DATA_BASE_PATH = "./users.db";
@@ -26,7 +26,7 @@ Q_OBJECT
 public:
     explicit Server(QWidget *parent = nullptr);
 
-    ~Server();
+    ~Server() override;
 private:
     QTcpServer *tcpServer_; // сервер
     QMap<qint64, QTcpSocket *> clients_; // мапа [clientID, socket]
@@ -42,7 +42,7 @@ private:
 
 	void test();
 private slots:
-
+	void sendToClient(QJsonDocument &doc, QTcpSocket *client, const bool &needWait = false);
     void newUser(); // новый пользователь
     void shutdownServer(); // выключение сервера
     void readData(); // чтение от пользователей

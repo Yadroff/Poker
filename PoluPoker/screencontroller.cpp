@@ -12,26 +12,19 @@ ScreenController::ScreenController(QObject *parent) :
     servConnect_ = new ServerConnecter();
     servConnect_->moveToThread(thread);
     connect(thread, SIGNAL(started()), servConnect_, SLOT(run()));
-    connect(servConnect_, SIGNAL(finished(const QString &)), this, SLOT(connectToServer(const QString &)));
+    connect(servConnect_, SIGNAL(finished(QString)), this, SLOT(connectToServer(QString)));
     thread->start();
     this->auth_ = new Authentication();
     this->auth_->show();
-    connect(this->auth_, SIGNAL(changeLogin(const QString &)), this, SLOT(setLogin(const QString &)));
+    connect(this->auth_, SIGNAL(changeLogin(QString)), this, SLOT(setLogin(QString)));
 }
 
-ScreenController::~ScreenController(){
-
-}
 
 void ScreenController::setLogin(const QString &newLogin)
 {
     login_ = newLogin;
 }
 
-const QString &ScreenController::login() const
-{
-    return login_;
-}
 
 void ScreenController::loginFail(const QString &error)
 {
@@ -44,7 +37,7 @@ void ScreenController::createMenu(const QStringList &tables) {
     this->auth_->close();
     this->menu_->show();
 //    connect(menu_, SIGNAL(needToSend(const QString &)), this->senderReciver_, SLOT(send(const QString &)));
-    connect(menu_, SIGNAL(signalCreateTable(const QString &)), this, SLOT(createTable(const QString&)));
+    connect(menu_, SIGNAL(signalCreateTable(QString)), this, SLOT(createTable(QString)));
 }
 
 void ScreenController::createTable(const QString &name)
@@ -100,8 +93,8 @@ void ScreenController::connectToServer(const QString &string) {
     }
     std::cout << "CONNECTED TO SERVER: IP: " << stringList.last().toStdString() << std::endl;
     senderReciver_ = new SenderReciver(socket_, this);
-    connect(auth_, SIGNAL(needToSend(const QString &)), senderReciver_, SLOT(send(const QString &)));
-    connect(senderReciver_, SIGNAL(loginRegistSuccess(const QStringList &)), this, SLOT(createMenu(const QStringList &)));
-    connect(senderReciver_, SIGNAL(loginRegistFail(const QString &)), this, SLOT(loginFail(const QString &)));
+    connect(auth_, SIGNAL(needToSend(QString)), senderReciver_, SLOT(send(QString)));
+    connect(senderReciver_, SIGNAL(loginRegistSuccess(QStringList)), this, SLOT(createMenu(QStringList)));
+    connect(senderReciver_, SIGNAL(loginRegistFail(QString)), this, SLOT(loginFail(QString)));
 }
 

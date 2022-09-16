@@ -13,7 +13,6 @@ Server::Server(QWidget *parent) : QWidget(parent) {
   connect(threadBroadcast_, SIGNAL(finished()), threadBroadcast_,
 		  SLOT(deleteLater()));
   threadBroadcast_->start();
-  //    Table table("Abc", 5);
   buttonShutDown_ = new QPushButton(this);
   QPixmap pixmap(":/image/Shutdown_button.jpg");
   QIcon buttonIcon(pixmap);
@@ -34,7 +33,7 @@ Server::Server(QWidget *parent) : QWidget(parent) {
   if (dataBase_.open()) {
 	std::cout << "OPERATION: OPEN DATA BASE: SUCCESS" << std::endl;
   } else {
-	std::cout << "OPEARTION: OPEN DATA BASE: FAIL" << std::endl;
+	std::cout << "OPERATION: OPEN DATA BASE: FAIL" << std::endl;
   }
   test();
 }
@@ -177,6 +176,20 @@ void Server::newUser() {
 	}
   }
 }
+
 void Server::test() {
-	tables_.insert("Abc", new Table("Abc"));
+  tables_.insert("Abc", new Table("Abc"));
 }
+
+void Server::sendToClient(QJsonDocument &doc, QTcpSocket *client, const bool &needWait) {
+  client->write(doc.toJson(QJsonDocument::Indented));
+  if (needWait) {
+	if (client->waitForReadyRead()) {
+	  qDebug() << "OPERATION: SEND TO CLIENT WAIT: SUCCESS";
+	} else {
+	  qWarning() << "OPERATION: SEND TO CLIENT WAIT: ERROR: NO ANSWER FROM CLIENT";
+	}
+  }
+}
+
+
