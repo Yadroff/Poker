@@ -37,14 +37,14 @@ void ScreenController::createMenu(const QStringList &tables) {
     this->auth_->close();
     this->menu_->show();
 //    connect(menu_, SIGNAL(needToSend(const QString &)), this->senderReciver_, SLOT(send(const QString &)));
-    connect(menu_, SIGNAL(signalCreateTable(QString)), this, SLOT(createTable(QString)));
+    connect(menu_, SIGNAL(signalCreateTable(QString)), this, SLOT(createTableRequest(QString)));
 }
 
-void ScreenController::createTable(const QString &name)
+void ScreenController::createTableRequest(const QString &name)
 {
-    this->table_ = new GameUI(name, login_);
-    this->menu_->hide();
-    this->menu_->deleteLater();
+//    this->menu_->hide();
+//	this->table_->show();
+//    this->menu_->deleteLater();
     QString string = "CREATE " + name + " " + QString::number(TABLE_SIZE);
     senderReciver_->send(string);
 }
@@ -96,5 +96,15 @@ void ScreenController::connectToServer(const QString &string) {
     connect(auth_, SIGNAL(needToSend(QString)), senderReciver_, SLOT(send(QString)));
     connect(senderReciver_, SIGNAL(loginRegistSuccess(QStringList)), this, SLOT(createMenu(QStringList)));
     connect(senderReciver_, SIGNAL(loginRegistFail(QString)), this, SLOT(loginFail(QString)));
+	connect(senderReciver_, SIGNAL(createSuccess(QString)), this, SLOT(createTable(QString)));
+	connect(senderReciver_, SIGNAL(createError(QString)), this, SLOT(createFail(QString)));
+}
+void ScreenController::createTable(const QString &name) {
+  this->table_ = new GameUI(name, login_);
+  this->menu_->close();
+  this->table_->show();
+}
+void ScreenController::createFail(const QString &error) {
+  QMessageBox::critical(this->menu_, "CREATE FAIL", error);
 }
 

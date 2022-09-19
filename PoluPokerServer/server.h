@@ -42,7 +42,7 @@ private:
 
 	void test();
 private slots:
-	void sendToClient(QJsonDocument &doc, QTcpSocket *client, const bool &needWait = false);
+//	static void sendToClient(QJsonDocument &doc, QTcpSocket *client, const bool &needWait = false);
     void newUser(); // новый пользователь
     void shutdownServer(); // выключение сервера
     void readData(); // чтение от пользователей

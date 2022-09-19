@@ -28,6 +28,7 @@ QJsonDocument CommandCreate::exec()
         result = "SUCCESS";
     }
     obj.insert("result", result);
+	obj.insert("name", tableName_);
     QJsonDocument doc(obj);
 	return doc;
 }

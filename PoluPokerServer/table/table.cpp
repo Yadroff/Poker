@@ -1,7 +1,5 @@
 #include "table.h"
 #include <QDateTime>
-#include <QJsonDocument>
-#include <QJsonObject>
 
 const int FLOP_CARDS = 4;
 
@@ -11,10 +9,17 @@ const int FLOP_CARDS = 4;
  * @param size - максимальное количество игроков
  */
 Table::Table(const QString &name, const char &size, QObject *parent)
-	: QObject(parent), tableCards_(5), usedCards_(52),
-	  generator_(QDateTime::currentMSecsSinceEpoch()), curBet_(0), size_(size), winnerComb_(), bank_(0) {
+	: QObject(parent),
+	  tableCards_(5),
+	  usedCards_(52),
+	  generator_(QDateTime::currentMSecsSinceEpoch()),
+	  curBet_(0),
+	  size_(size),
+	  winnerComb_(),
+	  bank_(0),
+	  isActive_(false) {
   name_ = name;
-  test();
+//  test();
 }
 
 QString Table::name() const { return this->name_; }
@@ -44,16 +49,14 @@ Card Table::generateCard() {
  */
 void Table::blind() {
   // small blind
-
   // big blind
   for (auto *player : gamePlayers_) {
-	player->addCard(generateCard());
-	player->addCard(generateCard());
+	giveCardToPlayer(player);
   }
 }
 
 /*!
- * Флоп
+ * Flop
  */
 void Table::flop() {
   for (int i = 0; i < FLOP_CARDS; ++i) {
@@ -75,15 +78,26 @@ void Table::tern() {
 
 /*!
  * Функция выдачи карты игроку
- * @param playerName - ник игрока
+ * @param player - игрок
  */
-void Table::giveCardToPlayer(const QString &playerName) {
-  for (auto *player : gamePlayers_) {
-	if (player->name() == playerName) {
-	  player->addCard(generateCard());
-	  return;
-	}
-  }
+void Table::giveCardToPlayer(Player *player) {
+  Card card = generateCard();
+  player->addCard(card);
+  QJsonDocument docToPlayer;
+  QJsonObject objToPlayer;
+  // отправляем JSON игроку
+  objToPlayer.insert("command", "ADD_CARD_TO_PLAYER");
+  objToPlayer.insert("suit", card.suitString());
+  objToPlayer.insert("nominal", card.nominalString());
+  docToPlayer.setObject(objToPlayer);
+  player->socket()->write(docToPlayer.toJson(QJsonDocument::Indented));
+  // отправляем JSON всем остальным
+  QJsonDocument docToAll;
+  QJsonObject objToAll;
+  objToAll.insert("command", "ADD_CARD");
+  objToAll.insert("name", player->name());
+  docToAll.setObject(objToAll);
+  sendToAll(docToAll.toJson(QJsonDocument::Indented));
 }
 
 /*!
@@ -91,9 +105,16 @@ void Table::giveCardToPlayer(const QString &playerName) {
  */
 void Table::putCardOnTable() {
   Card card = generateCard();
+  QJsonDocument doc;
+  QJsonObject obj;
+  obj.insert("command", "PUT_CARD_ON_TABLE");
+  obj.insert("suit", card.suitString());
+  obj.insert("nominal", card.nominalString());
+  doc.setObject(obj);
   for (auto *player : gamePlayers_) {
 	player->addCard(card);
   }
+  sendToAll(doc.toJson(QJsonDocument::Indented));
 }
 
 /*!
@@ -109,7 +130,9 @@ bool Table::addPlayer(const QString &playerName, QTcpSocket *socket, const int &
   }
   auto *player = new Player(playerName, socket, seat);
   players_.insert(playerName, player);
-  gamePlayers_.insert(playerName, player);
+  if (!isActive_) {
+	gamePlayers_.insert(playerName, player);
+  }
   std::cout << "TABLE: " << name_.toStdString() << ": SUCCESS: ADD PLAYER: " << playerName.toStdString() << std::endl;
   return true;
 }
@@ -139,10 +162,13 @@ void Table::betting(const Player &player) {
   QJsonDocument doc;
   QJsonObject obj;
   obj.insert("command", "BET");
+  obj.insert("currentBet", QJsonValue(curBet_));
   doc.setObject(obj);
   socket->write(doc.toJson(QJsonDocument::Indented));
-  if (socket->waitForReadyRead()) {
+  if (!socket->waitForReadyRead()) {
 	std::cout << "PLAYER " << player.name().toStdString() << " DIDN'T ANSWERED";
+	// обработка этого случая
+	playerFold(player);
   }
 }
 void Table::river() {}
@@ -163,5 +189,48 @@ void Table::test() {
   std::cout << "\tEND WINNER" << std::endl;
   for (auto *player : gamePlayers_) {
 	std::cout << *player << std::endl;
+  }
+}
+void Table::playerFold(const Player &player) {
+  QString name = player.name();
+  gamePlayers_.remove(name);
+  QJsonDocument doc = sendChat(name, "FOLD");
+  sendToAll(doc.toJson(QJsonDocument::Indented));
+}
+void Table::sendToAll(const QByteArray &arr) {
+  for (const auto &player : players_) {
+	player->socket()->write(arr);
+  }
+}
+bool Table::isActive() const {
+  return isActive_;
+}
+void Table::start() {
+  QJsonDocument doc = sendChat("SERVER", "START GAME");
+  sendToAll(doc.toJson(QJsonDocument::Indented));
+  gamePlayers_ = players_;
+  curBet_ = 0;
+  bank_ = 0;
+  isActive_ = true;
+  blind();
+}
+QJsonDocument Table::sendChat(const QString &sender, const QString &message) {
+  QJsonDocument doc;
+  QJsonObject obj;
+  obj.insert("command", "CHAT_MESSAGE");
+  obj.insert("sender", sender);
+  obj.insert("message", message);
+  doc.setObject(obj);
+  return doc;
+}
+void Table::leavePlayer(const QString &playerName) {
+  if (players_.contains(playerName)){
+	delete players_[playerName];
+	QJsonDocument doc;
+	QJsonObject obj;
+	obj.insert("command", "PLAYER_LEAVE");
+	obj.insert("name", playerName);
+	doc.setObject(obj);
+	sendToAll(doc.toJson(QJsonDocument::Indented));
   }
 }

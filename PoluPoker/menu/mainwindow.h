@@ -11,7 +11,7 @@ class MainWindow : public QWidget
     Q_OBJECT
 
 public:
-    MainWindow(const QStringList &tables, QWidget *parent = nullptr);
+    explicit MainWindow(const QStringList &tables, QWidget *parent = nullptr);
     ~MainWindow();
     QStringList tables_;
 

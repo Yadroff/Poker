@@ -6,6 +6,8 @@
 #include <QRandomGenerator>
 #include <QMap>
 #include <QTcpSocket>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 // TODO: переделать вектор в мапу
 class Table : public QObject {
@@ -18,7 +20,7 @@ public:
 
     [[nodiscard]] QMap<QString, Player *> players() const;
 
-    void giveCardToPlayer(const QString &playerName);
+    void giveCardToPlayer(Player *player);
 
     void putCardOnTable();
 
@@ -30,6 +32,17 @@ public:
 
     [[nodiscard]] int pot() const;
 
+	void playerFold(const Player &player);
+
+	void sendToAll(const QByteArray &arr);
+
+	static QJsonDocument sendChat(const QString &sender, const QString &message);
+
+	void start();
+
+	[[nodiscard]] bool isActive() const;
+
+	void leavePlayer(const QString &playerName);
 signals:
 private:
     QVector<Player *> calculateWinner();
@@ -58,6 +71,8 @@ private:
     int size_;
     Combination winnerComb_;
     int bank_;
+	bool isActive_;
+	const int MINIMAL_PLAYERS = 3;
 };
 
 #endif // TABLE_H

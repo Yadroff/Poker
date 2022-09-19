@@ -1,15 +1,13 @@
 #include "commandconnect.h"
 #include <QJsonArray>
 
-CommandConnect::CommandConnect(Table *table, QString &playerName,
-                               const int &playerID)
-    :  table_(table), playerName_(playerName),
-      playerID_(playerID) {}
+CommandConnect::CommandConnect(Table *table, QString &playerName, QTcpSocket *playerSocket)
+    :  table_(table), playerName_(playerName), playerSocket_(playerSocket){}
 
 QJsonDocument CommandConnect::exec() {
   QJsonObject obj;
   obj.insert("command", "CONNECT");
-  if (!table_->addPlayer(playerName_, playerID_, -1)) {
+  if (!table_->addPlayer(playerName_, playerSocket_, -1)) {
     obj.insert("result", "ALREADY EXISTS");
   } else {
     // TODO: отправить инфу клиенту

@@ -1,5 +1,5 @@
 {
     "command": "CREATE",
     "name": "ABC",
-    "players": 8
+    "size": 8
 }

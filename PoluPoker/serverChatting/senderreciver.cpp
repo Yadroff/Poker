@@ -73,7 +73,7 @@ void SenderReciver::parse(const QJsonDocument &jsonDoc) {
   if (command == "REGIST" or command == "LOGIN") {
 	QString result = obj.value("result").toString();
 	if (result == "SUCCESS") {
-	  QJsonArray tables = obj.value("tables_").toArray();
+	  QJsonArray tables = obj.value("tables").toArray();
 	  QStringList tableNames;
 	  for (auto it = tables.begin(); it != tables.end(); ++it){
 		tableNames.push_back(it->toObject().value("name").toString());
@@ -82,6 +82,14 @@ void SenderReciver::parse(const QJsonDocument &jsonDoc) {
 	} else {
 	  if (result.contains("UNIQUE constraint failed")) result = "User already exists";
 	  emit loginRegistFail(result);
+	}
+  } else if (command == "CREATE"){
+	QString result = obj.value("result").toString();
+	if (result == "SUCCESS"){
+	  QString name = obj.value("name").toString();
+	  emit createSuccess(name);
+	} else{
+	  emit createError(result);
 	}
   }
 }

@@ -70,6 +70,9 @@ void Server::shutdownServer() {
 	  clients_.remove(i);
 	  std::cout << "OPERATION: REMOVE: " << i << " CLIENT" << std::endl;
 	}
+  foreach(auto table, tables_.values()){
+	table->deleteLater();
+  }
   tcpServer_->close();
   std::cout << "STATE: SERVER CLOSED" << std::endl;
   isListen_ = false;
@@ -139,6 +142,13 @@ void Server::readData() {
 		  }
 		  toSend = ans.toJson(QJsonDocument::Indented);
 		  delete commandLogin;
+		} else if (command == "CREATE"){
+		  auto name = obj.value("name").toString();
+		  auto size = obj.value("size").toInt();
+		  auto create = new CommandCreate(tables_, name, size);
+		  auto ans = create->exec();
+		  toSend = ans.toJson(QJsonDocument::Indented);
+		  delete create;
 		}
 		clients_[i]->write(toSend);
 		std::cout << "SEND" << std::endl << toSend.toStdString() << std::endl;
@@ -153,6 +163,9 @@ void Server::disconnectUser() {
 	for (auto it = clients_.begin(); it != clients_.end(); ++it) {
 	  if (it.value() == client) {
 		id = it.key();
+			foreach(auto table, tables_.values()) {
+			table->leavePlayer(players_[it.value()]);
+		  }
 		clients_.erase(it);
 		break;
 	  }
@@ -181,15 +194,13 @@ void Server::test() {
   tables_.insert("Abc", new Table("Abc"));
 }
 
-void Server::sendToClient(QJsonDocument &doc, QTcpSocket *client, const bool &needWait) {
-  client->write(doc.toJson(QJsonDocument::Indented));
-  if (needWait) {
-	if (client->waitForReadyRead()) {
-	  qDebug() << "OPERATION: SEND TO CLIENT WAIT: SUCCESS";
-	} else {
-	  qWarning() << "OPERATION: SEND TO CLIENT WAIT: ERROR: NO ANSWER FROM CLIENT";
-	}
-  }
-}
-
-
+//void Server::sendToClient(QJsonDocument &doc, QTcpSocket *client, const bool &needWait) {
+//  client->write(doc.toJson(QJsonDocument::Indented));
+//  if (needWait) {
+//	if (client->waitForReadyRead()) {
+//	  qDebug() << "OPERATION: SEND TO CLIENT WAIT: SUCCESS";
+//	} else {
+//	  qWarning() << "OPERATION: SEND TO CLIENT WAIT: ERROR: NO ANSWER FROM CLIENT";
+//	}
+//  }
+//}

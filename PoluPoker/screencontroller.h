@@ -32,8 +32,10 @@ private slots:
     void connectToServer(const QString& servAddress);
     void loginFail(const QString &);
     void createMenu(const QStringList &tables);
-    void createTable(const QString &name);
+    void createTableRequest(const QString &name);
+	void createTable(const QString &name);
     void connectTable(const QString &name);
+	void createFail(const QString &error);
 };
 
 #endif // SCREENCONTROLLER_H

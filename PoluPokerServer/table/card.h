@@ -47,13 +47,16 @@ public:
 
     friend std::ostream &operator<<(std::ostream &os, const Card &card);
 
-    Suit suit() const; // геттеры
-    Nominal nominal() const;
+    [[nodiscard]] Suit suit() const; // геттеры
+    [[nodiscard]] Nominal nominal() const;
 
     void setSuit(const quint64 &suit);
 
     void setNominal(const quint64 &nominal);
 
+	QString suitString() const;
+
+	QString nominalString() const;
 private:
     Suit suit_;
     Nominal nominal_;

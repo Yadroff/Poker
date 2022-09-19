@@ -24,6 +24,8 @@ private slots:
 signals:
     void loginRegistFail(const QString &error);
     void loginRegistSuccess(const QStringList &tables);
+	void createSuccess(const QString &name);
+	void createError(const QString &error);
 };
 
 #endif // SENDERRECIVER_H
