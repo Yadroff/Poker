@@ -1,5 +1,5 @@
 #include "commandcreate.h"
-#include <QDebug>
+#include <iostream>
 
 /*!
  * @brief Конструктор класса команды создания стола

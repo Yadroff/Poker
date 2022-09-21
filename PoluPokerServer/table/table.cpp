@@ -232,5 +232,6 @@ void Table::leavePlayer(const QString &playerName) {
 	obj.insert("name", playerName);
 	doc.setObject(obj);
 	sendToAll(doc.toJson(QJsonDocument::Indented));
+	std::cout << doc.toJson(QJsonDocument::Indented).toStdString() << std::endl;
   }
 }

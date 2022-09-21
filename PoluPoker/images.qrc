@@ -20,7 +20,7 @@
         <file>images/RedChipStack.png</file>
         <file>images/GreenChipStack.png</file>
         <file>images/GrayChipStack.png</file>
-        <file>images/loadGIF.gif</file>
+        <file>images/backgroundLoad.jpg</file>
         <file>images/load.gif</file>
     </qresource>
 </RCC>

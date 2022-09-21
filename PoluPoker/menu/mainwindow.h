@@ -6,48 +6,47 @@
 #include "button.h"
 #include <iostream>
 
-class MainWindow : public QWidget
-{
-    Q_OBJECT
+class MainWindow : public QWidget {
+ Q_OBJECT
 
-public:
-    explicit MainWindow(const QStringList &tables, QWidget *parent = nullptr);
-    ~MainWindow();
-    QStringList tables_;
+ public:
+  explicit MainWindow(const QStringList &tables, QWidget *parent = nullptr);
+  ~MainWindow();
+  QStringList tables_;
 
-signals:
-    void signalCreateTable(const QString &name);
-    void signalConnectTable(const QString &name);
-private slots:\
+ signals:
+  void signalCreateTable(const QString &name);
+  void signalConnectTable(const QString &name);
+ private slots:\
     // create
-    void createTable();
-    void createClicked();
-    void cancelCreate();
+  void createTable();
+  void createClicked();
+  void cancelCreate();
 
-    //connect
-    void connectTable();
-    void connectClicked();
-    void cancelConnect();
+  //connect
+  void connectTable();
+  void connectClicked();
+  void cancelConnect();
 
-    //others
-    void exitMenu();
-    void help();
-private:
-    void setupUI();
-    Button *buttonCreateTable_;
-    Button *buttonCreate_;
-    Button *buttonCancelCreate_;
-    QLineEdit *lineCreateTable_;
+  //others
+  void exitMenu();
+  void help();
+ private:
+  void setupUI();
+  Button *buttonCreateTable_;
+  Button *buttonCreate_;
+  Button *buttonCancelCreate_;
+  QLineEdit *lineCreateTable_;
 
-    Button *buttonConnectTable_;
-    Button *buttonConnect_;
-    Button *buttonCancelConnect_;
-    QComboBox *boxTables_;
+  Button *buttonConnectTable_;
+  Button *buttonConnect_;
+  Button *buttonCancelConnect_;
+  QComboBox *boxTables_;
 
-    Button *buttonHelp_;
-    Button *exit_;
+  Button *buttonHelp_;
+  Button *exit_;
 
-    QMediaPlayer *mediaPlayer_;
+  QMediaPlayer *mediaPlayer_;
 
 };
 #endif // MAINWINDOW_H

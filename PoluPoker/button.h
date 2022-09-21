@@ -3,11 +3,10 @@
 
 #include <QPushButton>
 
-class Button: public QPushButton
-{
-    Q_OBJECT
-public:
-    Button(const QString &nameButton, const QString &buttonText);
+class Button : public QPushButton {
+ Q_OBJECT
+ public:
+  Button(const QString &nameButton, const QString &buttonText);
 };
 
 #endif // BUTTON_H

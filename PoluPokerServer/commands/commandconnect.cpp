@@ -1,31 +1,37 @@
 #include "commandconnect.h"
 #include <QJsonArray>
 
-CommandConnect::CommandConnect(Table *table, QString &playerName, QTcpSocket *playerSocket)
-    :  table_(table), playerName_(playerName), playerSocket_(playerSocket){}
+CommandConnect::CommandConnect(QMap<QString, Table *> &table,
+							   QString &tableName,
+							   QString &playerName,
+							   QTcpSocket *playerSocket)
+	: map_(table), playerName_(playerName), playerSocket_(playerSocket), tableName_(tableName) {}
 
 QJsonDocument CommandConnect::exec() {
   QJsonObject obj;
   obj.insert("command", "CONNECT");
-  if (!table_->addPlayer(playerName_, playerSocket_, -1)) {
-    obj.insert("result", "ALREADY EXISTS");
-  } else {
-    // TODO: отправить инфу клиенту
-    obj.insert("table_name", table_->name());
-    QJsonArray players;
-    foreach (const Player *player, table_->players().values()) {
-      QJsonObject playerJson;
-      playerJson.insert("name", player->name());
-      playerJson.insert("seat", player->seat());
-      playerJson.insert("money", player->coins());
-      int combinationSize = player->combination().size();
-      playerJson.insert("cards", (combinationSize > 2) ? 2 : combinationSize);
-      players.push_back(players);
-    }
-    obj.insert("players", players);
-    obj.insert("pot", table_->pot());
-    obj.insert("bet", table_->bet());
+  if (!map_.contains(tableName_)){
+	obj.insert("result", "TABLE DOESN'T EXISTS");
+	return QJsonDocument(obj);
   }
-  QJsonDocument doc(obj);
-  return doc;
+  auto table = map_[tableName_];
+  if (!table->addPlayer(playerName_, playerSocket_, -1)){
+	obj.insert("result", "ALREADY EXISTS");
+	return QJsonDocument(obj);
+  }
+  obj.insert("result", "SUCCESS");
+  obj.insert("pot", table->pot());
+  obj.insert("bet", table->bet());
+  QJsonArray arr;
+  auto players = table->players().values();
+  for (const auto player: players){
+	QJsonObject playerObj;
+	playerObj.insert("name", player->name());
+	playerObj.insert("seat", player->seat());
+	playerObj.insert("money", player->coins());
+	auto combSize = player->combination().size();
+	playerObj.insert("cards", (combSize <= 2) ? combSize : 2);
+	arr.append(playerObj);
+  }
+  return QJsonDocument(obj);
 }

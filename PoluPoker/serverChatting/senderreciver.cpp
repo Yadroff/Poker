@@ -4,13 +4,14 @@
 #include <QJsonParseError>
 #include <QJsonArray>
 
-SenderReciver::SenderReciver(QTcpSocket *socket, QObject *parent) :
+SenderReceiver::SenderReceiver(QTcpSocket *socket, QObject *parent)
+	:
 	QObject{parent}, socket_(socket) {
   connect(socket_, SIGNAL(readyRead()), this, SLOT(readData()));
   qDebug() << "CREATE SENDER/RECIVER";
 }
 
-SenderReciver::~SenderReciver() {
+SenderReceiver::~SenderReceiver() {
   qDebug() << "DELETE SENDER/RECIVER";
   if (socket_) {
 	socket_->close();
@@ -18,13 +19,13 @@ SenderReciver::~SenderReciver() {
   delete socket_;
 }
 
-void SenderReciver::send(const QString &str) {
+void SenderReceiver::send(const QString &str) {
   if (socket_->isOpen()) {
 	socket_->write(toJSON(str));
   }
 }
 
-QByteArray SenderReciver::toJSON(const QString &string) {
+QByteArray SenderReceiver::toJSON(const QString &string) {
   auto stringVec = string.split(" ").toVector();
   QJsonObject obj;
   auto command = stringVec[0];
@@ -39,11 +40,10 @@ QByteArray SenderReciver::toJSON(const QString &string) {
 	obj.insert("name", stringVec[1]);
 	obj.insert("size", stringVec[2].toInt());
   } else if (command == "CONNECT") {
-	assert(stringVec.size() == 4);
+	assert(stringVec.size() == 3);
 	obj.insert("command", command);
 	obj.insert("table_name", stringVec[1]);
 	obj.insert("player_name", stringVec[2]);
-	obj.insert("coins", stringVec[3].toInt());
   } else if (command == "CHANGE_SEAT") {
 	assert(stringVec.size() == 3);
 	obj.insert("command", command);
@@ -56,7 +56,7 @@ QByteArray SenderReciver::toJSON(const QString &string) {
   return arr;
 }
 
-void SenderReciver::readData() {
+void SenderReceiver::readData() {
   QByteArray data = socket_->readAll();
   QJsonParseError jsonError{};
   auto json = QJsonDocument::fromJson(data, &jsonError);
@@ -67,29 +67,47 @@ void SenderReciver::readData() {
   parse(json);
 }
 
-void SenderReciver::parse(const QJsonDocument &jsonDoc) {
+void SenderReceiver::parse(const QJsonDocument &jsonDoc) {
   QJsonObject obj = jsonDoc.object();
-  QString command = obj.value("command").toString();
+  QString command = obj["command"].toString();
   if (command == "REGIST" or command == "LOGIN") {
-	QString result = obj.value("result").toString();
+	QString result = obj["result"].toString();
 	if (result == "SUCCESS") {
-	  QJsonArray tables = obj.value("tables").toArray();
+	  QJsonArray tables = obj["tables"].toArray();
 	  QStringList tableNames;
-	  for (auto it = tables.begin(); it != tables.end(); ++it){
-		tableNames.push_back(it->toObject().value("name").toString());
+	  for (auto it = tables.begin(); it != tables.end(); ++it) {
+		tableNames.push_back(it->toObject()["name"].toString());
 	  }
 	  emit loginRegistSuccess(tableNames);
-	} else {
-	  if (result.contains("UNIQUE constraint failed")) result = "User already exists";
-	  emit loginRegistFail(result);
+	  return;
 	}
-  } else if (command == "CREATE"){
-	QString result = obj.value("result").toString();
-	if (result == "SUCCESS"){
-	  QString name = obj.value("name").toString();
+	if (result.contains("UNIQUE constraint failed")) result = "User already exists";
+	emit loginRegistFail(result);
+	return;
+  } else if (command == "CREATE") {
+	QString result = obj["result"].toString();
+	if (result == "SUCCESS") {
+	  QString name = obj["name"].toString();
 	  emit createSuccess(name);
-	} else{
-	  emit createError(result);
+	  return;
+	}
+	emit createError(result);
+	return;
+  } else if (command == "CONNECT") {
+//	std::cout << "PARSE" << std::endl;
+	QString result = obj["result"].toString();
+	if (result != "SUCCESS") {
+	  emit connectError(result);
+	  return;
+	}
+	emit connectSuccess(obj["table_name"].toString(), obj["bet"].toInt(), obj["pot"].toInt());
+	QJsonArray arr = obj["players"].toArray();
+	for (const auto &it : arr) {
+	  auto player = it.toObject();
+	  emit addPlayerToTable(player["name"].toString(),
+							player["seat"].toInt(),
+							player["money"].toInt(),
+							player["cards"].toInt());
 	}
   }
 }

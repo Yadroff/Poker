@@ -10,16 +10,16 @@
 #include "table/player.h"
 #include "table/table.h"
 
-class CommandConnect :public Command
-{
-public:
-    explicit CommandConnect(Table *table, QString &playerName, QTcpSocket *playerSocket);
-    QJsonDocument exec() override;
-    ~CommandConnect() = default;
-private:
-    Table *table_;
-    QString playerName_;
-    QTcpSocket *playerSocket_;
+class CommandConnect : public Command {
+ public:
+  explicit CommandConnect(QMap<QString, Table *> &tables_, QString &tableName, QString &playerName, QTcpSocket *playerSocket);
+  QJsonDocument exec() override;
+  ~CommandConnect() = default;
+ private:
+  QMap<QString, Table *> &map_;
+  QString playerName_;
+  QTcpSocket *playerSocket_;
+  QString tableName_;
 };
 
 #endif // COMMANDCONNECT_H

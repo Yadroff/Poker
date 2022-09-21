@@ -21,7 +21,7 @@ set(HEADERS
         menu/mainwindow.h
         serverChatting/senderreciver.h
         serverChatting/serverconnecter.h
-        load.h
+        loader.h
         button.h
         screencontroller.h
         )
@@ -36,7 +36,7 @@ set(SOURCES
         menu/mainwindow.cpp
         serverChatting/senderreciver.cpp
         serverChatting/serverconnecter.cpp
-        load.cpp
+        loader.cpp
         button.cpp
         screencontroller.cpp
         )
@@ -44,7 +44,7 @@ set(SOURCES
 set(UIS
         authentication/authentication.ui
         gameUI/gameui.ui
-        load.ui
+        loader.ui
         )
 
 set(RESOURCES

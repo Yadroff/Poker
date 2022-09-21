@@ -20,7 +20,7 @@ public:
 private:
     QString tableName_;
     int tableSize_;
-    QMap<QString, Table*> map_;
+    QMap<QString, Table*> &map_;
 signals:
 
 };
