@@ -56,7 +56,7 @@ void Authentication::on_buttonRegister_clicked() {
 	return;
   }
   transformString(password);
-  QString command = "REGIST " + login + QString(" ") + password;
+  QString command = "REGIST" + SEPARATOR + login + SEPARATOR + password;
   password = "";
   setEnabled(false);
   emit needToSend(command);
@@ -78,7 +78,7 @@ void Authentication::on_buttonLogin_clicked() {
 	return;
   }
   transformString(password);
-  QString command = "LOGIN " + login + QString(" ") + password;
+  QString command = "LOGIN" + SEPARATOR + login + SEPARATOR + password;
   password = "";
   setEnabled(false);
   emit needToSend(command);

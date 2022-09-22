@@ -15,7 +15,7 @@ class SenderReceiver : public QObject {
   void send(const QString &str);
  private:
   QTcpSocket *socket_;
-
+  const QString SEPARATOR = QString(QChar(7));
   QByteArray toJSON(const QString &string);
  private slots:
   void readData();
@@ -28,6 +28,7 @@ class SenderReceiver : public QObject {
   void connectSuccess(const QString &name, const int &bet, const int &pot);
   void connectError(const QString &error);
   void addPlayerToTable(const QString &playerName, const int &seat, const int &money, const int &cards);
+  void updateTables(const QStringList &tables);
 };
 
 #endif // SENDERRECIVER_H

@@ -7,6 +7,7 @@
 const QString KEY_VERNAM = "EVTIQWXQVVOPMCXREPYZ";
 const int KEY_SIZE = KEY_VERNAM.size();
 
+
 namespace Ui {
 class Authentication;
 }
@@ -20,8 +21,6 @@ class Authentication : public QMainWindow {
   void setEnabled(const bool &status);
 //    void load();
 //    void stopLoad();
- private:
-//        Load *load_;
  signals:
   void needToSend(const QString &command);
   void changeLogin(const QString &login);
@@ -32,6 +31,7 @@ class Authentication : public QMainWindow {
 
  private:
   Ui::Authentication *ui;
+  const QString SEPARATOR = QString(QChar(7));
 
   bool isValidString(QString &password);
   void transformString(QString &string);

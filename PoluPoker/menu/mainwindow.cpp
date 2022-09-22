@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 
 MainWindow::MainWindow(const QStringList &tables, QWidget *parent)
-	: QWidget(parent), tables_(tables) {
+	: QWidget(parent) {
   setupUI();
 //  boxTables_->addItems(tables);
   connect(exit_, &QPushButton::clicked, this, &MainWindow::exitMenu);
@@ -106,6 +106,7 @@ void MainWindow::help() {
 }
 
 void MainWindow::createTable() {
+  cancelConnect();
   buttonCreate_->show();
   lineCreateTable_->show();
   buttonCancelCreate_->show();
@@ -122,16 +123,17 @@ void MainWindow::createClicked() {
 	return;
   }
   QString tableName = lineCreateTable_->text();
-  if (tables_.contains(tableName)) {
-	auto reply = QMessageBox::warning(this, "Create Error", "Table with this name already exists");
-	if (reply == QMessageBox::Yes) {
-	  QApplication::quit();
-	}
-	lineCreateTable_->clear();
-	return;
-  }
-  tables_.append(tableName);
-  boxTables_->addItem(tableName);
+//  QStringList tables_ = boxTables_.items
+//  if (tables_.contains(tableName)) {
+//	auto reply = QMessageBox::warning(this, "Create Error", "Table with this name already exists");
+//	if (reply == QMessageBox::Yes) {
+//	  QApplication::quit();
+//	}
+//	lineCreateTable_->clear();
+//	return;
+//  }
+//  tables_.append(tableName);
+//  boxTables_->addItem(tableName);
   lineCreateTable_->clear();
   this->cancelCreate();
 //    QString command = "CREATE " + tableName;
@@ -150,7 +152,9 @@ void MainWindow::cancelCreate() {
 
 void MainWindow::connectTable() {
   buttonConnectTable_->hide();
-  boxTables_->addItems(tables_);
+  boxTables_->clear();
+  emit signalUpdateTables();
+  cancelCreate();
   boxTables_->show();
   buttonConnect_->show();
   buttonCancelConnect_->show();
@@ -161,5 +165,9 @@ void MainWindow::connectClicked() {
   this->cancelConnect();
 //    QString command = "CONNECT " + tableName;
   emit signalConnectTable(tableName);
+}
+void MainWindow::updateTablesList(const QStringList &tables) {
+  std::cout << "UPDATE TABLES LIST";
+  boxTables_->addItems(tables);
 }
 

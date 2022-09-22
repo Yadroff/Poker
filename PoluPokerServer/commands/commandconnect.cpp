@@ -20,6 +20,7 @@ QJsonDocument CommandConnect::exec() {
 	return QJsonDocument(obj);
   }
   obj.insert("result", "SUCCESS");
+  obj.insert("table_name", tableName_);
   obj.insert("pot", table->pot());
   obj.insert("bet", table->bet());
   QJsonArray arr;

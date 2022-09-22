@@ -17,8 +17,9 @@ class GameUI : public QMainWindow {
   void addPlayer(const QString &name, const int &seat, const int &money, const int &cards);
   void bet();
   void chatMessage(const QString &message);
-  ~GameUI();
+  ~GameUI() override;
  private:
+  const QString SEPARATOR = QString(QChar(7));
   Ui::GameUI *ui;
   QVector<Player *> players_;
   QVector<Seat *> seats_;
@@ -28,11 +29,12 @@ class GameUI : public QMainWindow {
   int bet_;
   int pot_;
  signals:
-  void sendChat(const QString &message);
-  void call();
-  void fold();
-  void bet(const int &);
-  void changeSeat(const int &);
+  void send(const QString &command);
+//  void sendChat(const QString &message);
+//  void call();
+//  void fold();
+//  void bet(const int &);
+//  void changeSeat(const int &);
 
  private slots:
   void test();

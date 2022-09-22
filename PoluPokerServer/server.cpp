@@ -158,6 +158,12 @@ void Server::readData() {
 		  auto ans = connect->exec();
 		  toSend = ans.toJson(QJsonDocument::Indented);
 		  delete connect;
+		} else if (command == "UPDATE_TABLES"){
+		  QJsonObject ansObj;
+		  ansObj.insert("command", command);
+		  ansObj.insert("result", "SUCCESS");
+		  ansObj.insert("tables", tables());
+		  toSend = QJsonDocument(ansObj).toJson(QJsonDocument::Indented);
 		}
 		clients_[i]->write(toSend);
 		std::cout << "SEND" << std::endl << toSend.toStdString() << std::endl;

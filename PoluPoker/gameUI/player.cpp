@@ -42,3 +42,9 @@ void Player::bet(qint32 &bet) {
 void Player::leaveTable() {
   seat_->free();
 }
+const QString &Player::name() const {
+  return name_;
+}
+void Player::SetName(const QString &name) {
+  name_ = name;
+}

@@ -18,10 +18,13 @@ class Player : public QObject {
   [[nodiscard]] int money() const;
   void bet(qint32 &bet);
 
+  [[nodiscard]] const QString &name() const;
+  void SetName(const QString &name);
  private:
   Card card_;
   int cardsCount_;
   QString name_;
+ private:
   qint32 money_;
   Seat *seat_;
  public slots:

@@ -1,7 +1,8 @@
 #include "screencontroller.h"
 #include <QSound>
+#include <qtestsupport_core.h>
 
-const int TABLE_SIZE = 8;
+
 
 ScreenController::ScreenController(QObject *parent)
 	:
@@ -12,6 +13,7 @@ ScreenController::ScreenController(QObject *parent)
   loader_ = new Loader();
   loader_->show();
   loader_->setStatus("Connecting to the server");
+  QTest::qWait(1000);
   thread = new QThread(this);
   servConnect_ = new ServerConnecter();
   servConnect_->moveToThread(thread);
@@ -45,22 +47,26 @@ void ScreenController::loginFail(const QString &error) {
 }
 
 void ScreenController::createMenu(const QStringList &tables) {
+  QTest::qWait(1000);
   this->menu_ = new MainWindow(tables);
   this->auth_->close();
   this->loader_->close();
   this->menu_->show();
-//    connect(menu_, SIGNAL(needToSend(const QString &)), this->senderReciver_, SLOT(send(const QString &)));
+//    connect(menu_, SIGNAL(needToSend(const QString &)), this->senderReceiver_, SLOT(send(const QString &)));
   connect(menu_, SIGNAL(signalCreateTable(QString)), this, SLOT(createTableRequest(QString)));
   connect(menu_, SIGNAL(signalConnectTable(QString)), this, SLOT(connectTableRequest(QString)));
+  connect(menu_, SIGNAL(signalUpdateTables()), this, SLOT(updateTableRequest()));
+  connect(senderReceiver_, SIGNAL(updateTables(QStringList)), menu_, SLOT(updateTablesList(QStringList)));
 }
 
 void ScreenController::createTableRequest(const QString &name) {
   this->menu_->hide();
   this->loader_->show();
   this->loader_->setStatus("Sending create request");
-  QString string = "CREATE " + name + " " + QString::number(TABLE_SIZE);
+  QTest::qWait(1000);
+  QString string = "CREATE" + SEPARATOR + name + SEPARATOR + QString::number(TABLE_SIZE);
   std::cout << string.toStdString() << std::endl;
-  senderReciver_->send(string);
+  senderReceiver_->send(string);
   this->loader_->setStatus("Wait server");
 }
 
@@ -69,9 +75,10 @@ void ScreenController::connectTableRequest(const QString &name) {
   this->menu_->hide();
   this->loader_->show();
   this->loader_->setStatus("Sending connect request");
-  QString command = "CONNECT " + name + " " + login_;
+  QTest::qWait(1000);
+  QString command = "CONNECT" + SEPARATOR + name + SEPARATOR + login_;
   std::cout << command.toStdString() << std::endl;
-  senderReciver_->send(command);
+  senderReceiver_->send(command);
   this->loader_->setStatus("Wait server");
 }
 
@@ -115,13 +122,7 @@ void ScreenController::connectToServer(const QString &string) {
   this->auth_->show();
   connect(this->auth_, SIGNAL(changeLogin(QString)), this, SLOT(setLogin(QString)));
   std::cout << "CONNECTED TO SERVER: IP: " << stringList.last().toStdString() << std::endl;
-  senderReciver_ = new SenderReceiver(socket_, this);
-  connect(auth_, SIGNAL(needToSend(QString)), this, SLOT(login(QString)));
-  connect(senderReciver_, SIGNAL(loginRegistSuccess(QStringList)), this, SLOT(createMenu(QStringList)));
-  connect(senderReciver_, SIGNAL(loginRegistFail(QString)), this, SLOT(loginFail(QString)));
-  connect(senderReciver_, SIGNAL(createSuccess(QString)), this, SLOT(createTable(QString)));
-  connect(senderReciver_, SIGNAL(createError(QString)), this, SLOT(createFail(QString)));
-  connect(senderReciver_, SIGNAL(connectSuccess(QString, int, int)), this, SLOT(connectTable(QString, int, int)));
+  createSenderReceiver(socket_);
 }
 
 void ScreenController::createFail(const QString &error) {
@@ -136,7 +137,9 @@ void ScreenController::connectTable(const QString &name, const int &pot, const i
   if (table_) {
 	delete table_;
   }
+  std::cout << "CREATE TABLE NAME: " << name.toStdString() << std::endl;
   table_ = new GameUI(name, login_, bet, pot);
+  connect(table_, SIGNAL(send(QString)), senderReceiver_, SLOT(send(QString)));
 //  connect(table_, SIGNAL(changeSeat(const int &)), this, SLOT());
   loader_->hide();
   table_->show();
@@ -145,7 +148,20 @@ void ScreenController::login(const QString &command) {
   this->auth_->hide();
   this->loader_->show();
   this->loader_->setStatus("Send request to server");
-  senderReciver_->send(command);
+  QTest::qWait(1000);
+  senderReceiver_->send(command);
   this->loader_->setStatus("Wait for server");
+}
+void ScreenController::createSenderReceiver(QTcpSocket *socket) {
+  senderReceiver_ = new SenderReceiver(socket, this);
+  connect(auth_, SIGNAL(needToSend(QString)), this, SLOT(login(QString)));
+  connect(senderReceiver_, SIGNAL(loginRegistSuccess(QStringList)), this, SLOT(createMenu(QStringList)));
+  connect(senderReceiver_, SIGNAL(loginRegistFail(QString)), this, SLOT(loginFail(QString)));
+  connect(senderReceiver_, SIGNAL(createSuccess(QString)), this, SLOT(createTable(QString)));
+  connect(senderReceiver_, SIGNAL(createError(QString)), this, SLOT(createFail(QString)));
+  connect(senderReceiver_, SIGNAL(connectSuccess(QString, int, int)), this, SLOT(connectTable(QString, int, int)));
+}
+void ScreenController::updateTableRequest() {
+  senderReceiver_->send("UPDATE_TABLES");
 }
 

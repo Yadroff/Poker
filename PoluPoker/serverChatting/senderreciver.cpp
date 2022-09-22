@@ -26,9 +26,10 @@ void SenderReceiver::send(const QString &str) {
 }
 
 QByteArray SenderReceiver::toJSON(const QString &string) {
-  auto stringVec = string.split(" ").toVector();
+  auto stringVec = string.split(SEPARATOR).toVector();
   QJsonObject obj;
   auto command = stringVec[0];
+  std::cout << command.toStdString() << std::endl;
   if (command == "REGIST" or command == "LOGIN") {
 	assert(stringVec.size() == 3);
 	obj.insert("command", command);
@@ -45,10 +46,42 @@ QByteArray SenderReceiver::toJSON(const QString &string) {
 	obj.insert("table_name", stringVec[1]);
 	obj.insert("player_name", stringVec[2]);
   } else if (command == "CHANGE_SEAT") {
+	assert(stringVec.size() == 4);
+	obj.insert("command", command);
+	obj.insert("table_name", stringVec[1]);
+	obj.insert("player_name", stringVec[2]);
+	obj.insert("new_seat", stringVec[3]);
+  } else if (command == "UPDATE_TABLES"){
+	assert(stringVec.size() == 1);
+	obj.insert("command", command);
+  } else if (command == "CHAT"){
+	assert(stringVec.size() == 4);
+	obj.insert("command", command);
+	obj.insert("table", stringVec[1]);
+	obj.insert("player", stringVec[2]);
+	obj.insert("message", stringVec[3]);
+  } else if (command == "FOLD"){
 	assert(stringVec.size() == 3);
 	obj.insert("command", command);
-	obj.insert("player_name", stringVec[1]);
-	obj.insert("new_seat", stringVec[2]);
+	obj.insert("table", stringVec[1]);
+	obj.insert("player", stringVec[2]);
+  } else if (command == "CALL"){
+	assert(stringVec.size() == 3);
+	obj.insert("command", command);
+	obj.insert("table", stringVec[1]);
+	obj.insert("player", stringVec[2]);
+  } else if (command == "BET"){
+	assert(stringVec.size() == 4);
+	obj.insert("command", command);
+	obj.insert("table", stringVec[1]);
+	obj.insert("player", stringVec[2]);
+	obj.insert("bet", stringVec[3].toInt());
+  } else if (command == "CHANGE_SEAT"){
+	assert(stringVec.size() == 4);
+	obj.insert("command", command);
+	obj.insert("table", stringVec[1]);
+	obj.insert("player", stringVec[2]);
+	obj.insert("seat", stringVec[3].toInt());
   }
   QJsonDocument doc(obj);
   QByteArray arr = doc.toJson(QJsonDocument::Indented);
@@ -100,6 +133,7 @@ void SenderReceiver::parse(const QJsonDocument &jsonDoc) {
 	  emit connectError(result);
 	  return;
 	}
+	std::cout << obj["table_name"].toString().toStdString() << std::endl;
 	emit connectSuccess(obj["table_name"].toString(), obj["bet"].toInt(), obj["pot"].toInt());
 	QJsonArray arr = obj["players"].toArray();
 	for (const auto &it : arr) {
@@ -109,6 +143,21 @@ void SenderReceiver::parse(const QJsonDocument &jsonDoc) {
 							player["money"].toInt(),
 							player["cards"].toInt());
 	}
+  } else if (command == "UPDATE_TABLES"){
+	QString result = obj["result"].toString();
+	if (result != "SUCCESS"){
+	  return;
+	}
+	QJsonArray arr = obj["tables"].toArray();
+	QStringList list;
+	for (const auto &it: arr){
+	  list.append(it.toObject()["name"].toString());
+	}
+	std::cout << "UPDATED TABLES" << std::endl;
+	for (const auto &it: list){
+	  std::cout << it.toStdString() << std::endl;
+	}
+	emit updateTables(list);
   }
 }
 

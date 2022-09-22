@@ -23,7 +23,7 @@ SOURCES += \
 HEADERS += \
     table/card.h \
     commands/command.h \
-    commands/combination.h \
+    table/combination.h \
     commands/commandconnect.h \
     commands/commandcreate.h \
     commands/commandauth.h \

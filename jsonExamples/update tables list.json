@@ -1,0 +1,12 @@
+{
+    "command": "UPDATE_TABLES",
+    "result": "SUCCESS",
+    "tables": [
+        {
+        "name": "ABC"
+        },
+        {
+        "name": "BAC"
+        }
+    ]
+}

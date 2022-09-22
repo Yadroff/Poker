@@ -11,6 +11,8 @@
 #include "loader.h"
 
 const quint16 SERVER_PORT = 7777;
+const int TABLE_SIZE = 8;
+
 class ScreenController : public QObject {
  Q_OBJECT
  public:
@@ -23,9 +25,11 @@ class ScreenController : public QObject {
   ServerConnecter *servConnect_;
   QThread *thread;
   GameUI *table_{};
-  SenderReceiver *senderReciver_{};
+  SenderReceiver *senderReceiver_{};
   Loader *loader_;
   QString login_;
+  const QString SEPARATOR = QString(QChar(7));
+
   void testTable();
  private slots:
   void setLogin(const QString &newLogin);
@@ -38,6 +42,8 @@ class ScreenController : public QObject {
   void connectTable(const QString &name, const int &pot, const int &bet);
   void createFail(const QString &error);
   void login(const QString &command);
+  void createSenderReceiver(QTcpSocket *socket);
+  void updateTableRequest();
 };
 
 #endif // SCREENCONTROLLER_H

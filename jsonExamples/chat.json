@@ -1,4 +1,5 @@
 {
+    "command": "CHAT",
     "table": "ABC",
     "player": "AAa",
     "message": "Hello, world!"

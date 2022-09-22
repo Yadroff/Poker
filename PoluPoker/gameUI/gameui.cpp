@@ -6,7 +6,7 @@
 
 GameUI::GameUI(const QString &name, const QString &myName, const int &bet, const int &pot, QWidget *parent)
 	:
-	QMainWindow(parent), ui(new Ui::GameUI), bet_(bet), pot_(pot) {
+	QMainWindow(parent), ui(new Ui::GameUI), bet_(bet), pot_(pot), name_(name) {
   setWindowTitle(name);
   std::cout << windowTitle().toStdString() << std::endl;
   me_ = new Player(myName, this);
@@ -256,7 +256,9 @@ GameUI::on_buttonSitInSeat0_clicked() {
 	me_->changeSeat(seats_[0]);
 	showGUI();
 	//TODO: отправить на сервер изменение места
-	emit changeSeat(0);
+//	emit changeSeat(0);
+	std::cout << "TABLE NAME: " << name_.toStdString() << " MY NAME: " << me_->name().toStdString() << std::endl;
+	emit send("CHANGE_SEAT" + SEPARATOR + name_ + SEPARATOR + me_->name() + SEPARATOR + "0");
   } else {
 	QMessageBox::critical(this, "ERROR", "Choosen seat is taken");
   }
@@ -267,7 +269,10 @@ GameUI::on_buttonSitInSeat1_clicked() {
   if (seats_[1]->isAvailable()) {
 	me_->changeSeat(seats_[1]);
 	showGUI();
-	emit changeSeat(1);
+//	emit changeSeat(1);
+	std::cout << "TABLE NAME: " << name_.toStdString() << " MY NAME: " << me_->name().toStdString() << std::endl;
+	emit send("CHANGE_SEAT" + SEPARATOR + name_ + SEPARATOR + me_->name() + SEPARATOR + "1");
+
   } else {
 	QMessageBox::critical(this, "ERROR", "Choosen seat is taken");
   }
@@ -277,7 +282,9 @@ void
 GameUI::on_buttonSitInSeat2_clicked() {
   if (seats_[2]->isAvailable()) {
 	me_->changeSeat(seats_[2]);
-	emit changeSeat(2);
+//	emit changeSeat(2);
+	std::cout << "TABLE NAME: " << name_.toStdString() << " MY NAME: " << me_->name().toStdString() << std::endl;
+	emit send("CHANGE_SEAT" + SEPARATOR + name_ + SEPARATOR + me_->name() + SEPARATOR + "2");
   } else {
 	QMessageBox::critical(this, "ERROR", "Choosen seat is taken");
   }
@@ -288,7 +295,9 @@ GameUI::on_buttonSitInSeat3_clicked() {
   if (seats_[3]->isAvailable()) {
 	me_->changeSeat(seats_[3]);
 	showGUI();
-	emit changeSeat(3);
+//	emit changeSeat(3);
+	std::cout << "TABLE NAME: " << name_.toStdString() << " MY NAME: " << me_->name().toStdString() << std::endl;
+	emit send("CHANGE_SEAT" + SEPARATOR + name_ + SEPARATOR + me_->name() + SEPARATOR + "3");
   } else {
 	QMessageBox::critical(this, "ERROR", "Choosen seat is taken");
   }
@@ -299,7 +308,9 @@ GameUI::on_buttonSitInSeat4_clicked() {
   if (seats_[4]->isAvailable()) {
 	me_->changeSeat(seats_[4]);
 	showGUI();
-	emit changeSeat(4);
+//	emit changeSeat(4);
+	std::cout << "TABLE NAME: " << name_.toStdString() << " MY NAME: " << me_->name().toStdString() << std::endl;
+	emit send("CHANGE_SEAT" + SEPARATOR + name_ + SEPARATOR + me_->name() + SEPARATOR + "4");
   } else {
 	QMessageBox::critical(this, "ERROR", "Choosen seat is taken");
   }
@@ -310,7 +321,9 @@ GameUI::on_buttonSitInSeat5_clicked() {
   if (seats_[5]->isAvailable()) {
 	me_->changeSeat(seats_[5]);
 	showGUI();
-	emit changeSeat(5);
+//	emit changeSeat(5);
+	std::cout << "TABLE NAME: " << name_.toStdString() << " MY NAME: " << me_->name().toStdString() << std::endl;
+	emit send("CHANGE_SEAT" + SEPARATOR + name_ + SEPARATOR + me_->name() + SEPARATOR + "5");
 	startGame();
 	test();
   } else {
@@ -323,7 +336,9 @@ GameUI::on_buttonSitInSeat6_clicked() {
   if (seats_[6]->isAvailable()) {
 	me_->changeSeat(seats_[6]);
 	showGUI();
-	emit changeSeat(6);
+//	emit changeSeat(6);
+	std::cout << "TABLE NAME: " << name_.toStdString() << " MY NAME: " << me_->name().toStdString() << std::endl;
+	emit send("CHANGE_SEAT" + SEPARATOR + name_ + SEPARATOR + me_->name() + SEPARATOR + "6");
   } else {
 	QMessageBox::critical(this, "ERROR", "Choosen seat is taken");
   }
@@ -334,7 +349,9 @@ GameUI::on_buttonSitInSeat7_clicked() {
   if (seats_[7]->isAvailable()) {
 	me_->changeSeat(seats_[7]);
 	showGUI();
-	emit changeSeat(7);
+//	emit changeSeat(7);
+	std::cout << "TABLE NAME: " << name_.toStdString() << " MY NAME: " << me_->name().toStdString() << std::endl;
+	emit send("CHANGE_SEAT" + SEPARATOR + name_ + SEPARATOR + me_->name() + SEPARATOR + "7");
   } else {
 	QMessageBox::critical(this, "ERROR", "Choosen seat is taken");
   }
@@ -345,6 +362,7 @@ GameUI::on_buttonFold_clicked() {
   ui->messageBrowser->append("System: You fold");
   hideBet();
   //TODO: отправить на сервер fold
+  emit send("FOLD" + SEPARATOR + name_ + SEPARATOR + me_->name());
   me_->clearCards();
 }
 
@@ -405,7 +423,8 @@ GameUI::on_buttonSubmit_clicked() {
   me_->bet(bet_);
   hideBet();
   //TODO: отправить на сервер изменение ставки
-  emit bet(bet_);
+  emit send("BET" + SEPARATOR + name_ + SEPARATOR + me_->name() + SEPARATOR + QString::number(bet_));
+//  emit bet(bet_);
 }
 
 void
@@ -416,7 +435,8 @@ GameUI::on_buttonCall_clicked() {
   showBetOnTable();
   hideBet();
   //TODO: отправить на сервер call
-  emit call();
+  emit send("CALL" + SEPARATOR + name_ + SEPARATOR + me_->name());
+//  emit call();
 }
 
 void
@@ -428,7 +448,7 @@ GameUI::on_messageBox_editingFinished() {
   ui->messageBrowser->append("You: " + text);
   ui->messageBox->clear();
   //TODO: отправить на сервер сообщение в чат
-  emit sendChat(text);
+  emit send("CHAT" + SEPARATOR + this->name_ + SEPARATOR + me_->name() + SEPARATOR + text);
 }
 
 void

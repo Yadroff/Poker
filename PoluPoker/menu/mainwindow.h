@@ -12,11 +12,12 @@ class MainWindow : public QWidget {
  public:
   explicit MainWindow(const QStringList &tables, QWidget *parent = nullptr);
   ~MainWindow();
-  QStringList tables_;
-
+ public slots:
+  void updateTablesList(const QStringList &tables);
  signals:
   void signalCreateTable(const QString &name);
   void signalConnectTable(const QString &name);
+  void signalUpdateTables();
  private slots:\
     // create
   void createTable();
